@@ -1,6 +1,6 @@
 import sys
-# sys.path.append("/home/pal/Documents/RLEnvironment")
-# sys.path.append("/home/pal/Documents/PersonasSim")
+sys.path.append("/home/pal/cognitive_game_ws/src/reinforcement_learning")
+sys.path.append("/home/pal/cognitive_game_ws/src/PersonasSim")
 # sys.path.append("/home/pal/Documents/XMLReader")
 # sys.path.append("/home/pal/Documents/Tiago")
 
@@ -141,7 +141,7 @@ class Robot:
       left_closer_token = skt.get_current_board_status()[solution_location-1]
       if left_closer_token != '0': solution_subset.append(left_closer_token)
       solution_subset.append(token)
-      right_closer_token = skt.get_current_board_status()[solution_location+1]
+      right_closer_token = skt.get_current_board_status()[solution_location-2]
       if right_closer_token != '0': solution_subset.append(right_closer_token)
     return solution_subset
 
@@ -216,7 +216,7 @@ class Robot:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
         token_loc = skt.get_token_location(token)
-        actions.suggest_solution(token_loc, speech, token)
+        actions.suggest_solution(token_loc, speech, token, 5)
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -288,72 +288,79 @@ class Robot:
       speech.reproduce_speech(self.get_help_timeout_actions_speech()[attempt][0])
 
   def provide_token_back(self, attempt, speech, actions, _from, _to):
-    if attempt > len(self.get_move_back_actions_speech()) - 1:
+    if attempt >= len(self.get_move_back_actions_speech()) - 1:
       attempt = np.random.randint(0, len(self.get_move_back_actions_speech()))
 
     if self.get_move_back_actions_speech()[attempt][1] == 1:
       # perform robot action
-      actions.pick_and_place(_from, _to)
       speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
+      actions.pick_and_place(_from, _to)
     else:
       speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
 
 
 
-# length=5
-# progress=1
-# timeout=15
-# assistance_levels = 5
-# max_attempt = 4
-# assistance_probs = []
-# complexity_probs = []
-# total_tokens= 10
+#length=5
+#progress=1
+#timeout=15
+#assistance_levels = 5
+#max_attempt = 4
+#assistance_probs = []
+#complexity_probs = []
+#total_tokens= 10
 
-# actions = Actions()
-
-
-# initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
-#          6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-#          11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
-#          16:'0', 17:'0', 18:'0', 19:'0', 20:'0'   
-#          }
-
-# current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
-#          6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-#          11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
-#          16:'0', 17:'0', 18:'0', 19:'0', 20:'0'   
-#          }
+#actions = Actions()
 
 
-# board_size = (4,5)
+#initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+#         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+#         11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
+#         16:'0', 17:'0', 18:'0', 19:'0', 20:'0'   
+#         }
 
-# tokens_list = [43, 21, 16, 38, 55]
+#current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+#         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+#         11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
+#         16:'0', 17:'0', 18:'0', 19:'0', 20:'0'   
+#         }
+#solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
+#                 6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+#                 11: 'A', 12: 'G', 13: '0', 14: 'B', 15: '0',
+#                 16: '0', 17: 'D', 18: '0', 19: 'O', 20: '0'
+#                 }
 
-# objective = "ascending"
-# skt = SKT(board_size, length, progress, timeout, assistance_levels, max_attempt,
-#           assistance_probs, complexity_probs, total_tokens,
-#           initial_board, current_board, tokens_list, objective)
 
-# print(skt.get_current_board_status())
+#current_board = initial_board.copy()
+#tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
 
-# xml = XMLReader()
+#objective = "ascending"
+#board_size = (4,5)
 
-# tiago = Robot("/home/pal/Documents/XMLReader/assistive_actions_definition.xml", xml)
-# skt.print_board()
+#skt = SKT(board_size, length, progress, timeout, assistance_levels, max_attempt,
+#          assistance_probs, complexity_probs, total_tokens,
+#          initial_board, current_board, tokens_list, objective, solution_board)
 
-# speech = SpeechUtterance.SpeechUtterance()
-# actions = Actions()
+#print(skt.get_current_board_status())
 
-# #tiago.provide_instructions(speech)
+#xml = XMLReader()
 
-# for i in (tokens_list):
-#   for k in range(max_attempt+2):
-#       token_str = str(i)
-#       #tiago.provide_congratulation(k, speech, actions)
-#       #tiago.provide_compassion(k, speech, actions)
-#       #tiago.provide_assistance(0, k, token_str, skt, speech, actions)
-#       #tiago.provide_assistance(1, k, token_str, skt, speech, actions)
-#       #tiago.provide_assistance(2, k, token_str, skt, speech, actions)
-#       #tiago.provide_assistance(3, k, token_str, skt, speech, actions)
-#       #tiago.provide_assistance(4, k, token_str, skt, speech, actions)
+#tiago = Robot("/home/pal/cognitive_game_ws/src/xml_reader/src/xml_reader/assistive_actions_definition.xml", xml)
+#skt.print_board()
+
+#speech = SpeechUtterance()
+#actions = Actions()
+
+#tiago.provide_instructions(speech)
+#tiago.provide_assistance(3, 1, '55', skt, speech, actions)
+
+#for i in (tokens_list):
+#  for k in range(max_attempt+2):
+#      token_str = str(i)
+      #tiago.provide_congratulation(k, speech, actions)
+      #tiago.provide_compassion(k, speech, actions)
+      #tiago.provide_assistance(0, k, token_str, skt, speech, actions)
+      #tiago.provide_assistance(1, k, token_str, skt, speech, actions)
+      #tiago.provide_assistance(2, k, token_str, skt, speech, actions)
+#      tiago.provide_assistance(3, k, token_str, skt, speech, actions)
+      #tiago.provide_assistance(4, k, token_str, skt, speech, actions)
 
