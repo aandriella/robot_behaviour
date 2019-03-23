@@ -325,7 +325,7 @@ class Actions:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def suggest_solution(self, cell, speech, text):
+  def suggest_solution(self, cell, speech, text, delay):
     # cell 1 is g45 for the robot view point
     conv_cell = self.convert(cell)
     rospy.loginfo("Starting run_motion_python application...")
@@ -341,7 +341,6 @@ class Actions:
 
     rospy.loginfo("Sending goal with motion: " + "s" + str(conv_cell))
     self.client.send_goal(goal)
-
     rospy.sleep(delay)
     speech.reproduce_speech(text)
 
