@@ -39,8 +39,8 @@ class Actions:
   def __init__(self):
     rospy.init_node('big_hero', anonymous=True)
     self.client = SimpleActionClient('/play_motion', PlayMotionAction)
-    self.simulated_magnet = 1#rospy.get_param('~magnet_simulation')
-    self.simulated_actions = 1#rospy.get_param('~actions_simulation')
+    self.simulated_magnet = False#rospy.get_param('~magnet_simulation')
+    self.simulated_actions = False#rospy.get_param('~actions_simulation')
 
   def activate_magnet(self):
     '''
@@ -189,11 +189,14 @@ class Actions:
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
+    rospy.loginfo("conv_cell "+str(conv_cell))
     rospy.loginfo("Waiting for Action Server...")
     self.client.wait_for_server()
-
+    rospy.loginfo("0")
     goal = PlayMotionGoal()
+    rospy.loginfo("1")
     goal.motion_name = "g" + str(conv_cell)
+    rospy.loginfo("2")
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
@@ -401,26 +404,29 @@ class Actions:
           state = self.client.get_state()
           if action_ok:
             rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+            deactivate = self.deactivate_magnet()
+            if deactivate == False:
+              return False
             return True
     else:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
 
-# def main():
-#   tiago = Actions()
-#   # tiago.wave()
-#   # tiago.pick_and_place(2, 11)
-#   # tiago.suggest_subset(11)
-#   # tiago.suggest_solution(14)
-#   # tiago.offer_token(19)
-#   # tiago.activate_magnet()
-#   # rospy.sleep(5)
-#   # tiago.deactivate_magnet()
+#def main():
+#  tiago = Actions()
+  #tiago.wave()
+  #tiago.pick_and_place(15, 4)
+  #tiago.suggest_subset(20)
+  #tiago.suggest_solution(14)
+  #tiago.offer_token(19)
+  #tiago.activate_magnet()
+  #rospy.sleep(5)
+  #tiago.deactivate_magnet()
 #
 #
-# if __name__ == '__main__':
-#   main()
+#if __name__ == '__main__':
+#  main()
 
 
 
