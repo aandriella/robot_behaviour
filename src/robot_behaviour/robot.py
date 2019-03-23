@@ -216,7 +216,7 @@ class Robot:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
         token_loc = skt.get_token_location(token)
-        actions.suggest_solution(token_loc, speech, token, 5)
+        actions.suggest_solution(token_loc, speech, token)
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
