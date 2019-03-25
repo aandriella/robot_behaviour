@@ -26,6 +26,11 @@ import time
 # ROS imports
 import rospy
 from actionlib import SimpleActionClient, GoalStatus
+
+import sys
+sys.path.append("/home/aandriella/pal/cognitive_game_ws/devel/lib/python2.7/dist-packages")
+
+print(sys.path)
 from play_motion_msgs.msg import PlayMotionAction, PlayMotionGoal
 import std_msgs.msg
 # important for the srv
