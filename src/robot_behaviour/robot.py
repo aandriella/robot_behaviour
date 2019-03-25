@@ -8,7 +8,7 @@ sys.path.append(parent_parent_dir_of_file+"/reinforcement_learning")
 sys.path.append(parent_parent_dir_of_file+"/PersonasSim")
 
 
-PYCHARM=True
+PYCHARM=False
 if not PYCHARM:
   #import from the package xml_reader
   from xml_reader.xml_reader import XMLReader
