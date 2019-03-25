@@ -1,15 +1,31 @@
 import sys
-sys.path.append("/home/pal/cognitive_game_ws/src/reinforcement_learning")
-sys.path.append("/home/pal/cognitive_game_ws/src/PersonasSim")
-# sys.path.append("/home/pal/Documents/XMLReader")
-# sys.path.append("/home/pal/Documents/Tiago")
+import os
+path = os.path.abspath(__file__)
+dir_path = os.path.dirname(path)
+parent_dir_of_file = os.path.dirname(dir_path)
+parent_parent_dir_of_file = os.path.dirname(parent_dir_of_file)
+sys.path.append(parent_parent_dir_of_file+"/reinforcement_learning")
+sys.path.append(parent_parent_dir_of_file+"/PersonasSim")
 
-#import from the package xml_reader
-from xml_reader.xml_reader import XMLReader
 
-from SKT import SKT
-from speech_utterance import SpeechUtterance
-from actions import Actions
+PYCHARM=True
+if not PYCHARM:
+  #import from the package xml_reader
+  from xml_reader.xml_reader import XMLReader
+
+  from SKT import SKT
+  from speech_utterance import SpeechUtterance
+  from actions import Actions
+else:
+  import os
+  path = os.path.abspath(__file__)
+  dir_path = os.path.dirname(path)
+  parent_dir_of_file = os.path.dirname(dir_path)
+  parent_parent_dir_of_file = os.path.dirname(parent_dir_of_file)
+  import sys
+  sys.path.append(parent_parent_dir_of_file + "/xml_reader/src/xml_reader/")
+  sys.path.append(parent_parent_dir_of_file + "/robot_behaviour/src/robot_behaviour/")
+
 
 import numpy as np
 
@@ -227,7 +243,8 @@ class Robot:
       # reproduce the gesture
       token_loc = skt.get_token_location(token)
       speech.reproduce_speech(self.get_assistive_action_speech(level_index, 0)[0])
-      actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
+      if self.get_assistive_action_speech(level_index, 0)[1] == 1:
+        actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
       #speech.reproduce_speech(token)
       # reproduce the gesture
       #speech.reproduce_speech(self.get_assistive_action_speech(level_index, 1)[0])
