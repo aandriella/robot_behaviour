@@ -408,6 +408,7 @@ class Actions:
           state = self.client.get_state()
           if action_ok:
             rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+            rospy.sleep(2.0)
             deactivate = self.deactivate_magnet()
             if deactivate == False:
               return False
