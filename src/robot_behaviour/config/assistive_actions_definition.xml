@@ -1,0 +1,44 @@
+<data>
+		<instruction name="1">This is a cognitive test to evaluate your abilities</instruction>
+    	<instruction name="2">The goal is to sort the tokens in ascending order on the board</instruction>
+    	<instruction name="3">Please wait for my instructions to move a token</instruction>
+
+
+        <LEV_0 name="no_gesture">"It's your turn,please move a token"</LEV_0>
+
+		<LEV_1 name="no_gesture">"Come on you can do it"</LEV_1>
+		<LEV_1 name="no_gesture">"Take into account the rules of the game"</LEV_1>
+		<LEV_1 name="no_gesture">"Let's do it!!"</LEV_1>
+
+		<LEV_2 name="no_gesture">"The solution can be one of those:"</LEV_2>
+		<LEV_2 name="no_gesture">"The right token is smaller than..."</LEV_2>
+		<LEV_2 name="no_gesture">"The right token is bigger than..."</LEV_2>
+		<LEV_2 name="no_gesture">"The right token is between "</LEV_2>
+
+		<LEV_3 name="no_gesture">"The right token is this one..."</LEV_3>
+		<LEV_3 name="no_gesture">"The right token to move is ..."</LEV_3>
+		<LEV_3 name="no_gesture">"That's easy.... the right token to move is.."</LEV_3>
+
+		<LEV_4 name="no_gesture">"The token to move is this one..."</LEV_4>
+		<LEV_4 name="no_gesture">"Take it ... and move in the right location"</LEV_4>
+
+		<help name="no_gesture">"Do you need help? Say YES or NO" </help>
+		<help_attempt name="no_gesture">"Can you repeat please"</help_attempt>
+		<help_timeout name="no_gesture">"No worries, I will do something for you"</help_timeout>
+
+		<move_back name="no_gesture">"I will move the token back"</move_back>
+
+		<time_out name="no_gesture">"Time is passing I will provide you assistance again"</time_out>
+
+
+
+		<compassion name="no_gesture">"People say lucky in love unlucky in gaming" </compassion>
+		<compassion name="no_gesture">"Dont worry sometimes happens"</compassion>
+		<compassion name="no_gesture">"Dont worry I'm sure you will get better"</compassion>
+		<compassion name="no_gesture">"I know how you feel, I've been in this situation before"</compassion>
+
+		<congratulation name="no_gesture">"You made a great move" </congratulation>
+		<congratulation name="no_gesture">"Well done, you're playing as I expected"</congratulation>
+		<congratulation name="no_gesture">"I really enjoying playing with you"</congratulation>
+
+</data>
