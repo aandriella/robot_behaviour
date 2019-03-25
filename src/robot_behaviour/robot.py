@@ -200,12 +200,15 @@ class Robot:
       #if in the xml file name= "no_gesture"
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        #hard coded string
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
         # reproduce the gesture
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-
+        # hard coded string
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
     elif level_index == 2:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -216,7 +219,8 @@ class Robot:
         print("token ", token, " location ", token_loc)
         subset_solution = self.get_token_subset_solution(token, skt)
         actions.suggest_subset(token_loc, speech, subset_solution, 5)
-       
+        # hard coded string
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -224,6 +228,8 @@ class Robot:
         subset_solution = self.get_token_subset_solution(token, skt)
         for i in range(len(subset_solution)):
           speech.reproduce_speech(subset_solution[i])
+        # hard coded string
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
 
     elif level_index == 3:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
@@ -233,18 +239,25 @@ class Robot:
         # reproduce the gesture
         token_loc = skt.get_token_location(token)
         actions.suggest_solution(token_loc, speech, token, 5)
+        # hard coded string
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         speech.reproduce_speech(token)
+        # hard coded string
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
 
     elif level_index == 4:
+      print("Warning hard coded string")
       # reproduce the gesture
       token_loc = skt.get_token_location(token)
       speech.reproduce_speech(self.get_assistive_action_speech(level_index, 0)[0])
       if self.get_assistive_action_speech(level_index, 0)[1] == 1:
         actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
+      # hard coded string
+      speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
       #speech.reproduce_speech(token)
       # reproduce the gesture
       #speech.reproduce_speech(self.get_assistive_action_speech(level_index, 1)[0])
