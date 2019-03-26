@@ -63,6 +63,8 @@ class Robot:
     self.help_action_speech = xml_reader.get_actions_by_tag(actions_file_name, 'help')
     self.help_attempt = xml_reader.get_actions_by_tag(actions_file_name, "help_attempt")
     self.help_timeout = xml_reader.get_actions_by_tag(actions_file_name, "help_timeout")
+    self.end_game = xml_reader.get_actions_by_tag(actions_file_name, "end_game")
+    self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
 
   def get_instructions_speech(self):
     '''
@@ -112,6 +114,18 @@ class Robot:
     '''
     return self.timeout_action_speech
 
+  def get_play_again_speech(self):
+    '''
+    :return: 
+    '''
+    return self.play_again
+  
+  def get_end_game_speech(self):
+    '''
+    :return: 
+    '''
+    return self.end_game
+  
   def get_assistive_actions(self, level_index):
     '''
     :param level_index:
@@ -327,6 +341,19 @@ class Robot:
       actions.pick_and_place(_from, _to)
     else:
       speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
+
+  def provide_game_completed(self, speech, actions):
+    for i in range(len(self.get_end_game_speech())):
+      # check if we need to reproduce a gesture
+      if self.get_end_game_speech()[i][1] == 1:
+        speech.reproduce_speech(self.get_end_game_speech()[i][0])
+        # reproduce the gesture
+        actions.wave()
+      else:
+        speech.reproduce_speech(self.get_end_game_speech()[i][0])
+
+  def provide_play_again(self, speech):
+    speech.reproduce_speech(self.get_play_again_speech()[0][0])
 
 
 
