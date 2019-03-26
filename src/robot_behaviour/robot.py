@@ -210,9 +210,11 @@ class Robot:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # hard coded string
         speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+
     elif level_index == 2:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
+      #robot action
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
@@ -222,6 +224,7 @@ class Robot:
         actions.suggest_subset(token_loc, speech, subset_solution, 5)
         # hard coded string
         speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        actions.initial_pos()
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -235,6 +238,7 @@ class Robot:
     elif level_index == 3:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
+      #robot action
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
@@ -242,6 +246,7 @@ class Robot:
         actions.suggest_solution(token_loc, speech, token, 5)
         # hard coded string
         speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        actions.initial_pos()
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -259,6 +264,7 @@ class Robot:
         actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
       # hard coded string
       speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+      actions.initial_pos()
       #speech.reproduce_speech(token)
       # reproduce the gesture
       #speech.reproduce_speech(self.get_assistive_action_speech(level_index, 1)[0])
