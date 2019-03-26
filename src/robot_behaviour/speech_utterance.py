@@ -19,7 +19,7 @@ class SpeechUtterance():
                 rospy.loginfo(sentence)
                 self.pub.publish(sentence)
                 waiting_time = round(len(sentence))/12
-                print("sentence len", len(sentence), "waiting time ", str(waiting_time))
+                #print("sentence len", len(sentence), "waiting time ", str(waiting_time))
                 #if the waiting time is smaller than 1 is reproducing a number
                 if waiting_time<1:
                   waiting_time = 2
