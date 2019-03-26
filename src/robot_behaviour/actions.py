@@ -36,7 +36,7 @@ import std_msgs.msg
 # important for the srv
 from std_srvs.srv import *
 
-from speech_utterance import SpeechUtterance
+from robot_behaviour.speech_utterance import SpeechUtterance
 
 
 class Actions:
@@ -137,8 +137,30 @@ class Actions:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def initial_pos(self, cell):
-    pass
+  def initial_pos(self):
+    rospy.loginfo("Starting run_motion_python application...")
+    self.wait_for_valid_time(10.0)
+    # client = SimpleActionClient('/play_motion', PlayMotionAction)
+    rospy.loginfo("Waiting for Action Server...")
+    self.client.wait_for_server()
+
+    goal = PlayMotionGoal()
+    goal.motion_name = "init"
+    goal.skip_planning = False
+    goal.priority = 0  # Optional
+
+    rospy.loginfo("Sending goal with motion: init")
+    self.client.send_goal(goal)
+
+    rospy.loginfo("Waiting for result...")
+    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+    state = self.client.get_state()
+    if action_ok:
+      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+      return True
+    else:
+      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
+      return False
 
   def head_noddling_yes(self):
     rospy.loginfo("Starting run_motion_python application...")
