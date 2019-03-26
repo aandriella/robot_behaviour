@@ -1,30 +1,19 @@
 import sys
 import os
-path = os.path.abspath(__file__)
-dir_path = os.path.dirname(path)
-parent_dir_of_file = os.path.dirname(dir_path)
-parent_parent_dir_of_file = os.path.dirname(parent_dir_of_file)
-sys.path.append(parent_parent_dir_of_file+"/reinforcement_learning")
-sys.path.append(parent_parent_dir_of_file+"/PersonasSim")
+# path = os.path.abspath(__file__)
+# dir_path = os.path.dirname(path)
+# parent_dir_of_file = os.path.dirname(dir_path)
+# parent_parent_dir_of_file = os.path.dirname(parent_dir_of_file)
+# sys.path.append(parent_parent_dir_of_file+"/reinforcement_learning")
+# sys.path.append(parent_parent_dir_of_file+"/PersonasSim")
 
 
-PYCHARM=False
-if not PYCHARM:
-  #import from the package xml_reader
-  from xml_reader.xml_reader import XMLReader
 
-  from SKT import SKT
-  from speech_utterance import SpeechUtterance
-  from actions import Actions
-else:
-  import os
-  path = os.path.abspath(__file__)
-  dir_path = os.path.dirname(path)
-  parent_dir_of_file = os.path.dirname(dir_path)
-  parent_parent_dir_of_file = os.path.dirname(parent_dir_of_file)
-  import sys
-  sys.path.append(parent_parent_dir_of_file + "/xml_reader/src/xml_reader/")
-  sys.path.append(parent_parent_dir_of_file + "/robot_behaviour/src/robot_behaviour/")
+#import from the package xml_reader
+from xml_reader.xml_reader import XMLReader
+from SKT import SKT
+from robot_behaviour.speech_utterance import SpeechUtterance
+from robot_behaviour.actions import Actions
 
 
 import numpy as np
@@ -192,15 +181,14 @@ class Robot:
         speech.reproduce_speech(self.get_timeout_actions_speech()[i][0])
 
 
-  def provide_instructions(self, speech):
+  def provide_instructions(self, speech, actions):
     for i in range(len(self.get_instructions_speech())):
       #check if we need to reproduce a gesture
-      if self.get_instructions_speech()[i][1]==1:
-        speech.reproduce_speech(self.get_instructions_speech()[i][0])
-        #reproduce the gesture
-
-      else:
-        speech.reproduce_speech(self.get_instructions_speech()[i][0])
+      speech.reproduce_speech(self.get_instructions_speech()[i][0])
+      #reproduce the gesture
+    #if at the first one of the instructions are with gesture then reproduce it
+    if self.get_instructions_speech()[0][1]==1:
+      actions.initial_pos()
 
   def provide_assistance(self, level_index, attempt, token, skt, speech, actions):
     if level_index == 0:
@@ -211,12 +199,11 @@ class Robot:
     elif level_index == 1:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-      #if in the xml file name= "no_gesture"
+      #if in the xml file name!= "no_gesture"
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
         speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         #hard coded string
         speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-        # reproduce the gesture
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -357,57 +344,57 @@ class Robot:
 
 
 
-#length=5
-#progress=1
-#timeout=15
-#assistance_levels = 5
-#max_attempt = 4
-#assistance_probs = []
-#complexity_probs = []
-#total_tokens= 10
-
-#actions = Actions()
-
-
-#initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+# length=5
+# progress=1
+# timeout=15
+# assistance_levels = 5
+# max_attempt = 4
+# assistance_probs = []
+# complexity_probs = []
+# total_tokens= 10
+#
+# actions = Actions()
+#
+#
+# initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
 #         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
 #         11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
-#         16:'0', 17:'0', 18:'0', 19:'0', 20:'0'   
+#         16:'0', 17:'0', 18:'0', 19:'0', 20:'0'
 #         }
-
-#current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+#
+# current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
 #         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
 #         11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
-#         16:'0', 17:'0', 18:'0', 19:'0', 20:'0'   
+#         16:'0', 17:'0', 18:'0', 19:'0', 20:'0'
 #         }
-#solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
+# solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
 #                 6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
 #                 11: 'A', 12: 'G', 13: '0', 14: 'B', 15: '0',
 #                 16: '0', 17: 'D', 18: '0', 19: 'O', 20: '0'
 #                 }
-
-
-#current_board = initial_board.copy()
-#tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
-
-#objective = "ascending"
-#board_size = (4,5)
-
-#skt = SKT(board_size, length, progress, timeout, assistance_levels, max_attempt,
+#
+#
+# current_board = initial_board.copy()
+# tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
+#
+# objective = "ascending"
+# board_size = (4,5)
+#
+# skt = SKT(board_size, length, progress, timeout, assistance_levels, max_attempt,
 #          assistance_probs, complexity_probs, total_tokens,
 #          initial_board, current_board, tokens_list, objective, solution_board)
-
-#print(skt.get_current_board_status())
-
-#xml = XMLReader()
-
-#tiago = Robot("/home/pal/cognitive_game_ws/src/xml_reader/src/xml_reader/assistive_actions_definition.xml", xml)
-#skt.print_board()
-
-#speech = SpeechUtterance()
-#actions = Actions()
-
-#tiago.provide_instructions(speech)
+#
+# print(skt.get_current_board_status())
+#
+# xml = XMLReader()
+#
+# tiago = Robot("/home/pal/cognitive_game_ws/src/xml_reader/src/xml_reader/assistive_actions_definition.xml", xml)
+# skt.print_board()
+#
+# speech = SpeechUtterance()
+# actions = Actions()
+#
+# tiago.provide_instructions(speech,actions)
 #tiago.provide_assistance(3, 1, '55', skt, speech, actions)
 
 #for i in (tokens_list):

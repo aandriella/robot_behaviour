@@ -11,36 +11,36 @@
 		<LEV_1 name="no_gesture">"Take into account the rules of the game"</LEV_1>
 		<LEV_1 name="no_gesture">"Remember you have to compose the name of a nobel prize of 5 letters"</LEV_1>
 
-		<LEV_2 name="no_gesture">"The solution can be one of those:"</LEV_2>
-		<LEV_2 name="no_gesture">"Try one of those tokens..."</LEV_2>
+		<LEV_2 name="1">"The solution can be one of those:"</LEV_2>
+		<LEV_2 name="1">"Try one of those tokens..."</LEV_2>
 
 
-		<LEV_3 name="no_gesture">"The right token is this one..."</LEV_3>
-		<LEV_3 name="no_gesture">"The right token to move is ..."</LEV_3>
-		<LEV_3 name="no_gesture">"That's easy.... the right token to move is.."</LEV_3>
+		<LEV_3 name="1">"The right token is this one..."</LEV_3>
+		<LEV_3 name="1">"The right token to move is ..."</LEV_3>
+		<LEV_3 name="1">"That's easy.... the right token to move is.."</LEV_3>
 
-		<LEV_4 name="no_gesture">"The token to move is this one..."</LEV_4>
-		<LEV_4 name="no_gesture">"Take it ... and move in the right location"</LEV_4>
+		<LEV_4 name="1">"The token to move is this one..."</LEV_4>
+		<LEV_4 name="1">"Take it ... and move in the right location"</LEV_4>
 
 		<help name="no_gesture">"Do you need help? Say YES or NO" </help>
 		<help_attempt name="no_gesture">"Can you repeat please"</help_attempt>
 		<help_timeout name="no_gesture">"No worries, I will do something for you"</help_timeout>
 
-		<move_back name="no_gesture">"I will move the token back"</move_back>
+		<move_back name="1">"I will move the token back"</move_back>
 
 		<time_out name="no_gesture">"Time is passing I will provide you assistance again"</time_out>
 
 
 
-		<compassion name="no_gesture">"People say lucky in love unlucky in gaming" </compassion>
-		<compassion name="no_gesture">"Dont worry sometimes happens"</compassion>
-		<compassion name="no_gesture">"Dont worry I'm sure you will get better"</compassion>
-		<compassion name="no_gesture">"I know how you feel, I've been in this situation before"</compassion>
+		<compassion name="1">"People say lucky in love unlucky in gaming" </compassion>
+		<compassion name="2">"Dont worry sometimes happens"</compassion>
+		<compassion name="3">"Dont worry I'm sure you will get better"</compassion>
+		<compassion name="3">"I know how you feel, I've been in this situation before"</compassion>
 
-		<congratulation name="no_gesture">"You made a great move" </congratulation>
-		<congratulation name="no_gesture">"Well done, you're playing as I expected"</congratulation>
-		<congratulation name="no_gesture">"I really enjoying playing with you"</congratulation>
+		<congratulation name="1">"You made a great move" </congratulation>
+		<congratulation name="2">"Well done, you're playing as I expected"</congratulation>
+		<congratulation name="3">"I really enjoying playing with you"</congratulation>
 
-        <end_game name="no_gesture"> "It has been a pleasure playing with you, hope you've enjoyed too"</end_game>
+        <end_game name="1"> "It has been a pleasure playing with you, hope you've enjoyed too"</end_game>
         <play_again name="no_gesture">"Do you want to play again?"</play_again>
 </data>
