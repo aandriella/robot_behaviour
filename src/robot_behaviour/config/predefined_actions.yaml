@@ -882,9 +882,9 @@ play_motion:
 
 
 
-    head_yes:
+    head_no:
       joints: [head_1_joint, head_2_joint]
-      meta: {description: 'head_yes', name: 'head_yes', usage: 'demo'}
+      meta: {description: 'head_no', name: 'head_no', usage: 'demo'}
       points:
       - positions: [0, 0]
         time_from_start: 0.1
@@ -896,9 +896,9 @@ play_motion:
         time_from_start: 6.0  
 
 
-    head_no:
+    head_yes:
       joints: [head_1_joint, head_2_joint]
-      meta: {description: 'head_no', name: 'head_no', usage: 'demo'}
+      meta: {description: 'head_yes', name: 'head_yes', usage: 'demo'}
       points:
       - positions: [0, 0]
         time_from_start: 0.1
