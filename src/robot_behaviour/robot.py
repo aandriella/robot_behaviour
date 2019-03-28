@@ -355,9 +355,10 @@ class Robot:
   def provide_play_again(self, speech):
     speech.reproduce_speech(self.get_play_again_speech()[0][0])
 
-  def provide_max_attempt(self, speech):
+  def provide_max_attempt(self, speech, actions, _from, _to):
     speech.reproduce_speech(self.get_max_attempt_speech()[0][0])
-    
+    actions.pick_and_place(_from, _to)
+
 
 
 
