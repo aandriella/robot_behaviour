@@ -29,7 +29,7 @@
 		<move_back name="1">"I will move the token back"</move_back>
 
 		<time_out name="no_gesture">"Time is passing I will provide you assistance again"</time_out>
-
+        <max_attempt name="1">"You've reached the maximum number of attempts, I will move the token for you"</max_attempt>
 
 
 		<compassion name="1">"People say lucky in love unlucky in gaming" </compassion>

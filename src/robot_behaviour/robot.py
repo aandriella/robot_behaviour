@@ -54,6 +54,7 @@ class Robot:
     self.help_timeout = xml_reader.get_actions_by_tag(actions_file_name, "help_timeout")
     self.end_game = xml_reader.get_actions_by_tag(actions_file_name, "end_game")
     self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
+    self.max_attempt = xml_reader.get_actions_by_tag(actions_file_name, "max_attempt")
 
   def get_instructions_speech(self):
     '''
@@ -114,7 +115,13 @@ class Robot:
     :return: 
     '''
     return self.end_game
-  
+
+  def get_max_attempt_speech(self):
+    '''
+    :return:
+    '''
+    return self.max_attempt
+
   def get_assistive_actions(self, level_index):
     '''
     :param level_index:
@@ -347,6 +354,10 @@ class Robot:
 
   def provide_play_again(self, speech):
     speech.reproduce_speech(self.get_play_again_speech()[0][0])
+
+  def provide_max_attempt(self, speech):
+    speech.reproduce_speech(self.get_max_attempt_speech()[0][0])
+    
 
 
 
