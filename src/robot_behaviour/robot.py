@@ -273,7 +273,6 @@ class Robot:
         actions.initial_pos()
       # hard coded string
       speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-      actions.initial_pos()
       #speech.reproduce_speech(token)
       # reproduce the gesture
       #speech.reproduce_speech(self.get_assistive_action_speech(level_index, 1)[0])
