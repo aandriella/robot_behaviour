@@ -269,6 +269,8 @@ class Robot:
       speech.reproduce_speech(self.get_assistive_action_speech(level_index, 0)[0])
       if self.get_assistive_action_speech(level_index, 0)[1] == 1:
         actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
+        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        actions.initial_pos()
       # hard coded string
       speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
       actions.initial_pos()
