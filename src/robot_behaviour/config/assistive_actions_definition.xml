@@ -29,7 +29,8 @@
 		<move_back name="no_gesture">"I will move the token back"</move_back>
 
 		<time_out name="no_gesture">"Time is passing I will provide you assistance again"</time_out>
-
+		
+ 		<max_attempt name="no_gesture">"You've reached the maximum number of attempts, I will move the token for you"</max_attempt>
 
 
 		<compassion name="no_gesture">"People say lucky in love unlucky in gaming" </compassion>
@@ -40,5 +41,7 @@
 		<congratulation name="no_gesture">"You made a great move" </congratulation>
 		<congratulation name="no_gesture">"Well done, you're playing as I expected"</congratulation>
 		<congratulation name="no_gesture">"I really enjoying playing with you"</congratulation>
+		<end_game name="1"> "It has been a pleasure playing with you, hope you've enjoyed too"</end_game>
+        <play_again name="no_gesture">"Do you want to play again?"</play_again>
 
 </data>
