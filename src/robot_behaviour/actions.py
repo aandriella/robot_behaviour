@@ -176,15 +176,15 @@ class Actions:
     rospy.loginfo("Sending goal with motion: noddling_yes")
     self.client.send_goal(goal)
 
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
-    else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
+    rospy.loginfo("Execute actions without waiting for result...")
+    # action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+    # state = self.client.get_state()
+    # if action_ok:
+    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+    #   return True
+    # else:
+    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
+    #   return False
 
   def head_noddling_no(self):
     rospy.loginfo("Starting run_motion_python application...")
@@ -200,15 +200,15 @@ class Actions:
     rospy.loginfo("Sending goal with motion: noddling_no")
     self.client.send_goal(goal)
 
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
-    else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
+    rospy.loginfo("Execute action without waiting for result...")
+    #action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+    #state = self.client.get_state()
+    # if action_ok:
+    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+    #   return True
+    # else:
+    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
+    #   return False
 
   def pick(self, cell):
     # cell 1 is g45 for the robot view point
