@@ -1,7 +1,8 @@
 <data>
-		<instruction name="1">This is a cognitive test to evaluate your abilities</instruction>
-    	<instruction name="2">The goal is to sort the tokens in ascending order on the board</instruction>
+		<instruction name="1">This is a cognitive test, called SKT, to evaluate your cognitive abilities</instruction>
+    	<instruction name="2">The goal is to sort numbered tokens in ascending order on the board</instruction>
     	<instruction name="3">Please wait for my instructions to move a token</instruction>
+    	<instruction name="4">Ready???? Let's start</instruction>
 
 
         <LEV_0 name="no_gesture">"It's your turn, please move a token"</LEV_0>
