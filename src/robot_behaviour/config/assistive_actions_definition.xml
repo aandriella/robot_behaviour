@@ -7,13 +7,15 @@
 
         <LEV_0 name="no_gesture">"It's your turn, please move a token"</LEV_0>
 
-		<LEV_1 name="no_gesture">"Come on.... I know you can do it"</LEV_1>
-		<LEV_1 name="no_gesture">"Remember, The numbers have to be sorted in ascending order"</LEV_1>
-		<LEV_1 name="no_gesture">"I believe in you!!"</LEV_1>
 		<LEV_1 name="no_gesture">"Dont be afraid to make a mistake... Do it!!"</LEV_1>
+		<LEV_1 name="no_gesture">"Remember, The numbers have to be sorted in ascending order"</LEV_1>
+		<LEV_1 name="no_gesture">"Come on.... I know you can do it"</LEV_1>
+		<LEV_1 name="no_gesture">"I believe in you!!"</LEV_1>
 
 
 		<LEV_2 name="gesture">"I'm here to help you ... The solution can be one of those:"</LEV_2>
+		<LEV_2 name="gesture">"Why do not try with one of those:"</LEV_2>
+		
 		<!--<LEV_2 name="no_gesture">"The right token is smaller than..."</LEV_2>
 		<LEV_2 name="no_gesture">"The right token is bigger than..."</LEV_2>
 		<LEV_2 name="no_gesture">"The right token is between "</LEV_2>-->
@@ -37,8 +39,8 @@
 
 
 		<compassion name="gesture">"People say lucky in love unlucky in gaming" </compassion>
-		<compassion name="gesture">"Dont worry sometimes happens"</compassion>
 		<compassion name="gesture">"Dont worry I'm sure you will get better"</compassion>
+		<compassion name="gesture">"Dont worry sometimes happens"</compassion>
 		<compassion name="gesture">"I know how you feel, I've been in this situation before"</compassion>
 
 		<congratulation name="gesture">"You made a great move" </congratulation>
