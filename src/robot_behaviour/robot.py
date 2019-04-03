@@ -167,7 +167,7 @@ class Robot:
       left_closer_token = skt.get_current_board_status()[solution_location-1]
       if left_closer_token != '0': solution_subset.append(left_closer_token)
       solution_subset.append(token)
-      right_closer_token = skt.get_current_board_status()[solution_location-2]
+      right_closer_token = skt.get_current_board_status()[solution_location+1]
       if right_closer_token != '0': solution_subset.append(right_closer_token)
     return solution_subset
 
