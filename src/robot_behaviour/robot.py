@@ -55,6 +55,7 @@ class Robot:
     self.end_game = xml_reader.get_actions_by_tag(actions_file_name, "end_game")
     self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
     self.max_attempt = xml_reader.get_actions_by_tag(actions_file_name, "max_attempt")
+    self.unexpected_behviour = xml_reader.get_actions_by_tag(actions_file_name, "unexpected_behviour")
 
   def get_instructions_speech(self):
     '''
@@ -121,6 +122,12 @@ class Robot:
     :return:
     '''
     return self.max_attempt
+
+  def get_unexpected_behviour(self):
+    '''
+    :return:
+    '''
+    return self.unexpected_behviour
 
   def get_assistive_actions(self, level_index):
     '''
@@ -361,6 +368,14 @@ class Robot:
     if self.get_max_attempt_speech()[0][1] == 1:
       actions.pick_and_place(_from, _to)
 
+  def provide_unexpected_behaviour(self, speech, actions):
+    for i in range(len(self.get_unexpected_behviour())):
+      if self.get_unexpected_behviour()[i][1]==1:
+        speech.reproduce_speech(self.get_unexpected_behviour()[i][0])
+        #reproduce action
+        actions.head_noddling_no()
+      else:
+        speech.reproduce_speech(self.get_unexpected_behviour()[i][0])
 
 
 
