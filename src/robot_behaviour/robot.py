@@ -55,7 +55,7 @@ class Robot:
     self.end_game = xml_reader.get_actions_by_tag(actions_file_name, "end_game")
     self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
     self.max_attempt = xml_reader.get_actions_by_tag(actions_file_name, "max_attempt")
-    self.unexpected_behviour = xml_reader.get_actions_by_tag(actions_file_name, "unexpected_behviour")
+    self.unexpected_behviour = xml_reader.get_actions_by_tag(actions_file_name, "unexpected_beahviour")
 
   def get_instructions_speech(self):
     '''
@@ -156,7 +156,7 @@ class Robot:
     #and get the two that are closer
     solution_location = skt.get_token_location(token)
     #if the right token is is the last column of the board
-    if(solution_location==(board_cols) or solution_location==((2*board_cols)) or solution_location==(3*board_cols) or solution_location==(4*board_cols)-1):
+    if(solution_location==(board_cols) or solution_location==((2*board_cols)) or solution_location==(3*board_cols) or solution_location==(4*board_cols)):
       left_left_closer_token = skt.get_current_board_status()[solution_location - 2]
       if left_left_closer_token != '0': solution_subset.append(left_left_closer_token)
       left_closer_token = skt.get_current_board_status()[solution_location-1]
@@ -377,6 +377,8 @@ class Robot:
       else:
         speech.reproduce_speech(self.get_unexpected_behviour()[i][0])
 
+  def provide_any_instruction(self, speech, sentence):
+    speech.reproduce_speech(sentence)
 
 
 # length=5
