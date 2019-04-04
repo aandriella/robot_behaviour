@@ -1,13 +1,13 @@
 <data>
-		<instruction name="1">This is a cognitive test, called SKT, to evaluate your cognitive abilities</instruction>
+		<instruction name="1">This is a cognitive exercise, based on the SKT, to train your cognitive abilities</instruction>
     	<instruction name="2">The goal is to sort numbered tokens in ascending order on the board</instruction>
     	<instruction name="3">Please wait for my instructions to move a token</instruction>
     	<instruction name="4">Ready???? Let's start</instruction>
 
 
-        <LEV_0 name="no_gesture">"It's your turn, please move a token"</LEV_0>
+        <LEV_0 name="no_gesture">"Please move a token"</LEV_0>
 
-		<LEV_1 name="no_gesture">"Dont be afraid to make a mistake... Do it!!"</LEV_1>
+		<LEV_1 name="no_gesture">"Dont be afraid to make a mistake...!!"</LEV_1>
 		<LEV_1 name="no_gesture">"Remember, The numbers have to be sorted in ascending order"</LEV_1>
 		<LEV_1 name="no_gesture">"Come on.... I know you can do it"</LEV_1>
 		<LEV_1 name="no_gesture">"I believe in you!!"</LEV_1>
@@ -37,6 +37,8 @@
 		
  		<max_attempt name="gesture">"You've reached the maximum number of attempts, I will move the token for you"</max_attempt>
 
+
+ 		<unexpected_beahviour name="no_gesture">"You should wait before moving ... please move the token back"</unexpected_beahviour>
 
 		<compassion name="gesture">"People say lucky in love unlucky in gaming" </compassion>
 		<compassion name="gesture">"Dont worry I'm sure you will get better"</compassion>
