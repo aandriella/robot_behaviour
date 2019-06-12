@@ -59,8 +59,17 @@ class Actions:
     try:
       activate = rospy.ServiceProxy('/set_magnet', SetBool)
       return activate(True)
-    except rospy.ServiceException as e:
-      rospy.logerr("Service call failed: ", str(e))
+    #except rospy.ServiceException as e:
+    except:
+      for i in range(10):
+        rospy.logerr("Service call failed: ")
+        rospy.loginfo("Try to reconnect")
+        rospy.wait_for_service('/set_magnet')
+        try:
+          activate = rospy.ServiceProxy('/set_magnet', SetBool)
+          return activate(True)
+        except:
+          rospy.loginfo("try again iteration ", i)
       return False
 
   def deactivate_magnet(self):
@@ -75,8 +84,17 @@ class Actions:
     try:
       activate = rospy.ServiceProxy('/set_magnet', SetBool)
       return activate(False)
-    except rospy.ServiceException as e:
-      rospy.logerr("Service call failed: ", str(e))
+    #except rospy.ServiceException as e:
+    except:
+      for i in range(10):
+        rospy.logerr("Service call failed: ")
+        rospy.loginfo("Try to reconnect")
+        rospy.wait_for_service('/set_magnet')
+        try:
+          activate = rospy.ServiceProxy('/set_magnet', SetBool)
+          return activate(True)
+        except:
+          rospy.loginfo("try again iteration ", i)
       return False
 
   def wait_for_valid_time(self, timeout):
