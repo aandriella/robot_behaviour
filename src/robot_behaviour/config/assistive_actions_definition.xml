@@ -10,11 +10,12 @@
 		<LEV_1 name="no_gesture">"Dont be afraid to make a mistake... Do it!!"</LEV_1>
 		<LEV_1 name="no_gesture">"Remember, The numbers have to be sorted in ascending order"</LEV_1>
 		<LEV_1 name="no_gesture">"Come on.... I know you can do it"</LEV_1>
-		<LEV_1 name="no_gesture">"I believe in you!!"</LEV_1>
+		<LEV_1 name="no_gesture">"I believe in ... you!!"</LEV_1>
 
 
 		<LEV_2 name="gesture">"I'm here to help you ... The solution can be one of those:"</LEV_2>
 		<LEV_2 name="gesture">"Why do not try with one of those:"</LEV_2>
+		<LEV_2 name="gesture">"Here is a tip ... The solution can be:" </LEV_2>
 		
 		<!--<LEV_2 name="no_gesture">"The right token is smaller than..."</LEV_2>
 		<LEV_2 name="no_gesture">"The right token is bigger than..."</LEV_2>
@@ -23,6 +24,7 @@
 		<LEV_3 name="gesture">"The right token is this one..."</LEV_3>
 		<LEV_3 name="gesture">"The right token to move is ..."</LEV_3>
 		<LEV_3 name="gesture">"It's not so difficult.... the right token to move is.."</LEV_3>
+		<LEV_3 name="gesture">"That's your lucky day ... the solution is..."</LEV_3>
 
 		<LEV_4 name="gesture">"The token to move is this one..."</LEV_4>
 		<LEV_4 name="gesture">"Take it ... and move in the right location"</LEV_4>
@@ -37,6 +39,9 @@
 		
  		<max_attempt name="gesture">"You've reached the maximum number of attempts, I will move the token for you"</max_attempt>
 
+ 		<unexpected_behviour name="no_gesture">"You're playing with your rules not mine"</unexpected_behviour>
+ 		<unexpected_behviour name="no_gesture">"Undo whatever you did!!"</unexpected_behviour>
+ 		
 
 		<compassion name="gesture">"People say lucky in love unlucky in gaming" </compassion>
 		<compassion name="gesture">"Dont worry I'm sure you will get better"</compassion>
@@ -46,6 +51,7 @@
 		<congratulation name="gesture">"You made a great move" </congratulation>
 		<congratulation name="gesture">"Well done, you're playing as I expected"</congratulation>
 		<congratulation name="gesture">"I really enjoying playing with you"</congratulation>
+		<congratulation name="gesture">"That's what I was expecting from you... well done"</congratulation>
 		
 		<end_game name="gesture"> "It has been a pleasure playing with you, hope you've enjoyed too"</end_game>
         
