@@ -4,14 +4,18 @@
 import rospy
 import time
 from std_msgs.msg import String
-
+from sound_play.libsoundplay import SoundClient
 
 
 class SpeechUtterance():
     def __init__(self):
-        self.pub = rospy.Publisher('speech', String, queue_size=10)
-    def reproduce_speech(self, sentence):
         rospy.init_node('big_hero', anonymous=True)
+      #Using google translator for reproducing speech
+        self.pub = rospy.Publisher('speech', String, queue_size=10)
+        #Load wav file to reproduce speech
+        self.soundhandle = SoundClient()
+
+    def reproduce_speech(self, sentence):
         rate = rospy.Rate(1) # 10hz
         while not rospy.is_shutdown():
             connections = self.pub.get_num_connections()
@@ -27,6 +31,42 @@ class SpeechUtterance():
                 time.sleep(waiting_time)
                 break
             #rospy.sleep(pause)
+
+    def play_file(self, file, volume=0.5):
+      rospy.loginfo('Example: SoundClient play methods can take in an explicit'
+                    ' blocking parameter')
+      soundhandle = SoundClient()  # blocking = False by default
+      rospy.sleep(0.5)  # Ensure publisher connection is successful.
+
+      sound_beep = soundhandle.waveSound(file, volume)
+
+      sound_beep.play()
+      rospy.sleep(0.5)  # Let sound complete.
+
+
+# def main():
+
+  # test = SpeechUtterance()
+  # test.play_file("/home/aandriella/Desktop/PenDriveBuckup/lev0_eng.wav", 1.0)
+  # Play the same sound twice, once blocking and once not. The first call is
+  # blocking (explicitly specified).
+  # sound_beep.play(blocking=True)
+  # # This call is not blocking (uses the SoundClient's setting).
+  # sound_beep.play()
+  # rospy.sleep(0.5)  # Let sound complete.
+
+  # # Play a blocking sound.
+  # soundhandle.play(SoundRequest.NEEDS_UNPLUGGING, blocking=True)
+  #
+  # # Create a new SoundClient where the default behavior *is* to block.
+  # soundhandle = SoundClient(blocking=True)
+  # soundhandle.say('Say-ing stuff while block-ing')
+  # soundhandle.say('Say-ing stuff without block-ing', blocking=False)
+  # rospy.sleep(1)
+
+
+# if __name__ == '__main__':
+#  main()
 
 # if __name__ == '__main__':
 #     length = 5
