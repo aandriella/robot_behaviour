@@ -1,0 +1,157 @@
+play_motion:
+  motions:
+    #Initial position    
+    rest:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+      meta:
+        name: rest
+        usage: rest
+        description: rest point for the robot
+
+    inter:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+      meta:
+        name: inter
+        usage: inter
+        description: Intermediate point for avoid crash
+
+    #####################################################################################################
+    ########################################PICK A TOKEN ################################################
+    #####################################################################################################    
+
+    #pick at location (1,1)
+    p11:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+        - time_from_start: 3
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 6
+          positions: [1.3652, -0.0746, -0.9904, 0.7188, -1.6312, 0.5702, -1.5771]
+      meta:
+        name: p11
+        usage: p11
+        description: pick a token in position p11 with intermediate point
+    #pick at location (1,2)
+    p12:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+        - time_from_start: 3
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 6
+          positions: [1.251, -0.0698, -0.9907, 0.7456, -1.6311, 0.5702, -1.5771]
+      meta:
+        name: p12
+        usage: p12
+        description: pick a token in position p12 with intermediate point
+
+    
+    #####################################################################################################
+    ######################################LEVEL OF ASSISTANCE 2##########################################
+    #####################################################################################################    
+    ss11:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+        - time_from_start: 3
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 5
+          positions: [1.37, -0.0776, -1.1768, 0.7206, -1.6308, 0.5701, -1.58]
+        - time_from_start: 6
+          positions: [1.13, -0.0676, -1.1674, 0.7606, -1.6308, 0.5701, -1.58]
+        - time_from_start: 7
+          positions: [1.37, -0.0776, -1.1768, 0.7206, -1.6308, 0.5701, -1.58]
+        - time_from_start: 9
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 11
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+      meta:
+        name: ss11
+        usage: ss11
+        description: suggest subset of tokens in position s11-s13 with intermediate point
+
+
+    #####################################################################################################
+    ######################################LEVEL OF ASSISTANCE 3##########################################
+    #####################################################################################################    
+    #suggest solution location(1,1)
+    s11:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+        - time_from_start: 3
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 5
+          positions: [1.37, -0.108, -1.3354, 0.7203, -1.631, 0.57, -1.58]
+        - time_from_start: 7
+          positions: [1.37, -0.0883, -1.2355, 0.7205, -1.6309, 0.5701, -1.58]
+        - time_from_start: 8
+          positions: [1.37, -0.108, -1.3354, 0.7203, -1.631, 0.57, -1.58]
+        - time_from_start: 9
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 11
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+      meta:
+        name: s11
+        usage: s11
+        description: point a token in position s11 with intermediate point    
+
+
+
+    s12:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+        - time_from_start: 3
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 5
+          positions: [1.251, -0.0698, -0.9907, 0.7456, -1.6311, 0.5702, -1.5771]
+        - time_from_start: 6
+          positions: [1.25, -0.0875, -1.2349, 0.7505, -1.6309, 0.5701, -1.58]
+        - time_from_start: 7
+          positions: [1.25, -0.0876, -1.3261, 0.7503, -1.6309, 0.57, -1.58]
+        - time_from_start: 8
+          positions: [1.25, -0.0875, -1.2349, 0.7505, -1.6309, 0.5701, -1.58]
+        - time_from_start: 9
+          positions: [1.25, -0.0876, -1.3261, 0.7503, -1.6309, 0.57, -1.58]
+        - time_from_start: 12
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 14
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+      meta:
+        name: s12
+        usage: s12
+        description: point a token in position s12 with intermediate point
+
+    #####################################################################################################
+    ######################################LEVEL OF ASSISTANCE 4##########################################
+    #####################################################################################################    
+    o11:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.33, 0.1367, -1.4914, 2.132, -1.7313, 1.0201, -1.5792]
+        - time_from_start: 3
+          positions: [0.33, -0.0753, -1.4874, 1.7104, -1.7315, 1.02, -1.58]
+        - time_from_start: 6
+          positions: [1.3652, -0.0746, -0.9904, 0.7188, -1.6312, 0.5702, -1.5771]
+        - time_from_start: 8
+          positions: [1.28, -0.0875, -1.3578, 0.7803, -1.6407, 0.6001, -1.58]
+        - time_from_start: 10
+          positions: [1.3484, -0.0875, -1.3664, 0.7802, -1.6407, 0.6001, -1.58]
+      meta:
+        name: o11
+        usage: o11
+        description: pick a token in position p11 and offer to user with intermediate point
