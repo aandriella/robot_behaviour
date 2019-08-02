@@ -35,8 +35,22 @@ from play_motion_msgs.msg import PlayMotionAction, PlayMotionGoal
 import std_msgs.msg
 # important for the srv
 from std_srvs.srv import *
+#import for getting joints
+from sensor_msgs.msg import JointState
+
 
 from robot_behaviour.speech_utterance import SpeechUtterance
+
+#min and max values for joints
+min_joint_1 = -1.41
+max_joint_1 = 1.31
+min_joint_2 = -0.284
+max_joint_2 = 4.509
+min_joint_3 = -0.862
+max_joint_3 = 1.845
+min_joint_4 = -1.1
+max_joint_4 = 2.31
+
 
 
 class Actions:
@@ -46,6 +60,42 @@ class Actions:
     self.client = SimpleActionClient('/play_motion', PlayMotionAction)
     self.simulated_magnet = False#rospy.get_param('~magnet_simulation')
     self.simulated_actions = False#rospy.get_param('~actions_simulation')
+
+  #callback for getting effort on each single joint
+    rospy.Subscriber("/joint_states", JointState, self.get_joints_callback)
+
+  def get_joints_callback(self, data):
+    valueHasChanged = False
+    # rospy.loginfo(rospy.get_caller_id())
+    # print("effort values", data.effort[0:7])
+    if data.effort[0] >= min_joint_1 and data.effort[0] <= max_joint_1:
+      pass
+    else:
+      return True
+      print("***************************************")
+      print("joint 1 over ", data.effort[0])
+      print("***************************************")
+    if data.effort[1] >= min_joint_2 and data.effort[1] <= max_joint_2:
+      pass
+    else:
+      return True
+      print("***************************************")
+      print("joint 2 over ", data.effort[1])
+      print("***************************************")
+    if data.effort[2] >= min_joint_3 and data.effort[2] <= max_joint_3:
+      pass
+    else:
+      return True
+      print("***************************************")
+      print("joint 3 over ", data.effort[2])
+      print("***************************************")
+    if data.effort[3] >= min_joint_4 and data.effort[3] <= max_joint_4:
+      pass
+    else:
+      return True
+      print("***************************************")
+      print("joint 4 over ", data.effort[3])
+      print("***************************************")
 
   def activate_magnet(self):
     '''

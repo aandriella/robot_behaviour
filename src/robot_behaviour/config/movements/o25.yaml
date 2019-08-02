@@ -1,0 +1,15 @@
+play_motion:
+  motions:
+    o25:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.64, 0.15, -1.2499, 1.0199, -1.6, 0.5399, -1.5499]
+        - time_from_start: 5
+          positions: [0.64, 0.20, -1.2499, 1.0199, -1.6, 0.5399, -1.5499]
+        - time_from_start: 10
+          positions: [0.6997, 0.2705, -1.1202, 0.6501, -1.5499, 0.5702, -1.5802]
+      meta:
+        name: o25
+        usage: o25
+        description:  offer token in position p15 to user
