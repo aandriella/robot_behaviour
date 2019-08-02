@@ -14,8 +14,7 @@ from xml_reader.xml_reader import XMLReader
 from SKT import SKT
 from robot_behaviour.speech_utterance import SpeechUtterance
 from robot_behaviour.actions import Actions
-
-
+import time
 import numpy as np
 
 class Robot:
@@ -380,6 +379,9 @@ class Robot:
   def provide_any_instruction(self, speech, sentence):
     speech.reproduce_speech(sentence)
 
+  def provide_illegal_move(self, speech, token, location):
+    speech.reproduce_speech("Move token "+token+ ". in location "+location)
+    time.sleep(2)
 
 # length=5
 # progress=1
