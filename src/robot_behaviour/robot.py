@@ -16,7 +16,7 @@ from robot_behaviour.speech_utterance import SpeechUtterance
 from robot_behaviour.actions import Actions
 import time
 import numpy as np
-
+import random as rn
 class Robot:
   '''
   robot class to define the actions of assistance, combining speech and gesture
@@ -55,6 +55,8 @@ class Robot:
     self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
     self.max_attempt = xml_reader.get_actions_by_tag(actions_file_name, "max_attempt")
     self.unexpected_beahviour = xml_reader.get_actions_by_tag(actions_file_name, "unexpected_behaviour")
+    self.positive_grasping = xml_reader.get_actions_by_tag(actions_file_name, "positive_grasping")
+    self.negative_grasping = xml_reader.get_actions_by_tag(actions_file_name, "negative_grasping")
 
   def get_instructions_speech(self):
     '''
@@ -106,13 +108,13 @@ class Robot:
 
   def get_play_again_speech(self):
     '''
-    :return: 
+    :return:
     '''
     return self.play_again
-  
+
   def get_end_game_speech(self):
     '''
-    :return: 
+    :return:
     '''
     return self.end_game
 
@@ -148,34 +150,52 @@ class Robot:
       print("The index is out of bound, we will set it to 0 for action index")
 
 
-  def get_token_subset_solution(self, token,  skt):
-    board_cols = skt.get_board_size()[1]
-    solution_subset =[]
-    #we need to get the location of the current token
-    #and get the two that are closer
-    solution_location = skt.get_token_location(token)
-    #if the right token is is the last column of the board
-    if(solution_location==(board_cols) or solution_location==((2*board_cols)) or solution_location==(3*board_cols) or solution_location==(4*board_cols)):
-      left_left_closer_token = skt.get_current_board_status()[solution_location - 2]
-      if left_left_closer_token != '0': solution_subset.append(left_left_closer_token)
-      left_closer_token = skt.get_current_board_status()[solution_location-1]
-      if left_closer_token != '0': solution_subset.append(left_closer_token)
-      solution_subset.append(token)
 
-    #if theright token is in the first column of the board
-    elif(solution_location==1 or solution_location==(board_cols+1) or solution_location==(board_cols*2)+1 or solution_location==(board_cols*3)+1):
-      solution_subset.append(token)
-      right_closer_token = skt.get_current_board_status()[solution_location+1]
-      if right_closer_token != '0': solution_subset.append(right_closer_token)
-      right_right_closer_token = skt.get_current_board_status()[solution_location + 2]
-      if right_right_closer_token != '0': solution_subset.append(right_right_closer_token)
+  def get_positive_grasping(self):
+    try:
+      return self.positive_grasping
+    except IndexError:
+      print("The index is out of bound, we will set it to 0 for action index")
+
+  def get_negative_grasping(self):
+    try:
+      return self.negative_grasping
+    except IndexError:
+      print("The index is out of bound, we will set it to 0 for action index")
+
+  def provide_lev_1(self, speech, file):
+    speech.play_file(file)
+
+  def provide_lev_2_col(self, token, skt, speech, robot, file_Left, file_Center, file_Right):
+    board_cols = skt.get_board_size()[1]
+    robot.look_at_user()
+
+    # we need to get the location of the current token
+    # and get the two that are closer
+    solution_location = skt.get_token_location(token)
+    # if the right token is is the last column of the board
+    if (solution_location == (board_cols) or solution_location == ((2 * board_cols)) or solution_location == (
+        3 * board_cols) or solution_location == (4 * board_cols)):
+      speech.play_file(file_Right)
+      print("Solution is on the right")
+    elif (solution_location == 1 or solution_location == (board_cols + 1) or solution_location == (
+            board_cols * 2) + 1 or solution_location == (board_cols * 3) + 1):
+      speech.play_file(file_Left)
+      print("Soluition in on the left")
     else:
-      left_closer_token = skt.get_current_board_status()[solution_location-1]
-      if left_closer_token != '0': solution_subset.append(left_closer_token)
-      solution_subset.append(token)
-      right_closer_token = skt.get_current_board_status()[solution_location-2]
-      if right_closer_token != '0': solution_subset.append(right_closer_token)
-    return solution_subset
+      speech.play_file(file_Center)
+      print("Solution is in the middle")
+
+  def provide_lev_2_row(self, token, skt, speech, file_1Row, file_2Row, file_3Row):
+    # we need to get the location of the current token
+    # and get the two that are closer
+    solution_location = skt.get_token_location(token)
+    if solution_location>11 and solution_location<15:
+      print("second row")
+      speech.play_file(file_2Row)
+    else:
+      print("first row")
+      speech.play_file(file_1Row)
 
 
   def move_token_back(self, token,  skt):
@@ -184,204 +204,34 @@ class Robot:
     token_dest_loc = skt.get_token_initial_location(token)
     return token_curr_loc, token_dest_loc
 
-  def provide_reengagement_timeout(self, speech):
-    for i in range(len(self.get_timeout_actions_speech())):
-      #check if we need to reproduce a gesture
-      if self.get_timeout_actions_speech()[i][1]==1:
-        speech.reproduce_speech(self.get_timeout_actions_speech()[i][0])
-        #reproduce the gesture
-      else:
-        speech.reproduce_speech(self.get_timeout_actions_speech()[i][0])
+
+  def provide_instructions(self, speech, file):
+    speech.play_file(file)
 
 
-  def provide_instructions(self, speech, actions):
-    for i in range(len(self.get_instructions_speech())):
-      #check if we need to reproduce a gesture
-      speech.reproduce_speech(self.get_instructions_speech()[i][0])
-      #reproduce the gesture
-    #if at the first one of the instructions are with gesture then reproduce it
-    if self.get_instructions_speech()[0][1]==1:
-      actions.initial_pos()
+  def provide_congratulation(self, speech, file):
+    speech.play_file(file)
 
-  def provide_assistance(self, level_index, attempt, token, skt, speech, actions):
-    if level_index == 0:
-      if attempt > len(self.get_assistive_actions(level_index)) - 1:
-        attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-      speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+  def provide_pos_feedback(self, attempt, max_attempt, speech, robot,  file):
+    if attempt>max_attempt-1:
+      attempt = np.random.randint(0, max_attempt)
+    #robot.head_noddling_yes()
+    speech.play_file(file[attempt])
 
-    elif level_index == 1:
-      if attempt > len(self.get_assistive_actions(level_index)) - 1:
-        attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-      #if in the xml file name!= "no_gesture"
-      if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        #hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-      else:
-        if attempt > len(self.get_assistive_actions(level_index)) - 1:
-          attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+  def provide_neg_feedback(self, attempt, max_attempt, speech, robot,  file):
+    if attempt>max_attempt-1:
+      attempt = np.random.randint(0, max_attempt)
+    #robot.head_noddling_no()
+    speech.play_file(file[attempt])
 
-    elif level_index == 2:
-      if attempt > len(self.get_assistive_actions(level_index)) - 1:
-        attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-      #robot action
-      if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        # reproduce the gesture
-        token_loc = skt.get_token_location(token)
-        print("token ", token, " location ", token_loc)
-        subset_solution = self.get_token_subset_solution(token, skt)
-        actions.suggest_subset(token_loc, speech, subset_solution, 5)
-        # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-        actions.initial_pos()
-      else:
-        if attempt > len(self.get_assistive_actions(level_index)) - 1:
-          attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        subset_solution = self.get_token_subset_solution(token, skt)
-        for i in range(len(subset_solution)):
-          speech.reproduce_speech(subset_solution[i])
-        # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+  def provide_token_back(self, speech, file):
+    speech.play_file(file)
 
-    elif level_index == 3:
-      if attempt > len(self.get_assistive_actions(level_index)) - 1:
-        attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-      #robot action
-      if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        # reproduce the gesture
-        token_loc = skt.get_token_location(token)
-        actions.suggest_solution(token_loc, speech, token, 5)
-        # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-        actions.initial_pos()
-      else:
-        if attempt > len(self.get_assistive_actions(level_index)) - 1:
-          attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        speech.reproduce_speech(token)
-        # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+  def provide_game_completed(self, speech, file):
+    speech.play_file(file)
 
-    elif level_index == 4:
-      print("Warning hard coded string")
-      # reproduce the gesture
-      token_loc = skt.get_token_location(token)
-      speech.reproduce_speech(self.get_assistive_action_speech(level_index, 0)[0])
-      if self.get_assistive_action_speech(level_index, 0)[1] == 1:
-        actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
-        #speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-        actions.initial_pos()
-      # hard coded string
-      speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-      #speech.reproduce_speech(token)
-      # reproduce the gesture
-      #speech.reproduce_speech(self.get_assistive_action_speech(level_index, 1)[0])
-    else:
-      assert Exception ("error in the index level, please revise it")
-
-
-  def provide_congratulation(self, attempt, speech, actions):
-    if attempt>len(self.get_congratulate_actions_speech())-1:
-      attempt = np.random.randint(0, len(self.get_congratulate_actions_speech()))
-    if self.get_congratulate_actions_speech()[attempt][1] == 1:
-      #perform robot action
-      actions.head_noddling_yes()
-      speech.reproduce_speech(self.get_congratulate_actions_speech()[attempt][0])
-    else:
-      speech.reproduce_speech(self.get_congratulate_actions_speech()[attempt][0])
-
-
-  def provide_compassion(self, attempt, speech, actions):
-    if attempt>len(self.get_compassion_actions_speech())-1:
-      attempt = np.random.randint(0, len(self.get_compassion_actions_speech()))
-
-    if self.get_compassion_actions_speech()[attempt][1] == 1:
-      # perform robot action
-      actions.head_noddling_no()
-      speech.reproduce_speech(self.get_compassion_actions_speech()[attempt][0])
-    else:
-      speech.reproduce_speech(self.get_compassion_actions_speech()[attempt][0])
-
-  def provide_help(self, attempt, speech):
-    if attempt > len(self.get_help_actions_speech()) - 1:
-      attempt = np.random.randint(0, len(self.get_help_actions_speech()))
-
-    if self.get_help_actions_speech()[attempt][1] == 1:
-      speech.reproduce_speech(self.get_help_actions_speech()[attempt][0])
-      #perform robot action (need to implement this movement)
-    else:
-      speech.reproduce_speech(self.get_help_actions_speech()[attempt][0])
-
-  def provide_help_attempt(self, attempt, speech):
-    if attempt > len(self.get_help_attempt_actions_speech()) - 1:
-      attempt = np.random.randint(0, len(self.get_help_attempt_actions_speech()))
-
-    if self.get_help_attempt_actions_speech()[attempt][1] == 1:
-      speech.reproduce_speech(self.get_help_attempt_actions_speech()[attempt][0])
-      #perform robot action
-    else:
-      speech.reproduce_speech(self.get_help_attempt_actions_speech()[attempt][0])
-
-  def provide_help_timeout(self, attempt, speech):
-    if attempt > len(self.get_help_timeout_actions_speech()) - 1:
-      attempt = np.random.randint(0, len(self.get_help_timeout_actions_speech()))
-
-    if self.get_help_timeout_actions_speech()[attempt][1] == 1:
-      speech.reproduce_speech(self.get_help_timeout_actions_speech()[attempt][0])
-      # perform robot action
-    else:
-      speech.reproduce_speech(self.get_help_timeout_actions_speech()[attempt][0])
-
-  def provide_token_back(self, attempt, speech, actions, _from, _to):
-    if attempt >= len(self.get_move_back_actions_speech()) - 1:
-      attempt = np.random.randint(0, len(self.get_move_back_actions_speech()))
-
-    if self.get_move_back_actions_speech()[attempt][1] == 1:
-      # perform robot action
-      speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
-      actions.pick_and_place(_from, _to)
-    else:
-      speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
-
-  def provide_game_completed(self, speech, actions):
-    for i in range(len(self.get_end_game_speech())):
-      # check if we need to reproduce a gesture
-      if self.get_end_game_speech()[i][1] == 1:
-        speech.reproduce_speech(self.get_end_game_speech()[i][0])
-        # reproduce the gesture
-        actions.wave()
-      else:
-        speech.reproduce_speech(self.get_end_game_speech()[i][0])
-
-  def provide_play_again(self, speech):
-    speech.reproduce_speech(self.get_play_again_speech()[0][0])
-
-  def provide_max_attempt(self, speech, actions, _from, _to):
-    speech.reproduce_speech(self.get_max_attempt_speech()[0][0])
-    if self.get_max_attempt_speech()[0][1] == 1:
-      actions.pick_and_place(_from, _to)
-
-  def provide_unexpected_behaviour(self, speech, actions):
-    for i in range(len(self.get_unexpected_beahviour())):
-      if self.get_unexpected_beahviour()[i][1]==1:
-        speech.reproduce_speech(self.get_unexpected_beahviour()[i][0])
-        #reproduce action
-        actions.head_noddling_no()
-      else:
-        speech.reproduce_speech(self.get_unexpected_beahviour()[i][0])
-
-  def provide_any_instruction(self, speech, sentence):
-    speech.reproduce_speech(sentence)
-
-  def provide_illegal_move(self, speech, token, location):
-    speech.reproduce_speech("Move token "+token+ ". in location "+location)
-    time.sleep(2)
+  def provide_illegal_move(self, speech, file):
+    speech.play_file(file)
 
 # length=5
 # progress=1
