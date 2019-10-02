@@ -17,6 +17,10 @@ class SpeechUtterance():
 
     def reproduce_speech(self, sentence):
         rate = rospy.Rate(1) # 10hz
+        #check if the sentence is a string otherwise cast it
+        if not isinstance(sentence, str):
+          sentence = str(sentence)
+
         while not rospy.is_shutdown():
             connections = self.pub.get_num_connections()
             if connections>0:
@@ -32,7 +36,7 @@ class SpeechUtterance():
                 break
             #rospy.sleep(pause)
 
-    def play_file(self, file, volume=0.5):
+    def play_file(self, file, timing, volume=0.5):
       rospy.loginfo('Example: SoundClient play methods can take in an explicit'
                     ' blocking parameter')
       soundhandle = SoundClient()  # blocking = False by default
@@ -41,7 +45,7 @@ class SpeechUtterance():
       sound_beep = soundhandle.waveSound(file, volume)
 
       sound_beep.play()
-      rospy.sleep(0.5)  # Let sound complete.
+      rospy.sleep(timing)  # Let sound complete.
 
 
 # def main():

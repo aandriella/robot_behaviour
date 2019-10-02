@@ -163,28 +163,38 @@ class Robot:
     except IndexError:
       print("The index is out of bound, we will set it to 0 for action index")
 
-  def provide_lev_1(self, speech, file):
-    speech.play_file(file)
+  def provide_lev_1(self, speech, file, your_turn):
+    #speech.play_file(file, 2)
+    #speech.play_file(your_turn, 1)
+    return file
 
-  def provide_lev_2_col(self, token, skt, speech, robot, file_Left, file_Center, file_Right):
+  def provide_lev_2_col(self, token, skt, speech, robot, file_Left, file_Center, file_Right, your_turn):
     board_cols = skt.get_board_size()[1]
-    robot.look_at_user()
 
     # we need to get the location of the current token
     # and get the two that are closer
     solution_location = skt.get_token_location(token)
+    sentence = ""
     # if the right token is is the last column of the board
     if (solution_location == (board_cols) or solution_location == ((2 * board_cols)) or solution_location == (
         3 * board_cols) or solution_location == (4 * board_cols)):
-      speech.play_file(file_Right)
+      sentence = file_Right
+      #speech.play_file(file_Right, 3)
+      #speech.play_file(your_turn, 1)
       print("Solution is on the right")
     elif (solution_location == 1 or solution_location == (board_cols + 1) or solution_location == (
             board_cols * 2) + 1 or solution_location == (board_cols * 3) + 1):
-      speech.play_file(file_Left)
+      sentence = file_Left
+      #speech.play_file(file_Left, 3)
+      #speech.play_file(your_turn, 1)
       print("Soluition in on the left")
     else:
-      speech.play_file(file_Center)
+      sentence = file_Center
+      #speech.play_file(file_Center, 3)
+      #speech.play_file(your_turn, 1)
       print("Solution is in the middle")
+
+    return sentence
 
   def provide_lev_2_row(self, token, skt, speech, file_1Row, file_2Row, file_3Row):
     # we need to get the location of the current token
@@ -192,10 +202,10 @@ class Robot:
     solution_location = skt.get_token_location(token)
     if solution_location>11 and solution_location<15:
       print("second row")
-      speech.play_file(file_2Row)
+      speech.play_file(file_2Row, 3)
     else:
       print("first row")
-      speech.play_file(file_1Row)
+      speech.play_file(file_1Row, 3)
 
 
   def move_token_back(self, token,  skt):
@@ -205,34 +215,37 @@ class Robot:
     return token_curr_loc, token_dest_loc
 
 
-  def provide_instructions(self, speech, file):
-    speech.play_file(file)
-
+  def provide_instructions(self, speech, file1, file2):
+    speech.play_file(file1, 10)
+    speech.play_file(file2, 10)
 
   def provide_congratulation(self, speech, file):
-    speech.play_file(file)
+    speech.play_file(file, 4)
 
   def provide_pos_feedback(self, attempt, max_attempt, speech, robot,  file):
-    if attempt>max_attempt-1:
-      attempt = np.random.randint(0, max_attempt)
+    attempt = np.random.randint(0, max_attempt)
     #robot.head_noddling_yes()
-    speech.play_file(file[attempt])
+    #speech.play_file(file[attempt],2)
+    return file[attempt]
 
   def provide_neg_feedback(self, attempt, max_attempt, speech, robot,  file):
-    if attempt>max_attempt-1:
-      attempt = np.random.randint(0, max_attempt)
+
+    attempt = np.random.randint(0, max_attempt)
     #robot.head_noddling_no()
-    speech.play_file(file[attempt])
-
+    #speech.play_file(file[attempt], 2)
+    return file[attempt]
   def provide_token_back(self, speech, file):
-    speech.play_file(file)
-
+    #speech.play_file(file, 2)
+    return file
   def provide_game_completed(self, speech, file):
-    speech.play_file(file)
-
+    #speech.play_file(file,4)
+    return file
   def provide_illegal_move(self, speech, file):
-    speech.play_file(file)
-
+    #speech.play_file(file, 3)
+    return file
+  def provide_timeout(self, speech, file):
+    #speech.play_file(file, 3)
+    return file
 # length=5
 # progress=1
 # timeout=15
