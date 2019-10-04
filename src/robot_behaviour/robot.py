@@ -168,12 +168,13 @@ class Robot:
     #speech.play_file(your_turn, 1)
     return file
 
-  def provide_lev_2_col(self, token, skt, speech, robot, file_Left, file_Center, file_Right, your_turn):
+  def provide_lev_2_col(self, token, skt, file_Left, file_Center, file_Right, your_turn):
     board_cols = skt.get_board_size()[1]
 
     # we need to get the location of the current token
     # and get the two that are closer
-    solution_location = skt.get_token_location(token)
+    solution_location = skt.get_token_location_from_storage_rows(token, 11)
+    print(solution_location, board_cols)
     sentence = ""
     # if the right token is is the last column of the board
     if (solution_location == (board_cols) or solution_location == ((2 * board_cols)) or solution_location == (
@@ -222,19 +223,14 @@ class Robot:
   def provide_congratulation(self, speech, file):
     speech.play_file(file, 4)
 
-  def provide_pos_feedback(self, attempt, max_attempt, speech, robot,  file):
-    attempt = np.random.randint(0, max_attempt)
+  def provide_pos_feedback(self, attempt, max_attempt, file):
     #robot.head_noddling_yes()
     #speech.play_file(file[attempt],2)
     return file[attempt]
 
-  def provide_neg_feedback(self, attempt, max_attempt, speech, robot,  file):
-
-    attempt = np.random.randint(0, max_attempt)
-    #robot.head_noddling_no()
-    #speech.play_file(file[attempt], 2)
+  def provide_neg_feedback(self, attempt,  max_attempt, file):
     return file[attempt]
-  def provide_token_back(self, speech, file):
+  def provide_token_back(self, file):
     #speech.play_file(file, 2)
     return file
   def provide_game_completed(self, speech, file):
