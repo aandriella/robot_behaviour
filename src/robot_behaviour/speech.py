@@ -9,9 +9,10 @@ from pal_interaction_msgs.msg import TtsAction, TtsGoal
 class Speech():
   def __init__(self, language):
     rospy.init_node('big_hero', anonymous=True)
-    self.client = actionlib.SimpleActionClient('tts_to_soundplay', TtsAction)
+    self.client = actionlib.SimpleActionClient('tts', TtsAction)
     self.language = language
-  def event(event):
+  def event(self, event):
+    print("event {}".format(event))
     return {
       1: 'TTS_EVENT_INITIALIZATION',
       2: 'TTS_EVENT_SHUTDOWN',
@@ -20,11 +21,12 @@ class Speech():
       16: 'TTS_EVENT_MARK',
       32: 'TTS_EVENT_STARTED_PLAYING_WORD',
       64: 'TTS_EVENT_FINISHED_PLAYING_PHRASE',
-      128: 'TTS_EVENT_FINISHED_PLAYING_SENTENCE'
+      128: 'TTS_EVENT_FINISHED_PLAYING_SENTENCE',
+      256: 'PLAYING'
     }[event]
 
-  def feedbackCb(feedback):
-    print("event type: " + event(feedback.event_type))
+  def feedbackCb(self, feedback):
+    print("event type: " + self.event(feedback.event_type))
     print("timestamp: " + str(feedback.timestamp))
     print("current word: " + feedback.text_said)
     print("next word: " + feedback.next_word)
