@@ -26,6 +26,16 @@
 		<LEV_4 name="no_gesture">"The token to move is this one..."</LEV_4>
 		<LEV_4 name="no_gesture">"Take it ... and move in the right location"</LEV_4>
 
+
+		<positive_grasping name="no_gesture">"Right!!"</positive_grasping>
+		<positive_grasping name="no_gesture">"Wow, I was not expecting that"</positive_grasping>
+		<positive_grasping name="no_gesture">"YEEES"</positive_grasping>
+
+		<negative_grasping name="no_gesture">"Nope!!"</negative_grasping>
+		<negative_grasping name="no_gesture">"Are you sure?"</negative_grasping>
+		<negative_grasping name="no_gesture">"Mmmmmh"</negative_grasping>
+
+
 		<help name="no_gesture">"Do you need help? Say YES or NO" </help>
 		<help_attempt name="no_gesture">"Can you repeat please"</help_attempt>
 		<help_timeout name="no_gesture">"No worries, I will do something for you"</help_timeout>
