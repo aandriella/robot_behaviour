@@ -53,7 +53,7 @@ max_joint_4 = 2.31
 
 
 
-class Actions:
+class Gesture:
 
   def __init__(self):
     rospy.init_node('big_hero', anonymous=True)
@@ -420,7 +420,7 @@ class Actions:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def suggest_solution(self, cell, speech, text, delay):
+  def suggest_solution(self, token_id, cell, speech, delay):
     # cell 1 is g45 for the robot view point
     conv_cell = self.convert(cell)
     rospy.loginfo("Starting run_motion_python application...")
@@ -437,7 +437,7 @@ class Actions:
     rospy.loginfo("Sending goal with motion: " + "s" + str(conv_cell))
     self.client.send_goal(goal)
     rospy.sleep(delay)
-    speech.reproduce_speech(text)
+    speech.reproduce_speech(token_id)
 
     rospy.loginfo("Waiting for result...")
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))

@@ -37,6 +37,7 @@ class Robot:
     # define the function for the action of engagement
     # self.engaging_actions_modalities
 
+
     self.congratulate_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'congratulation')
     self.compassion_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'compassion')
     self.move_back_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'move_back')
@@ -180,99 +181,98 @@ class Robot:
     for i in range(len(self.get_timeout_actions_speech())):
       # check if we need to reproduce a gesture
       if self.get_timeout_actions_speech()[i][1] == 1:
-        speech.reproduce_speech(self.get_timeout_actions_speech()[i][0])
+        speech.text_to_speech(self.get_timeout_actions_speech()[i][0])
         # reproduce the gesture
       else:
-        speech.reproduce_speech(self.get_timeout_actions_speech()[i][0])
+        speech.text_to_speech(self.get_timeout_actions_speech()[i][0])
 
   def provide_instructions(self, speech, actions):
     for i in range(len(self.get_instructions_speech())):
       # check if we need to reproduce a gesture
-      speech.reproduce_speech(self.get_instructions_speech()[i][0])
+      speech.text_to_speech(self.get_instructions_speech()[i][0])
       # reproduce the gesture
     # if at the first one of the instructions are with gesture then reproduce it
     if self.get_instructions_speech()[0][1] == 1:
       actions.initial_pos()
 
   def provide_assistance(self, level_index, attempt, token, skt, speech, actions):
+    token_id, token_loc = token
     if level_index == 0:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-      speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+      speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
 
     elif level_index == 1:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
       # if in the xml file name!= "no_gesture"
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
 
     elif level_index == 2:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
       # robot action
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
-        token_loc = skt.get_token_location(token)
-        print("token ", token, " location ", token_loc)
-        subset_solution = self.get_token_subset_solution(token, skt)
+        print("token ", token_id, " location ", token_loc)
+        subset_solution = self.get_token_subset_solution(token_id, skt)
         actions.suggest_subset(token_loc, speech, subset_solution, 5)
         # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
         actions.initial_pos()
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        subset_solution = self.get_token_subset_solution(token, skt)
+        speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        subset_solution = self.get_token_subset_solution(token_id, skt)
         for i in range(len(subset_solution)):
-          speech.reproduce_speech(subset_solution[i])
+          speech.text_to_speech(subset_solution[i])
         # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
 
     elif level_index == 3:
       if attempt > len(self.get_assistive_actions(level_index)) - 1:
         attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
       # robot action
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
-        token_loc = skt.get_token_location(token)
-        actions.suggest_solution(token_loc, speech, token, 5)
+        actions.suggest_solution(token_id, token_loc, speech, 5)
         # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
         actions.initial_pos()
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
-        speech.reproduce_speech(self.get_assistive_action_speech(level_index, attempt)[0])
-        speech.reproduce_speech(token)
+        speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
+        speech.text_to_speech(token_id)
         # hard coded string
-        speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
 
     elif level_index == 4:
       print("Warning hard coded string")
       # reproduce the gesture
       token_loc = skt.get_token_location(token)
-      speech.reproduce_speech(self.get_assistive_action_speech(level_index, 0)[0])
+      speech.text_to_speech(self.get_assistive_action_speech(level_index, 0)[0])
       if self.get_assistive_action_speech(level_index, 0)[1] == 1:
         actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
-        # speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
+        # speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
         actions.initial_pos()
       # hard coded string
-      speech.reproduce_speech(self.get_assistive_action_speech(0, 0)[0])
-      # speech.reproduce_speech(token)
+      speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
+      # speech.text_to_speech(token)
       # reproduce the gesture
-      # speech.reproduce_speech(self.get_assistive_action_speech(level_index, 1)[0])
+      # speech.text_to_speech(self.get_assistive_action_speech(level_index, 1)[0])
     else:
       assert Exception("error in the index level, please revise it")
 
@@ -282,9 +282,9 @@ class Robot:
     if self.get_congratulate_actions_speech()[attempt][1] == 1:
       # perform robot action
       actions.head_noddling_yes()
-      speech.reproduce_speech(self.get_congratulate_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_congratulate_actions_speech()[attempt][0])
     else:
-      speech.reproduce_speech(self.get_congratulate_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_congratulate_actions_speech()[attempt][0])
 
   def provide_compassion(self, attempt, speech, actions):
     if attempt > len(self.get_compassion_actions_speech()) - 1:
@@ -293,39 +293,39 @@ class Robot:
     if self.get_compassion_actions_speech()[attempt][1] == 1:
       # perform robot action
       actions.head_noddling_no()
-      speech.reproduce_speech(self.get_compassion_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_compassion_actions_speech()[attempt][0])
     else:
-      speech.reproduce_speech(self.get_compassion_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_compassion_actions_speech()[attempt][0])
 
   def provide_help(self, attempt, speech):
     if attempt > len(self.get_help_actions_speech()) - 1:
       attempt = np.random.randint(0, len(self.get_help_actions_speech()))
 
     if self.get_help_actions_speech()[attempt][1] == 1:
-      speech.reproduce_speech(self.get_help_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_help_actions_speech()[attempt][0])
       # perform robot action (need to implement this movement)
     else:
-      speech.reproduce_speech(self.get_help_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_help_actions_speech()[attempt][0])
 
   def provide_help_attempt(self, attempt, speech):
     if attempt > len(self.get_help_attempt_actions_speech()) - 1:
       attempt = np.random.randint(0, len(self.get_help_attempt_actions_speech()))
 
     if self.get_help_attempt_actions_speech()[attempt][1] == 1:
-      speech.reproduce_speech(self.get_help_attempt_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_help_attempt_actions_speech()[attempt][0])
       # perform robot action
     else:
-      speech.reproduce_speech(self.get_help_attempt_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_help_attempt_actions_speech()[attempt][0])
 
   def provide_help_timeout(self, attempt, speech):
     if attempt > len(self.get_help_timeout_actions_speech()) - 1:
       attempt = np.random.randint(0, len(self.get_help_timeout_actions_speech()))
 
     if self.get_help_timeout_actions_speech()[attempt][1] == 1:
-      speech.reproduce_speech(self.get_help_timeout_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_help_timeout_actions_speech()[attempt][0])
       # perform robot action
     else:
-      speech.reproduce_speech(self.get_help_timeout_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_help_timeout_actions_speech()[attempt][0])
 
   def provide_token_back(self, attempt, speech, actions, _from, _to):
     if attempt >= len(self.get_move_back_actions_speech()) - 1:
@@ -333,43 +333,43 @@ class Robot:
 
     if self.get_move_back_actions_speech()[attempt][1] == 1:
       # perform robot action
-      speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_move_back_actions_speech()[attempt][0])
       actions.pick_and_place(_from, _to)
     else:
-      speech.reproduce_speech(self.get_move_back_actions_speech()[attempt][0])
+      speech.text_to_speech(self.get_move_back_actions_speech()[attempt][0])
 
   def provide_game_completed(self, speech, actions):
     for i in range(len(self.get_end_game_speech())):
       # check if we need to reproduce a gesture
       if self.get_end_game_speech()[i][1] == 1:
-        speech.reproduce_speech(self.get_end_game_speech()[i][0])
+        speech.text_to_speech(self.get_end_game_speech()[i][0])
         # reproduce the gesture
         actions.wave()
       else:
-        speech.reproduce_speech(self.get_end_game_speech()[i][0])
+        speech.text_to_speech(self.get_end_game_speech()[i][0])
 
   def provide_play_again(self, speech):
-    speech.reproduce_speech(self.get_play_again_speech()[0][0])
+    speech.text_to_speech(self.get_play_again_speech()[0][0])
 
   def provide_max_attempt(self, speech, actions, _from, _to):
-    speech.reproduce_speech(self.get_max_attempt_speech()[0][0])
+    speech.text_to_speech(self.get_max_attempt_speech()[0][0])
     if self.get_max_attempt_speech()[0][1] == 1:
       actions.pick_and_place(_from, _to)
 
   def provide_unexpected_behaviour(self, speech, actions):
     for i in range(len(self.get_unexpected_beahviour())):
       if self.get_unexpected_beahviour()[i][1] == 1:
-        speech.reproduce_speech(self.get_unexpected_beahviour()[i][0])
+        speech.text_to_speech(self.get_unexpected_beahviour()[i][0])
         # reproduce action
         actions.head_noddling_no()
       else:
-        speech.reproduce_speech(self.get_unexpected_beahviour()[i][0])
+        speech.text_to_speech(self.get_unexpected_beahviour()[i][0])
 
   def provide_any_instruction(self, speech, sentence):
-    speech.reproduce_speech(sentence)
+    speech.text_to_speech(sentence)
 
   def provide_illegal_move(self, speech, token, location):
-    speech.reproduce_speech("Move token " + token + ". in location " + location)
+    speech.text_to_speech("Move token " + token + ". in location " + location)
     time.sleep(2)
 
 length=5
@@ -381,19 +381,19 @@ assistance_probs = []
 complexity_probs = []
 total_tokens= 10
 
-actions = Actions()
+actions = Gesture()
 
 
 initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-        11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
-        16:'0', 17:'0', 18:'0', 19:'0', 20:'0'
+        11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
+        16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
         }
 
 current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-        11:'43', 12:'21', 13:'16', 14:'38', 15:'55',
-        16:'0', 17:'0', 18:'0', 19:'0', 20:'0'
+        11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
+        16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
         }
 solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
                 6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
@@ -420,21 +420,23 @@ xml = XMLReader()
 
 tiago = Robot("/home/aandriella/pal/cognitive_game_ws/src/xml_reader/src/xml_reader/assistive_actions_definition.xml", xml)
 skt.print_board()
+speech = Speech("en_GB")
+actions = Gesture()
 
-speech = SpeechUtterance()
-actions = Actions()
-
-tiago.provide_instructions(speech,actions)
-tiago.provide_assistance(3, 1, '55', skt, speech, actions)
+#tiago.provide_instructions(speech,actions)
+#tiago.provide_assistance(3, 1, '55', skt, speech, actions)
 
 for i in (tokens_list):
  for k in range(max_attempt+2):
-  token_str = str(i)
-  tiago.provide_congratulation(k, speech, actions)
-  tiago.provide_compassion(k, speech, actions)
-  tiago.provide_assistance(0, k, token_str, skt, speech, actions)
-  tiago.provide_assistance(1, k, token_str, skt, speech, actions)
-  tiago.provide_assistance(2, k, token_str, skt, speech, actions)
-  tiago.provide_assistance(3, k, token_str, skt, speech, actions)
-  tiago.provide_assistance(4, k, token_str, skt, speech, actions)
+  token = skt.get_expected_token()
+  print(token, " ")
+  # tiago.provide_congratulation(k, speech, actions)
+  # tiago.provide_compassion(k, speech, actions)
+  # tiago.provide_assistance(0, k, token, skt, speech, actions)
+  # tiago.provide_assistance(1, k, token, skt, speech, actions)
+  # tiago.provide_assistance(2, k, token, skt, speech, actions)
+  tiago.provide_assistance(3, k, token, skt, speech, actions)
+  # tiago.provide_assistance(4, k, token, skt, speech, actions)
+  skt.update_board(token[0], token[1])
+
 
