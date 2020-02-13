@@ -39,7 +39,7 @@ from std_srvs.srv import *
 from sensor_msgs.msg import JointState
 
 
-from robot_behaviour.speech_utterance import SpeechUtterance
+from robot_behaviour.speech import Speech
 
 #min and max values for joints
 min_joint_1 = -1.41
@@ -290,12 +290,12 @@ class Gesture:
     rospy.loginfo("0")
     goal = PlayMotionGoal()
     rospy.loginfo("1")
-    goal.motion_name = "g" + str(conv_cell)
+    goal.motion_name = "p" + str(conv_cell)
     rospy.loginfo("2")
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
-    rospy.loginfo("Sending goal with motion: " + "g" + str(conv_cell))
+    rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
     self.client.send_goal(goal)
 
     rospy.loginfo("Waiting for result...")
@@ -316,7 +316,7 @@ class Gesture:
           goal.motion_name = "c" + str(conv_cell)
           goal.skip_planning = False
           goal.priority = 0  # Optional
-          rospy.loginfo("Sending goal with motion: " + "g" + str(conv_cell))
+          rospy.loginfo("Sending goal with motion: " + "c" + str(conv_cell))
           self.client.send_goal(goal)
 
           rospy.loginfo("Waiting for result...")
@@ -341,11 +341,11 @@ class Gesture:
     self.client.wait_for_server()
 
     goal = PlayMotionGoal()
-    goal.motion_name = "g" + str(conv_cell)
+    goal.motion_name = "p" + str(conv_cell)
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
-    rospy.loginfo("Sending goal with motion: " + "g" + str(conv_cell))
+    rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
     self.client.send_goal(goal)
 
     rospy.loginfo("Waiting for result...")
@@ -369,7 +369,7 @@ class Gesture:
           goal.skip_planning = False
           goal.priority = 0  # Optional
 
-          rospy.loginfo("Sending goal with motion: " + "g" + str(conv_cell))
+          rospy.loginfo("Sending goal with motion: " + "c" + str(conv_cell))
           self.client.send_goal(goal)
 
           rospy.loginfo("Waiting for result...")
@@ -407,7 +407,7 @@ class Gesture:
     
     rospy.sleep(delay)
     for i in range(len(text)):
-      speech.reproduce_speech(text[i])
+      speech.text_to_speech(text[i])
     
 
     rospy.loginfo("Waiting for result...")
@@ -420,9 +420,9 @@ class Gesture:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def suggest_solution(self, token_id, cell, speech, delay):
+  def suggest_solution(self, token_id, token_loc, speech, delay):
     # cell 1 is g45 for the robot view point
-    conv_cell = self.convert(cell)
+    conv_cell = self.convert(token_loc)
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -437,7 +437,7 @@ class Gesture:
     rospy.loginfo("Sending goal with motion: " + "s" + str(conv_cell))
     self.client.send_goal(goal)
     rospy.sleep(delay)
-    speech.reproduce_speech(token_id)
+    speech.text_to_speech(token_id)
 
     rospy.loginfo("Waiting for result...")
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))
@@ -508,20 +508,20 @@ class Gesture:
       return False
 
 
-#def main():
-#  tiago = Actions()
+def main():
+  tiago = Gesture()
   #tiago.wave()
-  #tiago.pick_and_place(15, 4)
+  tiago.pick_and_place(20, 18)
   #tiago.suggest_subset(20)
   #tiago.suggest_solution(14)
   #tiago.offer_token(19)
   #tiago.activate_magnet()
   #rospy.sleep(5)
   #tiago.deactivate_magnet()
-#
-#
-#if __name__ == '__main__':
-#  main()
+
+
+if __name__ == '__main__':
+  main()
 
 
 
