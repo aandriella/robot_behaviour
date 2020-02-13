@@ -389,7 +389,7 @@ class Gesture:
 
   def suggest_subset(self, cell, speech, text, delay):
     # cell 1 is g45 for the robot view point
-    conv_cell = self.convert(cell)
+    conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -397,11 +397,11 @@ class Gesture:
     self.client.wait_for_server()
 
     goal = PlayMotionGoal()
-    goal.motion_name = "h" + str(conv_cell)
+    goal.motion_name = "ss" + str(conv_cell)
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
-    rospy.loginfo("Sending goal with motion: " + "s" + str(conv_cell))
+    rospy.loginfo("Sending goal with motion: " + "ss" + str(conv_cell))
     self.client.send_goal(goal)
 
     
