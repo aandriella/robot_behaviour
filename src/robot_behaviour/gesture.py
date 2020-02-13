@@ -459,11 +459,11 @@ class Gesture:
     self.client.wait_for_server()
 
     goal = PlayMotionGoal()
-    goal.motion_name = "g" + str(conv_cell)
+    goal.motion_name = "p" + str(conv_cell)
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
-    rospy.loginfo("Sending goal with motion: " + "g" + str(conv_cell))
+    rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
     self.client.send_goal(goal)
 
     rospy.loginfo("Waiting for result...")

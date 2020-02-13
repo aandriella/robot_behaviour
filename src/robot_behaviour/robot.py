@@ -41,6 +41,7 @@ class Robot:
     self.congratulate_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'congratulation')
     self.compassion_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'compassion')
     self.move_back_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'move_back')
+    self.self.correct_token_speech = xml_reader.get_actions_by_tag(actions_file_name, 'correct_token')
     self.timeout_action_speech = xml_reader.get_actions_by_tag(actions_file_name, "time_out")
     self.help_action_speech = xml_reader.get_actions_by_tag(actions_file_name, 'help')
     self.help_attempt = xml_reader.get_actions_by_tag(actions_file_name, "help_attempt")
@@ -49,6 +50,7 @@ class Robot:
     self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
     self.max_attempt = xml_reader.get_actions_by_tag(actions_file_name, "max_attempt")
     self.unexpected_beahviour = xml_reader.get_actions_by_tag(actions_file_name, "unexpected_behaviour")
+
 
   def get_instructions_speech(self):
     '''
@@ -74,6 +76,11 @@ class Robot:
     '''
     return self.move_back_actions_speech
 
+  def get_correct_token_speech(self):
+    '''
+    :return:
+    '''
+    return self.correct_token_speech
   def get_help_actions_speech(self):
     '''
     :return: help actions
@@ -336,6 +343,17 @@ class Robot:
       actions.pick_and_place(_from, _to)
     else:
       speech.text_to_speech(self.get_move_back_actions_speech()[attempt][0])
+
+  def provide_correct_token(self, attempt, speech, actions, _from, _to):
+    if attempt >= len(self.get_correct_token_speech()) - 1:
+      attempt = np.random.randint(0, len(self.get_correct_token_speech()))
+
+    if self.get_correct_token_speech()[attempt][1] == 1:
+      # perform robot action
+      speech.text_to_speech(self.get_correct_token_speech()[attempt][0])
+      actions.pick_and_place(_from, _to)
+    else:
+      speech.text_to_speech(self.get_correct_token_speech()[attempt][0])
 
   def provide_game_completed(self, speech, actions):
     for i in range(len(self.get_end_game_speech())):

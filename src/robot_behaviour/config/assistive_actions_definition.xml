@@ -34,6 +34,7 @@
 		<help_timeout name="no_gesture">"No worries, I will do something for you"</help_timeout>
 
 		<move_back name="gesture">"I will move the token back"</move_back>
+		<correct_token name="gesture">"I will move the correct token for you"</correct_token>
 
 		<time_out name="no_gesture">"Time is passing I will provide you assistance again"</time_out>
 		
