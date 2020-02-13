@@ -1,8 +1,8 @@
 <data>
-		<instruction name="no_gesture">This is a cognitive test, called SKT, to evaluate your cognitive abilities</instruction>
-    	<instruction name="no_gesture">The goal is to sort the tokens in ascending order on the board</instruction>
-    	<instruction name="no_gesture">Please wait for my instructions to move a token</instruction>
-    	<instruction name="no_gesture">Ready???? Let's start</instruction>
+		<instruction name="no_gesture">This is a cognitive exercise, based on the SKT, to train your cognitive abilities.
+		The goal is to sort numbered tokens in ascending order on the board.
+    	Please wait for my instructions to move a token.
+    	Ready???? Let's start</instruction>
 
 
         <LEV_0 name="no_gesture">"It's your turn, please move a token"</LEV_0>
@@ -25,16 +25,6 @@
 
 		<LEV_4 name="no_gesture">"The token to move is this one..."</LEV_4>
 		<LEV_4 name="no_gesture">"Take it ... and move in the right location"</LEV_4>
-
-
-		<positive_grasping name="no_gesture">"Right!!"</positive_grasping>
-		<positive_grasping name="no_gesture">"Wow, I was not expecting that"</positive_grasping>
-		<positive_grasping name="no_gesture">"YEEES"</positive_grasping>
-
-		<negative_grasping name="no_gesture">"Nope!!"</negative_grasping>
-		<negative_grasping name="no_gesture">"Are you sure?"</negative_grasping>
-		<negative_grasping name="no_gesture">"Mmmmmh"</negative_grasping>
-
 
 		<help name="no_gesture">"Do you need help? Say YES or NO" </help>
 		<help_attempt name="no_gesture">"Can you repeat please"</help_attempt>
