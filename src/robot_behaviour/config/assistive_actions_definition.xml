@@ -1,8 +1,8 @@
 <data>
-		<instruction name="1">This is a cognitive exercise, based on the SKT, to train your cognitive abilities</instruction>
-    	<instruction name="2">The goal is to sort numbered tokens in ascending order on the board</instruction>
-    	<instruction name="3">Please wait for my instructions to move a token</instruction>
-    	<instruction name="4">Ready???? Let's start</instruction>
+		<instruction name="no_gesture">This is a cognitive exercise, based on the SKT, to train your cognitive abilities.
+		The goal is to sort numbered tokens in ascending order on the board.
+    	Please wait for my instructions to move a token.
+    	Ready???? Let's start</instruction>
 
 
         <LEV_0 name="no_gesture">"Please move a token"</LEV_0>
