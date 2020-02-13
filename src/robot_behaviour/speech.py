@@ -9,7 +9,7 @@ from pal_interaction_msgs.msg import TtsAction, TtsGoal
 class Speech():
   def __init__(self, language):
     rospy.init_node('big_hero', anonymous=True)
-    self.client = actionlib.SimpleActionClient('tts_to_soundplay', TtsAction)
+    self.client = actionlib.SimpleActionClient('tts', TtsAction)
     self.language = language
   def event(self, event):
     print("event {}".format(event))
@@ -33,7 +33,7 @@ class Speech():
     print("-")
 
   def text_to_speech(self, text):
-    #rospy.loginfo("Waiting for Server")
+    rospy.loginfo("Waiting for Server")
     self.client.wait_for_server()
     rospy.loginfo("Reached Server")
     goal = TtsGoal()
@@ -46,9 +46,9 @@ class Speech():
 #    print("warning/error msgs: " + res.msg)
 
 
-# if __name__ == "__main__":
-#   speech = Speech("en_GB")
-#   speech.text_to_speech("Hi I'm socrates")
+if __name__ == "__main__":
+  speech = Speech("en_GB")
+  speech.text_to_speech("Hi I'm socrates")
   
 
 
