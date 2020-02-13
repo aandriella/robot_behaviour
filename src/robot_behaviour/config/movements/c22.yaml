@@ -4,10 +4,10 @@ play_motion:
       joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
       points:
         - time_from_start: 0
-          positions: [0.95, 0.1153, -1.3, 1.0301, -1.6296, 0.5696, -1.5801]
+          positions: [1.011, 0.2148, -1.1407, 1.0227, -1.5298, 0.5698, -1.5782]
         - time_from_start: 2
           positions: [0.939, 0.183, -1.3074, 1.0479, -1.6315, 0.5706, -1.5775]
-        - time_from_start: 5
+        - time_from_start: 7
           positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
       meta:
         name: c22
