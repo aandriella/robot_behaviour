@@ -41,7 +41,7 @@ class Robot:
     self.congratulate_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'congratulation')
     self.compassion_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'compassion')
     self.move_back_actions_speech = xml_reader.get_actions_by_tag(actions_file_name, 'move_back')
-    self.self.correct_token_speech = xml_reader.get_actions_by_tag(actions_file_name, 'correct_token')
+    self.correct_token_speech = xml_reader.get_actions_by_tag(actions_file_name, 'correct_token')
     self.timeout_action_speech = xml_reader.get_actions_by_tag(actions_file_name, "time_out")
     self.help_action_speech = xml_reader.get_actions_by_tag(actions_file_name, 'help')
     self.help_attempt = xml_reader.get_actions_by_tag(actions_file_name, "help_attempt")
