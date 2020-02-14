@@ -178,7 +178,7 @@ class Gesture:
     s = solution
     h = suggest_subset
     '''
-    return 46 - cell - 5 * ((cell - 1) / 5)
+    return 46 - cell - 5 * int((cell - 1) / 5)
 
   def wave(self):
     rospy.loginfo("Starting run_motion_python application...")
@@ -213,7 +213,7 @@ class Gesture:
     self.client.wait_for_server()
 
     goal = PlayMotionGoal()
-    goal.motion_name = "init"
+    goal.motion_name = "rest"
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
@@ -280,7 +280,7 @@ class Gesture:
 
   def pick(self, cell):
     # cell 1 is g45 for the robot view point
-    conv_cell = self.convert(cell)
+    conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -333,7 +333,7 @@ class Gesture:
 
   def place(self, cell):
     # cell 1 is g45 for the robot view point
-    conv_cell = self.convert(cell)
+    conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -422,7 +422,7 @@ class Gesture:
 
   def suggest_solution(self, token_id, token_loc, speech, delay):
     # cell 1 is g45 for the robot view point
-    conv_cell = self.convert(token_loc)
+    conv_cell = int(self.convert(token_loc))
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -449,9 +449,9 @@ class Gesture:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def offer_token(self, cell, speech, text):
+  def offer_token(self, token_id, token_loc, speech, text):
     # cell 1 is g45 for the robot view point
-    conv_cell = self.convert(cell)
+    conv_cell = int(self.convert(token_loc))
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -491,7 +491,7 @@ class Gesture:
           self.client.send_goal(goal)
 
           #rospy.sleep(delay)
-          speech.reproduce_speech(text)
+          speech.text_to_speech(text)
 
           rospy.loginfo("Waiting for result...")
           action_ok = self.client.wait_for_result(rospy.Duration(30.0))
@@ -509,12 +509,16 @@ class Gesture:
 
 
 def main():
-  tiago = Gesture()
+  pass
+  #robot_gesture = Gesture()
+  #robot_speech = Speech("en_GB")
+
   #tiago.wave()
-  tiago.pick_and_place(20, 18)
+  #tiago.pick_and_place(20, 18)
   #tiago.suggest_subset(20)
   #tiago.suggest_solution(14)
-  #tiago.offer_token(19)
+  #robot_gesture.initial_pos()
+  #robot_gesture.offer_token("S", 17, robot_speech, "Ehehe")
   #tiago.activate_magnet()
   #rospy.sleep(5)
   #tiago.deactivate_magnet()
