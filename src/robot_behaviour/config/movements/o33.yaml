@@ -1,6 +1,6 @@
 play_motion:
   motions:
-    o23:
+    o33:
       joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
       points:
         - time_from_start: 0
@@ -10,6 +10,6 @@ play_motion:
         - time_from_start: 10
           positions: [1.4105, 0.2109, -1.1399, 0.6501, -1.5298, 0.57, -1.58]
       meta:
-        name: o23
-        usage: o23
-        description: offer token in location p23  to user 
+        name: o33
+        usage: o33
+        description: offer token in location p33  to user 

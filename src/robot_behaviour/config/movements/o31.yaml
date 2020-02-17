@@ -1,6 +1,6 @@
 play_motion:
   motions:
-    o21:
+    o31:
       joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
       points:
         - time_from_start: 0
@@ -10,6 +10,6 @@ play_motion:
         - time_from_start: 10
           positions: [1.4105, 0.2109, -1.1399, 0.6501, -1.5298, 0.57, -1.58]
       meta:
-        name: o21
-        usage: o21
-        description: offer token in position p21 to user
+        name: o31
+        usage: o31
+        description: offer token in position p31 to user

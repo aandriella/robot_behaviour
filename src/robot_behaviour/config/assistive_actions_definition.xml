@@ -16,10 +16,6 @@
 		<LEV_2 name="gesture">"I'm here to help you ... The solution can be one of those:"</LEV_2>
 		<LEV_2 name="gesture">"Why do not try with one of those:"</LEV_2>
 		<LEV_2 name="gesture">"Here is a tip ... The solution can be:" </LEV_2>
-		
-		<!--<LEV_2 name="no_gesture">"The right token is smaller than..."</LEV_2>
-		<LEV_2 name="no_gesture">"The right token is bigger than..."</LEV_2>
-		<LEV_2 name="no_gesture">"The right token is between "</LEV_2>-->
 
 		<LEV_3 name="gesture">"The right token is this one..."</LEV_3>
 		<LEV_3 name="gesture">"The right token to move is ..."</LEV_3>
@@ -36,8 +32,9 @@
 		<move_back name="gesture">"I will move the token back"</move_back>
 		<correct_token name="gesture">"I will move the correct token for you"</correct_token>
 
-		<time_out name="no_gesture">"Time is passing I will provide you assistance again"</time_out>
-		
+		<time_out_pick name="no_gesture">"Time is passing, please move the token back and I will provide you assistance again"</time_out_pick>
+		<time_out name="no_gesture">"Time is passing,  I will provide you assistance again"</time_out>
+
  		<max_attempt name="gesture">"You've reached the maximum number of attempts, I will move the token for you"</max_attempt>
 
  		<unexpected_behviour name="no_gesture">"You're playing with your rules not mine"</unexpected_behviour>
