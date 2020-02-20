@@ -1,0 +1,57 @@
+<data>
+		<instruction name="no_gesture">Este es un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas. 
+        El objetivo es ordenar fichas numeradas en orden ascendente en el tablero. 
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? Comencemos.</instruction>
+
+
+        <LEV_0 name="no_gesture">"Es tu turno, por favor, mueve una ficha"</LEV_0>
+
+		<LEV_1 name="no_gesture">"¡¡¡No tengas miedo de comenter un error!!</LEV_1>         
+		<LEV_1 name="no_gesture">"Recuerda, los números deben estar ordenados en orden ascendente"</LEV_1>
+		<LEV_1 name="no_gesture">"¡Vamos!... Sé que puedes hacerlo"</LEV_1>
+		<LEV_1 name="no_gesture">"Creo en... ¡ti!"</LEV_1>
+
+		<LEV_2 name="gesture">"Estoy aquí para ayudarte... La solución puede ser uno de estos (puede ser una de estas fichas:)"</LEV_2>
+		<LEV_2 name="gesture">"¿Por qué no pruebas con uno de estos (con una de estas fichas)?</LEV_2>
+		<LEV_2 name="gesture">"Una pista... La solución puede ser:" </LEV_2>
+
+		<LEV_3 name="gesture">"La ficha correcta es ésta:"</LEV_3>
+		<LEV_3 name="gesture">"La ficha correcta a mover es ésta ... (la ficha que has de mover es ésta: )"</LEV_3>
+		<LEV_3 name="gesture">"No es tan difícil... La ficha correcta para mover es: (que has ede mover es:)"</LEV_3>
+		<LEV_3 name="gesture">"Hoy es tu día de suerte... La solución es...</LEV_3>
+
+		<LEV_4 name="gesture">"La ficha que has de mover es ésta..."</LEV_4>
+		<LEV_4 name="gesture">"Cógela... y muévela a la posición correcta"</LEV_4>
+
+
+		<move_back name="gesture">"Voy a mover la ficha de vuelta</move_back>
+		<correct_token name="gesture">"Voy a mover la ficha correcta por ti"</correct_token>
+
+		<time_out_pick name="no_gesture">"El tiempo corre, por favor, mueve la ficha de vuelta y te ofreceré ayuda de nuevo</time_out_pick>
+		<time_out name="no_gesture">"El tiempo corre, te ayudaré de nuevo (te voy a ayudar otra vez)</time_out>
+
+ 		<max_attempt name="gesture">"Has superado el número máximo de intentos. Voy a mover la ficha por ti"</max_attempt>
+
+ 		<unexpected_behviour name="no_gesture">"Estás jugando con tus reglas, no las mías"</unexpected_behviour>
+ 		<unexpected_behviour name="no_gesture">"¡Deshaz lo que has hecho!</unexpected_behaviour>
+ 		
+
+ 		<unexpected_beahviour name="no_gesture">"Deberías esperar antes de mover... Por favor, mueve la ficha de vuelta"</unexpected_beahviour>
+
+		<compassion name="gesture">"El dicho dice: Afortunado en el amor, desafortunado en el juego" </compassion>
+		<compassion name="gesture">"No te preocupes, estoy seguro de que mejorarás</compassion>
+		<compassion name="gesture">"No te preocupes, a veces pasa (todos nos equivocamos)</compassion>
+Dont worry sometimes happens"</compassion>
+		<compassion name="gesture">"Sé como te sientes, también he estado en esta situación antes"</compassion>
+
+		<congratulation name="gesture">"Has hecho un buen movimiento" </congratulation>
+		<congratulation name="gesture">"Bien hecho, estás jugando según lo esperado</congratulation>
+		<congratulation name="gesture">"Me encanta jugar contigo</congratulation>
+		<congratulation name="gesture">"Eso es (exactamente) lo que esperaba de ti... Bien hecho</congratulation>
+		
+		<end_game name="gesture"> "Ha sido un placer jugar contigo, espero que tu también lo hayas disfrutado (te lo hayas pasado bien)</end_game>
+        
+        <play_again name="no_gesture">"¿Quieres jugar otra vez?"</play_again>
+
+</data>
