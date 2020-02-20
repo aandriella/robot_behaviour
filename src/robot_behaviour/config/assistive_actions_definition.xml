@@ -5,7 +5,7 @@
     	Ready???? Let's start</instruction>
 
 
-        <LEV_0 name="no_gesture">"Please move a token"</LEV_0>
+        <LEV_0 name="no_gesture">"It's your turn, please move a token"</LEV_0>
 
 		<LEV_1 name="no_gesture">"Dont be afraid to make a mistake...!!"</LEV_1>
 		<LEV_1 name="no_gesture">"Remember, The numbers have to be sorted in ascending order"</LEV_1>
@@ -25,9 +25,6 @@
 		<LEV_4 name="gesture">"The token to move is this one..."</LEV_4>
 		<LEV_4 name="gesture">"Take it ... and move in the right location"</LEV_4>
 
-		<help name="no_gesture">"Do you need help? Say YES or NO" </help>
-		<help_attempt name="no_gesture">"Can you repeat please"</help_attempt>
-		<help_timeout name="no_gesture">"No worries, I will do something for you"</help_timeout>
 
 		<move_back name="gesture">"I will move the token back"</move_back>
 		<correct_token name="gesture">"I will move the correct token for you"</correct_token>
