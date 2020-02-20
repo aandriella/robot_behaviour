@@ -2,13 +2,15 @@
 
 import time
 import numpy as np
-
+import random
+import rospy
 
 # import from the package xml_reader
 from xml_reader.xml_reader import XMLReader
 from SKT import SKT
 from robot_behaviour.speech import Speech
 from robot_behaviour.gesture import Gesture
+from robot_behaviour.face import Face
 
 
 class Robot:
@@ -50,6 +52,8 @@ class Robot:
     self.play_again = xml_reader.get_actions_by_tag(actions_file_name, "play_again")
     self.max_attempt = xml_reader.get_actions_by_tag(actions_file_name, "max_attempt")
     self.unexpected_beahviour = xml_reader.get_actions_by_tag(actions_file_name, "unexpected_behaviour")
+    self.positive_feedback = xml_reader.get_actions_by_tag(actions_file_name, "positive_feedback")
+    self.negative_feedback = xml_reader.get_actions_by_tag(actions_file_name, "negative_feedback")
 
 
   def get_instructions_speech(self):
@@ -99,6 +103,12 @@ class Robot:
     '''
     return self.help_timeout
 
+  def get_positive_feedback_speech(self):
+    return self.positive_feedback
+
+  def get_negative_feedback_speech(self):
+    return self.negative_feedback
+
   def get_timeout_actions_speech(self):
     '''
     :return:
@@ -122,6 +132,15 @@ class Robot:
     :return:
     '''
     return self.max_attempt
+
+  def change_facial_expression(self, face, expression, x=0, y=0):
+    face.reproduce_face_expression(expression)
+    face.move_eyes(x,y)
+    rospy.sleep(1)
+
+  def change_pupils_direction(self, face, x, y):
+    face.move_eyes(x,y)
+
 
   def get_unexpected_beahviour(self):
     '''
@@ -184,6 +203,14 @@ class Robot:
     token_dest_loc = skt.get_token_initial_location(token)
     return token_curr_loc, token_dest_loc
 
+  def provide_positive_feedback(self, speech):
+    action_index = random.randint(0, len(self.get_positive_feedback_speech())-1)
+    speech.text_to_speech(self.get_positive_feedback_speech()[action_index][0])
+
+  def provide_negative_feedback(self, speech, ):
+    action_index = random.randint(0, len(self.get_negative_feedback_speech())-1)
+    speech.text_to_speech(self.get_negative_feedback_speech()[action_index][0])
+
   def provide_reengagement_timeout(self, speech):
     for i in range(len(self.get_timeout_actions_speech())):
       # check if we need to reproduce a gesture
@@ -232,6 +259,7 @@ class Robot:
         # reproduce the gesture
         print("token ", token_id, " location ", token_loc)
         subset_solution = self.get_token_subset_solution(token_id, skt)
+        print(subset_solution)
         actions.suggest_subset(token_loc, speech, subset_solution, 5)
         # hard coded string
         speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
@@ -389,71 +417,70 @@ class Robot:
     speech.text_to_speech("Move token " + token + ". in location " + location)
     time.sleep(2)
 
-# length=5
-# progress=1
-# timeout=15
-# assistance_levels = 5
-# max_attempt = 4
-# assistance_probs = []
-# complexity_probs = []
-# total_tokens= 10
-#
-# actions = Gesture()
-#
-#
-# initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
-#         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-#         11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
-#         16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
-#         }
-#
-# current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
-#         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-#         11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
-#         16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
-#         }
-# solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
-#                 6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-#                 11: 'A', 12: 'G', 13: '0', 14: 'B', 15: '0',
-#                 16: '0', 17: 'D', 18: '0', 19: 'O', 20: '0'
-#                 }
-#
-#
-# current_board = initial_board.copy()
-# tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
-#
-# objective = "ascending"
-# board_size = (4,5)
-#
-# skt = SKT(board_size, 5, progress, timeout, assistance_probs, 0, 0,
-#             max_attempt,
-#             assistance_probs, complexity_probs, total_tokens,
-#             initial_board, current_board, tokens_list, objective, solution_board)
-#
-#
-# print(skt.get_current_board_status())
-#
-# xml = XMLReader()
-#
-# tiago = Robot("/home/pal/cognitive_game_ws/src/robot_behaviour/src/robot_behaviour/config/assistive_actions_definition.xml", xml)
-# skt.print_board()
-# speech = Speech("en_GB")
-# actions = Gesture()
-#
-# #tiago.provide_instructions(speech, actions)
-# #tiago.provide_assistance(3, 1, '55', skt, speech, actions)
-#
-# for i in (tokens_list):
-#  for k in range(max_attempt+2):
-#   token = skt.get_expected_token()
-#   print(token, " ")
-  # tiago.provide_congratulation(k, speech, actions)
-  # tiago.provide_compassion(k, speech, actions)
-  # tiago.provide_assistance(0, k, token, skt, speech, actions)
-  #tiago.provide_assistance(1, k, token, skt, speech, actions)
-  #tiago.provide_assistance(2, k, token, skt, speech, actions)
-  #tiago.provide_assistance(3, k, token, skt, speech, actions)
-  # tiago.provide_assistance(4, k, token, skt, speech, actions)
-  #skt.update_board(token[0], token[1])
+length=5
+progress=1
+timeout=15
+assistance_levels = 5
+max_attempt = 4
+assistance_probs = []
+complexity_probs = []
+total_tokens= 10
+
+actions = Gesture()
+
+
+initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+        6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+        11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
+        16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
+        }
+
+current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+        6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+        11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
+        16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
+        }
+solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
+                6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+                11: 'A', 12: 'G', 13: '0', 14: 'B', 15: '0',
+                16: '0', 17: 'D', 18: '0', 19: 'O', 20: '0'
+                }
+
+
+current_board = initial_board.copy()
+tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
+
+objective = "ascending"
+board_size = (4,5)
+
+skt = SKT(board_size, 5, progress, timeout, assistance_probs, 0, 0,
+            max_attempt,
+            assistance_probs, complexity_probs, total_tokens,
+            initial_board, current_board, tokens_list, objective, solution_board)
+
+
+print(skt.get_current_board_status())
+
+xml = XMLReader()
+
+tiago = Robot("/home/pal/cognitive_game_ws/src/robot_behaviour/src/robot_behaviour/config/assistive_actions_definition_es.xml", xml)
+skt.print_board()
+speech = Speech("en_GB")
+actions = Gesture()
+
+#tiago.provide_instructions(speech, actions)
+#tiago.provide_assistance(3, 1, '55', skt, speech, actions)
+
+for i in (tokens_list):
+ for k in range(max_attempt+2):
+  token = skt.get_expected_token()
+  print(token, " ")
+  tiago.provide_congratulation(k, speech, actions)
+  tiago.provide_compassion(k, speech, actions)
+  tiago.provide_assistance(0, k, token, skt, speech, actions)
+  tiago.provide_assistance(1, k, token, skt, speech, actions)
+  tiago.provide_assistance(2, k, token, skt, speech, actions)
+  tiago.provide_assistance(3, k, token, skt, speech, actions)
+  tiago.provide_assistance(4, k, token, skt, speech, actions)
 
 
