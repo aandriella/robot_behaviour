@@ -9,7 +9,7 @@ play_motion:
           positions: [0.64, 0.2, -1.2499, 1.0199, -1.6, 0.5399, -1.5499]
         - time_from_start: 5
           positions: [0.6999, 0.1201, -1.25, 0.8897, -1.5998, 0.5403, -1.5503]
-        - time_from_start: 10
+        - time_from_start: 6.5
           positions: [0.7063, 0.1887, -1.1412, 0.9305, -1.5298, 0.5698, -1.5782]
       meta:
         name: p25

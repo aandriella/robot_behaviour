@@ -9,7 +9,7 @@ play_motion:
           positions: [0.4469, 0.6519, -1.2589, 1.6, -1.6314, 0.5705, -1.5776]
         - time_from_start: 5
           positions: [0.44, 0.45, -1.2601, 1.57, -1.63, 0.5701, -1.5801]
-        - time_from_start: 10
+        - time_from_start: 7
           positions: [0.3829, 0.2275, -1.29, 1.583, -1.63, 0.5, -1.58]
       meta:
         name: p44

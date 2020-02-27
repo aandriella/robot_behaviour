@@ -6,17 +6,17 @@ play_motion:
         - time_from_start: 0
           positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
         #go to p23
-        - time_from_start: 5
+        - time_from_start: 3
           positions: [1.07, 0.2206, -1.2998, 1.0401, -1.6298, 0.5703, -1.5803]
         #go to p21
-        - time_from_start: 10
+        - time_from_start: 5
           positions: [1.07, 0.1806, -1.2998, 1.0401, -1.6298, 0.5703, -1.5803]
         #go to p22
-        - time_from_start: 15
+        - time_from_start: 7
           positions: [1.07, 0.2206, -1.2998, 1.0401, -1.6298, 0.5703, -1.5803]
         #come back
-        - time_from_start: 20
-          positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
+        - time_from_start: 10
+          positions: [0.2269, 0.3316, -1.6138, 2.2556, -1.6316, 0.5703, -1.5773]
       meta:
         name: s21
         usage: s21

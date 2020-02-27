@@ -5,9 +5,9 @@ play_motion:
       points:
         - time_from_start: 0
           positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
-        - time_from_start: 5
+        - time_from_start: 3
           positions: [0.9706, 0.3627, -1.269, 1.3155, -1.6315, 0.5706, -1.5775]
-        - time_from_start: 10
+        - time_from_start: 5
           positions: [0.982, 0.2805, -1.2072, 1.3062, -1.6315, 0.5606, -1.5775]
       meta:
         name: p31

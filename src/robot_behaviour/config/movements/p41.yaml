@@ -9,7 +9,7 @@ play_motion:
           positions: [0.87, 0.5943, -1.2749, 1.5802, -1.6308, 0.5703, -1.5778]
         - time_from_start: 5
           positions: [0.86, 0.4201, -1.2799, 1.58, -1.63, 0.57, -1.58]
-        - time_from_start: 10
+        - time_from_start: 7
           positions: [0.8286, 0.2517, -1.2764, 1.5771, -1.63, 0.53, -1.58]
       meta:
         name: p41
