@@ -404,10 +404,9 @@ class Gesture:
     rospy.loginfo("Sending goal with motion: " + "ss" + str(conv_cell))
     self.client.send_goal(goal)
 
-    
     rospy.sleep(delay)
-    for i in range(len(text)):
-      speech.text_to_speech(text[i])
+    for elem in text:
+      speech.text_to_speech(elem)
     
 
     rospy.loginfo("Waiting for result...")
@@ -449,7 +448,7 @@ class Gesture:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def offer_token(self, token_id, token_loc, speech, text):
+  def offer_token(self, token_loc, speech, text):
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(token_loc))
     rospy.loginfo("Starting run_motion_python application...")
@@ -508,24 +507,27 @@ class Gesture:
       return False
 
 
-def main():
-  pass
-  #robot_gesture = Gesture()
-  #robot_speech = Speech("en_GB")
-
-  #tiago.wave()
-  #tiago.pick_and_place(20, 18)
-  #tiago.suggest_subset(20)
-  #tiago.suggest_solution(14)
-  #robot_gesture.initial_pos()
-  #robot_gesture.offer_token("S", 17, robot_speech, "Ehehe")
-  #tiago.activate_magnet()
-  #rospy.sleep(5)
-  #tiago.deactivate_magnet()
-
-
-if __name__ == '__main__':
-  main()
+# def main():
+#   robot_gesture = Gesture()
+#   robot_speech = Speech("en_GB")
+#
+#   #tiago.wave()
+#   robot_gesture.pick_and_place(18, 1)
+#   rospy.sleep(2)
+#   robot_gesture.pick_and_place(1, 18)
+#   rospy.sleep(2)
+#   robot_gesture.pick_and_place(12, 2)
+#   rospy.sleep(2)
+#   robot_gesture.pick_and_place(2, 12)
+#   rospy.sleep(2)
+#   robot_gesture.pick_and_place(15, 3)
+#   rospy.sleep(2)
+#   robot_gesture.pick_and_place(3, 15)
+#   rospy.sleep(2)
+#
+#
+# if __name__ == '__main__':
+#   main()
 
 
 
