@@ -257,13 +257,12 @@ class Robot:
       if self.get_assistive_action_speech(level_index, attempt)[1] == 1:
         speech.text_to_speech(self.get_assistive_action_speech(level_index, attempt)[0])
         # reproduce the gesture
-        print("token ", token_id, " location ", token_loc)
         subset_solution = self.get_token_subset_solution(token_id, skt)
         print(subset_solution)
-        actions.suggest_subset(token_loc, speech, subset_solution, 5)
+        actions.suggest_subset(token_loc, speech, subset_solution, 3)
         # hard coded string
         speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
-        actions.initial_pos()
+        #actions.initial_pos()
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -284,7 +283,7 @@ class Robot:
         actions.suggest_solution(token_id, token_loc, speech, 5)
         # hard coded string
         speech.text_to_speech(self.get_assistive_action_speech(0, 0)[0])
-        actions.initial_pos()
+        #actions.initial_pos()
       else:
         if attempt > len(self.get_assistive_actions(level_index)) - 1:
           attempt = np.random.randint(0, len(self.get_assistive_actions(level_index)))
@@ -296,7 +295,7 @@ class Robot:
     elif level_index == 4:
       print("Warning hard coded string")
       # reproduce the gesture
-      token_loc = skt.get_token_location(token)
+      token_loc = skt.get_token_initial_location(token[0])
       speech.text_to_speech(self.get_assistive_action_speech(level_index, 0)[0])
       if self.get_assistive_action_speech(level_index, 0)[1] == 1:
         actions.offer_token(token_loc, speech, self.get_assistive_action_speech(level_index, 1)[0])
@@ -315,7 +314,7 @@ class Robot:
       attempt = np.random.randint(0, len(self.get_congratulate_actions_speech()))
     if self.get_congratulate_actions_speech()[attempt][1] == 1:
       # perform robot action
-      actions.head_noddling_yes()
+      #actions.head_noddling_yes()
       speech.text_to_speech(self.get_congratulate_actions_speech()[attempt][0])
     else:
       speech.text_to_speech(self.get_congratulate_actions_speech()[attempt][0])
@@ -326,7 +325,7 @@ class Robot:
 
     if self.get_compassion_actions_speech()[attempt][1] == 1:
       # perform robot action
-      actions.head_noddling_no()
+      #actions.head_noddling_no()
       speech.text_to_speech(self.get_compassion_actions_speech()[attempt][0])
     else:
       speech.text_to_speech(self.get_compassion_actions_speech()[attempt][0])
@@ -369,6 +368,7 @@ class Robot:
       # perform robot action
       speech.text_to_speech(self.get_move_back_actions_speech()[attempt][0])
       actions.pick_and_place(_from, _to)
+      actions.initial_pos()
     else:
       speech.text_to_speech(self.get_move_back_actions_speech()[attempt][0])
 
@@ -380,6 +380,7 @@ class Robot:
       # perform robot action
       speech.text_to_speech(self.get_correct_token_speech()[attempt][0])
       actions.pick_and_place(_from, _to)
+      actions.initial_pos()
     else:
       speech.text_to_speech(self.get_correct_token_speech()[attempt][0])
 
@@ -417,70 +418,69 @@ class Robot:
     speech.text_to_speech("Move token " + token + ". in location " + location)
     time.sleep(2)
 
-length=5
-progress=1
-timeout=15
-assistance_levels = 5
-max_attempt = 4
-assistance_probs = []
-complexity_probs = []
-total_tokens= 10
-
-actions = Gesture()
-
-
-initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
-        6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-        11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
-        16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
-        }
-
-current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
-        6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-        11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
-        16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
-        }
-solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
-                6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
-                11: 'A', 12: 'G', 13: '0', 14: 'B', 15: '0',
-                16: '0', 17: 'D', 18: '0', 19: 'O', 20: '0'
-                }
-
-
-current_board = initial_board.copy()
-tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
-
-objective = "ascending"
-board_size = (4,5)
-
-skt = SKT(board_size, 5, progress, timeout, assistance_probs, 0, 0,
-            max_attempt,
-            assistance_probs, complexity_probs, total_tokens,
-            initial_board, current_board, tokens_list, objective, solution_board)
-
-
-print(skt.get_current_board_status())
-
-xml = XMLReader()
-
-tiago = Robot("/home/pal/cognitive_game_ws/src/robot_behaviour/src/robot_behaviour/config/assistive_actions_definition_es.xml", xml)
-skt.print_board()
-speech = Speech("en_GB")
-actions = Gesture()
+# length=5
+# progress=1
+# timeout=15
+# assistance_levels = 5
+# max_attempt = 4
+# assistance_probs = []
+# complexity_probs = []
+# total_tokens= 10
+#
+#
+#
+# initial_board = {1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+#         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+#         11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
+#         16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
+#         }
+#
+# current_board ={1:'0', 2:'0', 3:'0', 4:'0', 5:'0',
+#         6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+#         11:'A', 12:'G', 13:'U', 14:'B', 15:'E',
+#         16:'C', 17:'D', 18:'I', 19:'O', 20:'R'
+#         }
+# solution_board = {1:'C', 2:'U', 3:'R', 4:'I', 5:'E',
+#                 6:'0', 7:'0', 8:'0', 9:'0', 10:'0',
+#                 11: 'A', 12: 'G', 13: '0', 14: 'B', 15: '0',
+#                 16: '0', 17: 'D', 18: '0', 19: 'O', 20: '0'
+#                 }
+#
+#
+# current_board = initial_board.copy()
+# tokens_list = ['A', 'G', 'U', 'B', 'E', 'C', 'D', 'I', 'O', 'R']
+#
+# objective = "ascending"
+# board_size = (4,5)
+#
+# skt = SKT(board_size, 5, progress, timeout, assistance_probs, 0, 0,
+#             max_attempt,
+#             assistance_probs, complexity_probs, total_tokens,
+#             initial_board, current_board, tokens_list, objective, solution_board)
+#
+#
+# print(skt.get_current_board_status())
+#
+# xml = XMLReader()
+#
+# tiago = Robot("/home/pal/cognitive_game_ws/src/robot_behaviour/src/robot_behaviour/config/assistive_actions_definition_esp.xml", xml)
+# speech = Speech("es_ES")
+# actions = Gesture()
+# token = ("U", 13)
+# tiago.provide_assistance(4, 1, token, skt, speech, actions)
 
 #tiago.provide_instructions(speech, actions)
 #tiago.provide_assistance(3, 1, '55', skt, speech, actions)
-
-for i in (tokens_list):
- for k in range(max_attempt+2):
-  token = skt.get_expected_token()
-  print(token, " ")
-  tiago.provide_congratulation(k, speech, actions)
-  tiago.provide_compassion(k, speech, actions)
-  tiago.provide_assistance(0, k, token, skt, speech, actions)
-  tiago.provide_assistance(1, k, token, skt, speech, actions)
-  tiago.provide_assistance(2, k, token, skt, speech, actions)
-  tiago.provide_assistance(3, k, token, skt, speech, actions)
-  tiago.provide_assistance(4, k, token, skt, speech, actions)
+#
+# for i in (tokens_list):
+#  for k in range(max_attempt+2):
+#    token = (i, skt.get_token_location(i))
+#    tiago.provide_congratulation(k, speech, actions)
+#    tiago.provide_compassion(k, speech, actions)
+#    tiago.provide_assistance(0, k, token, skt, speech, actions)
+#    tiago.provide_assistance(1, k, token, skt, speech, actions)
+#    tiago.provide_assistance(2, k, token, skt, speech, actions)
+#    tiago.provide_assistance(3, k, token, skt, speech, actions)
+#    tiago.provide_assistance(4, k, token, skt, speech, actions)
 
 
