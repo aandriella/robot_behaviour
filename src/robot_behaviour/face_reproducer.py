@@ -9,7 +9,7 @@ class Face:
 
   def __init__(self):
     rospy.init_node('big_hero', anonymous=True)
-    self.face_pub = rospy.Publisher('display_chatter', String, queue_size=10)
+    self.face_pub = rospy.Publisher('/facial_expression', String, queue_size=10)
 
 
 
@@ -24,13 +24,15 @@ class Face:
 
 
 
+def main():
+  face = Face()
+  face.reproduce_face_expression("happy")
+  rospy.sleep(2.0)
+  face.reproduce_face_expression("sad")
+  rospy.sleep(2.0)
+  face.reproduce_face_expression("confused")
+  rospy.sleep(2.0)
+  face.move_eyes(0, -50)
 
-#
-# face = Face()
-#
-# face.reproduce_face_expression("happy")
-# face.reproduce_face_expression("sad")
-# face.reproduce_face_expression("confused")
-# face.move_eyes(0, -50)
-
-
+if __name__=="__main__":
+  main()
