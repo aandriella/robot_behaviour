@@ -6,7 +6,7 @@ import time
 #import PAL Robotics custom headers
 from pal_interaction_msgs.msg import TtsAction, TtsGoal
 
-class Voice():
+class Speech():
   def __init__(self, language):
     rospy.init_node('big_hero', anonymous=True)
     self.client = actionlib.SimpleActionClient('tts_to_soundplay', TtsAction)
@@ -58,7 +58,7 @@ class Voice():
     print("cancel action")
 #
 if __name__ == "__main__":
-    speech = Voice("en_GB")
+    speech = Speech("en_GB")
     text = "This is the sentence you have to reproduce"
     speech.text_to_speech("This is the sentence to reproduce")
     start = time.time()
