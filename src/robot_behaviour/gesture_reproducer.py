@@ -538,6 +538,13 @@ class Gesture:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
+  def cancel_motion(self):
+    rospy.loginfo("canceling action")
+    print("canceling action")
+    self.client.cancel_goal()
+    rospy.loginfo("goal has been canceled")
+    print("cancel action")
+
 
 # def main():
 #   robot_gesture = Gesture()
