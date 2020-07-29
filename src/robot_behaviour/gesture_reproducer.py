@@ -39,7 +39,7 @@ from std_srvs.srv import *
 from sensor_msgs.msg import JointState
 
 
-from robot_behaviour.speech import Speech
+from robot_behaviour.speech_reproducer import Voice
 
 #min and max values for joints
 min_joint_1 = -1.41
@@ -385,7 +385,39 @@ class Gesture:
   def pick_and_place(self, from_, to_):
     pick_success = self.pick(from_)
     if pick_success:
-      self.place(to_)
+      place_success = self.place(to_)
+      return place_success
+
+  def suggest_row(self, row, speech, text, delay):
+    # cell 1 is g45 for the robot view point
+    conv_cell = int(self.convert(cell))
+    rospy.loginfo("Starting run_motion_python application...")
+    self.wait_for_valid_time(10.0)
+    # client = SimpleActionClient('/play_motion', PlayMotionAction)
+    rospy.loginfo("Waiting for Action Server...")
+    self.client.wait_for_server()
+
+    goal = PlayMotionGoal()
+    goal.motion_name = "sr" + str(conv_cell)
+    goal.skip_planning = False
+    goal.priority = 0  # Optional
+
+    rospy.loginfo("Sending goal with motion: " + "sr" + str(conv_cell))
+    self.client.send_goal(goal)
+
+    rospy.sleep(delay)
+    for elem in text:
+      speech.text_to_speech(elem)
+
+    rospy.loginfo("Waiting for result...")
+    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+    state = self.client.get_state()
+    if action_ok:
+      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+      return True
+    else:
+      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
+      return False
 
   def suggest_subset(self, cell, speech, text, delay):
     # cell 1 is g45 for the robot view point
