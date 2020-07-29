@@ -446,7 +446,7 @@ class Gesture:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
-  def suggest_solution(self, token_id, token_loc, reproduce_text, text, delay):
+  def suggest_solution(self, token_loc, reproduce_text, text, delay):
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(token_loc))
     rospy.loginfo("Starting run_motion_python application...")
@@ -483,6 +483,7 @@ class Gesture:
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
     rospy.loginfo("Waiting for Action Server...")
+
     self.client.wait_for_server()
 
     goal = PlayMotionGoal()
