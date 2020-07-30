@@ -340,7 +340,7 @@ class Robot:
     if self.face != None and self.gesture == None:
       assert "This level has not been designed to be provided without the robot"
       self.speech.text_to_speech(s.sentences['lev_5'][0])
-      rospy.sleep(0.1)
+      rospy.sleep(0.5)
       self.face.reproduce_face_expression("happy")
       self.speech.text_to_speech(s.sentences['lev_5'][1])
       b_executed = True
@@ -462,17 +462,22 @@ class Robot:
     else:
       assert "Error Instruction does not contemplate any gesture"
 
-  def reproduce_sentence(self, text):
-    self.speech.text_to_speech(text)
+  def cancel_action(self):
+    if self.gesture != None:
+      self.gesture.cancel_motion()
+    self.speech.cancel_reproduction()
 
-  def fake_function(self, reproduce_sentence, text):
-    i=0
-    while(i<1000):
-      if i%10==0:
-        reproduce_sentence(text)
-      else:
-        pass
-      i += 1
+  # def reproduce_sentence(self, text):
+  #   self.speech.text_to_speech(text)
+  #
+  # def fake_function(self, reproduce_sentence, text):
+  #   i=0
+  #   while(i<1000):
+  #     if i%10==0:
+  #       reproduce_sentence(text)
+  #     else:
+  #       pass
+  #     i += 1
 
 
 def main():
