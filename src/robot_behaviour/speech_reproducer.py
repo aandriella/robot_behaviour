@@ -2,14 +2,17 @@
 import rospy
 import actionlib
 import time
-
+from actionlib_msgs.msg import GoalStatus
 #import PAL Robotics custom headers
 from pal_interaction_msgs.msg import TtsAction, TtsGoal
+from sound_play.libsoundplay import SoundClient
+from actionlib_msgs.msg import GoalStatus
 
 class Speech():
   def __init__(self, language):
     rospy.init_node('big_hero', anonymous=True)
-    self.client = actionlib.SimpleActionClient('tts_to_soundplay', TtsAction)
+    self.client = actionlib.SimpleActionClient('/tts_to_soundplay', TtsAction)
+    self.sound_client = SoundClient()
     self.language = language
     self.feedback = 0
     self.text = ""
@@ -29,15 +32,15 @@ class Speech():
     }[event]
 
   def feedbackCb(self, feedback):
-    # print("event type: " + self.event(feedback.event_type))
-    # print("timestamp: " + str(feedback.timestamp))
-    # print("current word: " + feedback.text_said)
-    # print("next word: " + feedback.next_word)
-    # print("-")
+    print("event type: " + self.event(feedback.event_type))
+    print("timestamp: " + str(feedback.timestamp))
+    print("current word: " + feedback.text_said)
+    print("next word: " + feedback.next_word)
+    print("-")
     self.feedback = self.event(feedback.event_type)
     return self.feedback
 
-  def text_to_speech(self, text):
+  def text_to_speech(self, text, locked=False):
     rospy.loginfo("Waiting for Server")
     self.client.wait_for_server()
     rospy.loginfo("Reached Server")
@@ -45,28 +48,36 @@ class Speech():
     goal.rawtext.text = text
     goal.rawtext.lang_id = self.language
     self.client.send_goal(goal, feedback_cb=self.feedbackCb)
-    #self.client.wait_for_result()
-    #res = self.client.get_result()
-    #print("text: " + res.text)
-#    print("warning/error msgs: " + res.msg)
+    goal_state = self.client.get_state()
+    if locked:
+      self.client.wait_for_result(timeout=rospy.Duration(50))
+
+    response = self.client.get_result()
+    if goal_state != GoalStatus.SUCCEEDED:
+      self.client.stop_tracking_goal()
+
+
+    return response
 
   def cancel_reproduction(self):
-    rospy.loginfo("canceling action")
-    print("canceling action")
-    self.client.cancel_goal()
+    rospy.loginfo("canceling...")
+    self.sound_client.stopAll()
     rospy.loginfo("goal has been canceled")
-    print("cancel action")
+
+  def get_status(self):
+    if self.feedback == "TTS_EVENT_STARTED_PLAYING_WORD":
+      return True
 #
 if __name__ == "__main__":
     speech = Speech("en_GB")
     text = "This is the sentence you have to reproduce"
-    speech.text_to_speech("This is the sentence to reproduce")
+    success = speech.text_to_speech("This is the sentence to reproduce f df  gf gf hhghg ds dfd df fgfg hg hggh jhjh j hjh fg f gf", True )
+    print(success)
     start = time.time()
     elapsed_time = 0
-    while(elapsed_time<3):
-      elapsed_time = time.time()-start
-      print("elapsed_time:", elapsed_time)
-    speech.cancel_reproduction()
+    # while(elapsed_time<4):
+    #   elapsed_time = time.time()-start
+    #speech.cancel_reproduction()
     #while(speech.feedback!="TTS_EVENT_FINISHED_PLAYING_SENTENCE"):
     #  print("Do something else")
     #print("We're out")
