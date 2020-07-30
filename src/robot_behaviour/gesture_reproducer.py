@@ -39,8 +39,6 @@ from std_srvs.srv import *
 from sensor_msgs.msg import JointState
 
 
-from robot_behaviour.speech_reproducer import Voice
-
 #min and max values for joints
 min_joint_1 = -1.41
 max_joint_1 = 1.31
@@ -416,6 +414,7 @@ class Gesture:
       return False
 
   def suggest_subset(self, cell, reproduce_text, text, delay):
+
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
