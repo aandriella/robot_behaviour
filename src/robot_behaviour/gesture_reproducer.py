@@ -39,7 +39,7 @@ from std_srvs.srv import *
 from sensor_msgs.msg import JointState
 
 
-from robot_behaviour.speech_reproducer import Voice
+
 
 #min and max values for joints
 min_joint_1 = -1.41
