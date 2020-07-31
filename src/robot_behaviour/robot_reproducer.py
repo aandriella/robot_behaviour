@@ -150,26 +150,26 @@ class Robot:
   '''
 
 
-  def assistance(self, lev_id, row, counter, token, *tokens):
+  def assistance(self, lev_id, row, counter, token, facial_expression,  tokens):
 
     if lev_id == 0:
       if counter >= len(s.sentences['lev_0'])-1: counter = random.randint(0, len(s.sentences['lev_0'])-1)
-      self.assistance_level["lev_0"].__call__(counter)
+      self.assistance_level["lev_0"].__call__(counter, facial_expression)
     elif lev_id == 1:
       if counter >= len(s.sentences['lev_1'])-1: counter = random.randint(0, len(s.sentences['lev_1'])-1)
-      self.assistance_level["lev_1"].__call__(counter)
+      self.assistance_level["lev_1"].__call__(counter, facial_expression)
     elif lev_id == 2:
       if counter >= len(s.sentences['lev_2'])-1: counter = random.randint(0, len(s.sentences['lev_2'])-1)
-      self.assistance_level["lev_2"].__call__(row, counter)
+      self.assistance_level["lev_2"].__call__(row, counter, facial_expression)
     elif lev_id == 3:
       if counter >= len(s.sentences['lev_3'])-1: counter = random.randint(0, len(s.sentences['lev_3'])-1)
-      self.assistance_level["lev_3"].__call__(token, counter, *tokens)
+      self.assistance_level["lev_3"].__call__(token, counter, facial_expression, tokens)
     elif lev_id == 4:
       if counter >= len(s.sentences['lev_4'])-1: counter = random.randint(0, len(s.sentences['lev_4'])-1)
-      self.assistance_level["lev_4"].__call__(token, counter)
+      self.assistance_level["lev_4"].__call__(token, counter, facial_expression)
     elif lev_id == 5:
       if counter >= len(s.sentences['lev_5'])-1: counter = random.randint(0, len(s.sentences['lev_5'])-1)
-      self.assistance_level["lev_5"].__call__(token)
+      self.assistance_level["lev_5"].__call__(token, facial_expression)
     else:
       assert "The selected level is not in the list"
 
@@ -210,7 +210,7 @@ class Robot:
     if self.face!=None and self.gesture==None:
       self.speech.text_to_speech(s.sentences['lev_1'][counter])
       rospy.sleep(0.1)
-      self.face.reproduce_face_expression("neutral")
+      self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face==None and self.gesture!=None:
       assert "Error Lev 1 does not contemplate any gesture"
@@ -250,7 +250,7 @@ class Robot:
       b_executed = True
     return b_executed
 
-  def suggest_cells(self, token, counter, facial_expression, *tokens):
+  def suggest_cells(self, token, counter, facial_expression, tokens):
     '''
     It tells the user the cells near to the correct token (included the latter)
       Args:
