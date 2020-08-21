@@ -6,19 +6,22 @@ facial expression and gesture. Every time we check if the action
 '''
 import rospy
 import random
+import ast
 from robot_behaviour.face_reproducer import Face
 from robot_behaviour.speech_reproducer import Speech
 from robot_behaviour.gesture_reproducer import Gesture
 import robot_behaviour.sentences as s
 
 class Robot:
-  def __init__(self, speech, face=None, gesture=None):
+  def __init__(self, speech, sentences_file, face=None, gesture=None):
     '''
     :param speech: instance of class Speech
+    :param sentences_file: the file where all the sentences are stored
     :param face:  instance of class Face
     :param gesture: instance of class Gesture
     '''
     self.speech = speech
+    self.sentences = self.load_sentences(sentences_file)
     self.face = face
     self.gesture = gesture
 
@@ -43,6 +46,12 @@ class Robot:
     }
 
 
+  def load_sentences(self, file):
+    file = open(file, "r")
+    contents = file.read()
+    self.senteces = ast.literal_eval(contents)
+    file.close()
+    return self.senteces
 
   def congratulate(self, counter, facial_expression):
     '''
@@ -54,9 +63,9 @@ class Robot:
     '''
     print("Congrats method")
     b_executed = False
-    if counter >=len(s.sentences['congratulation'])-1: counter=random.randint(0, len(s.sentences['congratulation'])-1)
+    if counter >=len(self.sentences['congratulation'])-1: counter=random.randint(0, len(self.sentences['congratulation'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['congratulation'][counter])
+      self.speech.text_to_speech(self.sentences['congratulation'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -81,9 +90,9 @@ class Robot:
       '''
     print("Compassion funct")
     b_executed = False
-    if counter >=len(s.sentences['compassion'])-1: counter=random.randint(0, len(s.sentences['compassion'])-1)
+    if counter >=len(self.sentences['compassion'])-1: counter=random.randint(0, len(self.sentences['compassion'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['compassion'][counter])
+      self.speech.text_to_speech(self.sentences['compassion'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -112,21 +121,21 @@ class Robot:
     b_executed = False
     if self.face!=None and self.gesture==None:
       if who == "robot":
-        if counter >= len(s.sentences['robot_move_back'])-1: counter = random.randint(0, len(s.sentences['robot_move_back'])-1)
-        self.speech.text_to_speech(s.sentences['robot_move_back'][counter])
+        if counter >= len(self.sentences['robot_move_back'])-1: counter = random.randint(0, len(self.sentences['robot_move_back'])-1)
+        self.speech.text_to_speech(self.sentences['robot_move_back'][counter])
       else:
-        if counter >= len(s.sentences['user_move_back'])-1: counter = random.randint(0, len(s.sentences['user_move_back'])-1)
-        self.speech.text_to_speech(s.sentences['user_move_back'][counter])
+        if counter >= len(self.sentences['user_move_back'])-1: counter = random.randint(0, len(self.sentences['user_move_back'])-1)
+        self.speech.text_to_speech(self.sentences['user_move_back'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face==None and self.gesture!=None:
       if who == "robot":
-        if counter >= len(s.sentences['robot_move_back'])-1: counter = random.randint(0, len(s.sentences['robot_move_back'])-1)
-        self.speech.text_to_speech(s.sentences['robot_move_back'][counter])
+        if counter >= len(self.sentences['robot_move_back'])-1: counter = random.randint(0, len(self.sentences['robot_move_back'])-1)
+        self.speech.text_to_speech(self.sentences['robot_move_back'][counter])
       else:
-        if counter >= len(s.sentences['user_move_back'])-1: counter = random.randint(0, len(s.sentences['user_move_back'])-1)
-        self.speech.text_to_speech(s.sentences['user_move_back'][counter])
+        if counter >= len(self.sentences['user_move_back'])-1: counter = random.randint(0, len(self.sentences['user_move_back'])-1)
+        self.speech.text_to_speech(self.sentences['user_move_back'][counter])
       rospy.sleep(0.1)
       # TODO: validation on the robot
       success = self.gesture.pick_and_place(token_from, token_to)
@@ -135,9 +144,9 @@ class Robot:
     else:
       #TODO validation on the robot
       if who == "robot":
-        self.speech.text_to_speech(s.sentences['robot_move_back'][counter])
+        self.speech.text_to_speech(self.sentences['robot_move_back'][counter])
       else:
-        self.speech.text_to_speech(s.sentences['user_move_back'][counter])
+        self.speech.text_to_speech(self.sentences['user_move_back'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       success = self.gesture.pick_and_place(token_from, token_to)
@@ -153,22 +162,22 @@ class Robot:
   def assistance(self, lev_id, row, counter, token, facial_expression,  tokens):
 
     if lev_id == 0:
-      if counter >= len(s.sentences['lev_0'])-1: counter = random.randint(0, len(s.sentences['lev_0'])-1)
+      if counter >= len(self.sentences['lev_0'])-1: counter = random.randint(0, len(self.sentences['lev_0'])-1)
       self.assistance_level["lev_0"].__call__(counter, facial_expression)
     elif lev_id == 1:
-      if counter >= len(s.sentences['lev_1'])-1: counter = random.randint(0, len(s.sentences['lev_1'])-1)
+      if counter >= len(self.sentences['lev_1'])-1: counter = random.randint(0, len(self.sentences['lev_1'])-1)
       self.assistance_level["lev_1"].__call__(counter, facial_expression)
     elif lev_id == 2:
-      if counter >= len(s.sentences['lev_2'])-1: counter = random.randint(0, len(s.sentences['lev_2'])-1)
+      if counter >= len(self.sentences['lev_2'])-1: counter = random.randint(0, len(self.sentences['lev_2'])-1)
       self.assistance_level["lev_2"].__call__(row, counter, facial_expression)
     elif lev_id == 3:
-      if counter >= len(s.sentences['lev_3'])-1: counter = random.randint(0, len(s.sentences['lev_3'])-1)
+      if counter >= len(self.sentences['lev_3'])-1: counter = random.randint(0, len(self.sentences['lev_3'])-1)
       self.assistance_level["lev_3"].__call__(token, counter, facial_expression, tokens)
     elif lev_id == 4:
-      if counter >= len(s.sentences['lev_4'])-1: counter = random.randint(0, len(s.sentences['lev_4'])-1)
+      if counter >= len(self.sentences['lev_4'])-1: counter = random.randint(0, len(self.sentences['lev_4'])-1)
       self.assistance_level["lev_4"].__call__(token, counter, facial_expression)
     elif lev_id == 5:
-      if counter >= len(s.sentences['lev_5'])-1: counter = random.randint(0, len(s.sentences['lev_5'])-1)
+      if counter >= len(self.sentences['lev_5'])-1: counter = random.randint(0, len(self.sentences['lev_5'])-1)
       self.assistance_level["lev_5"].__call__(token, facial_expression)
     else:
       assert "The selected level is not in the list"
@@ -185,7 +194,7 @@ class Robot:
     print("Lev_0")
     b_executed = False
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['lev_0'][counter])
+      self.speech.text_to_speech(self.sentences['lev_0'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -208,7 +217,7 @@ class Robot:
     print("Lev_1")
     b_executed = False
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['lev_1'][counter])
+      self.speech.text_to_speech(self.sentences['lev_1'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -231,18 +240,18 @@ class Robot:
     print("Lev_2")
     b_executed = False
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['lev_2'][counter]+str(row))
+      self.speech.text_to_speech(self.sentences['lev_2'][counter]+str(row))
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face==None and self.gesture!=None:
-      self.speech.text_to_speech(s.sentences['lev_2'][counter]+str(row))
+      self.speech.text_to_speech(self.sentences['lev_2'][counter]+str(row))
       rospy.sleep(0.1)
       #TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
       self.gesture.suggest_row(row)
       b_executed = True
     else:
-      self.speech.text_to_speech(s.sentences['lev_2'][counter] + str(row))
+      self.speech.text_to_speech(self.sentences['lev_2'][counter] + str(row))
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
@@ -270,19 +279,19 @@ class Robot:
     tokens_id_to_str = "   ".join([str(t) for t in tokens_id])
     if self.face!=None and self.gesture==None:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_3'][counter]+tokens_id_to_str)
+      self.speech.text_to_speech(self.sentences['lev_3'][counter]+tokens_id_to_str)
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face==None and self.gesture!=None:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_3'][counter])
+      self.speech.text_to_speech(self.sentences['lev_3'][counter])
       rospy.sleep(0.1)
       self.gesture.suggest_subset(token_sol_from, self.reproduce_sentence, text= tokens_id_to_str, delay=0.1)
       b_executed = True
     else:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_3'][counter])
+      self.speech.text_to_speech(self.sentences['lev_3'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       self.gesture.suggest_subset(token_sol_from, self.reproduce_sentence, text=tokens_id_to_str, delay=0.1)
@@ -305,18 +314,18 @@ class Robot:
     #need for speech
     tokens_id_to_str =  str(token_sol_id)
     if self.face != None and self.gesture == None:
-      self.speech.text_to_speech(s.sentences['lev_4'][counter] + tokens_id_to_str)
+      self.speech.text_to_speech(self.sentences['lev_4'][counter] + tokens_id_to_str)
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face == None and self.gesture != None:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_4'][counter])
+      self.speech.text_to_speech(self.sentences['lev_4'][counter])
       self.gesture.suggest_solution(token_sol_from, self.reproduce_sentence, tokens_id_to_str, delay=0.1)
       b_executed = True
     else:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_4'][counter])
+      self.speech.text_to_speech(self.sentences['lev_4'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       self.gesture.suggest_solution(token_sol_from, self.reproduce_sentence(tokens_id_to_str), delay=0.1)
@@ -339,23 +348,23 @@ class Robot:
     token_id_to_str = " . ".join([str(t) for t in token_sol_id])
     if self.face != None and self.gesture == None:
       assert "This level has not been designed to be provided without the robot"
-      self.speech.text_to_speech(s.sentences['lev_5'][0])
+      self.speech.text_to_speech(self.sentences['lev_5'][0])
       rospy.sleep(0.5)
       self.face.reproduce_face_expression(facial_expression)
-      self.speech.text_to_speech(s.sentences['lev_5'][1])
+      self.speech.text_to_speech(self.sentences['lev_5'][1])
       b_executed = True
     elif self.face == None and self.gesture != None:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_5'][0])
+      self.speech.text_to_speech(self.sentences['lev_5'][0])
       rospy.sleep(0.1)
-      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, s.sentences['lev_5'][1])
+      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1])
       b_executed = True
     else:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(s.sentences['lev_5'][0])
+      self.speech.text_to_speech(self.sentences['lev_5'][0])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
-      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, s.sentences['lev_5'][1])
+      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1])
       b_executed = True
     return b_executed
 
@@ -368,25 +377,25 @@ class Robot:
            Bool: if the action has been executed successfully
         '''
     print("move_onbehalf")
-    if counter >= len(s.sentences['max_attempt'])-1: counter = random.randint(0, len(s.sentences['max_attempt'])-1)
+    if counter >= len(self.sentences['max_attempt'])-1: counter = random.randint(0, len(self.sentences['max_attempt'])-1)
     token_sol_id, token_sol_from, token_sol_to = token
     token_id_to_str = " . ".join([str(t) for t in token_sol_id])
     b_executed = False
-    print("Counter:",counter, len(s.sentences['max_attempt'])-1)
+    print("Counter:",counter, len(self.sentences['max_attempt'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['max_attempt'][counter])
+      self.speech.text_to_speech(self.sentences['max_attempt'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face==None and self.gesture!=None:
       # TODO: test on the robot
-      self.speech.text_to_speech(s.sentences['max_attempt'][counter])
+      self.speech.text_to_speech(self.sentences['max_attempt'][counter])
       rospy.sleep(0.1)
       self.gesture.pick_and_place(token_sol_from, token_sol_to)
       b_executed = True
     else:
       # TODO: test on the robot
-      self.speech.text_to_speech(s.sentences['max_attempt'][counter])
+      self.speech.text_to_speech(self.sentences['max_attempt'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       self.gesture.pick_and_place(token_sol_from, token_sol_to)
@@ -404,14 +413,14 @@ class Robot:
     b_executed = False
     if self.face!=None and self.gesture==None:
       if positive:
-        if counter >= len(s.sentences['pick_ok'])-1: counter = random.randint(0, len(s.sentences['pick_ok'])-1)
-        self.speech.text_to_speech(s.sentences['pick_ok'][counter])
+        if counter >= len(self.sentences['pick_ok'])-1: counter = random.randint(0, len(self.sentences['pick_ok'])-1)
+        self.speech.text_to_speech(self.sentences['pick_ok'][counter])
         rospy.sleep(0.2)
         self.face.reproduce_face_expression(facial_expression)
         b_executed = True
       else:
-        if counter >= len(s.sentences['pick_no'])-1: counter = random.randint(0, len(s.sentences['pick_no'])-1)
-        self.speech.text_to_speech(s.sentences['pick_no'][counter])
+        if counter >= len(self.sentences['pick_no'])-1: counter = random.randint(0, len(self.sentences['pick_no'])-1)
+        self.speech.text_to_speech(self.sentences['pick_no'][counter])
         rospy.sleep(0.2)
         self.face.reproduce_face_expression(facial_expression)
         b_executed = True
@@ -430,9 +439,9 @@ class Robot:
         '''
     print("timeout")
     b_executed = False
-    if counter >= len(s.sentences['timeout'])-1: counter = random.randint(0, len(s.sentences['timeout'])-1)
+    if counter >= len(self.sentences['timeout'])-1: counter = random.randint(0, len(self.sentences['timeout'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['timeout'][counter])
+      self.speech.text_to_speech(self.sentences['timeout'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -451,9 +460,9 @@ class Robot:
     '''
     print("instruction")
     b_executed = False
-    if counter >= len(s.sentences['instruction'])-1: counter = random.randint(0, len(s.sentences['instruction'])-1)
+    if counter >= len(self.sentences['instruction'])-1: counter = random.randint(0, len(self.sentences['instruction'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(s.sentences['instruction'][counter], locked=True)
+      self.speech.text_to_speech(self.sentences['instruction'][counter], locked=True)
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
