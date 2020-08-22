@@ -32,11 +32,11 @@ class Speech():
     }[event]
 
   def feedbackCb(self, feedback):
-    print("event type: " + self.event(feedback.event_type))
-    print("timestamp: " + str(feedback.timestamp))
-    print("current word: " + feedback.text_said)
-    print("next word: " + feedback.next_word)
-    print("-")
+    # print("event type: " + self.event(feedback.event_type))
+    # print("timestamp: " + str(feedback.timestamp))
+    # print("current word: " + feedback.text_said)
+    # print("next word: " + feedback.next_word)
+    # print("-")
     self.feedback = self.event(feedback.event_type)
     return self.feedback
 
@@ -46,18 +46,19 @@ class Speech():
     rospy.loginfo("Reached Server")
     goal = TtsGoal()
     goal.rawtext.text = text
+    length = len(text)
     goal.rawtext.lang_id = self.language
     self.client.send_goal(goal, feedback_cb=self.feedbackCb)
     goal_state = self.client.get_state()
     if locked:
-      self.client.wait_for_result(timeout=rospy.Duration(50))
+      self.client.wait_for_result(timeout=rospy.Duration(5))
 
     response = self.client.get_result()
     if goal_state != GoalStatus.SUCCEEDED:
       self.client.stop_tracking_goal()
 
 
-    return response
+    return response, length
 
   def cancel_reproduction(self):
     rospy.loginfo("canceling...")
@@ -71,10 +72,16 @@ class Speech():
 if __name__ == "__main__":
     speech = Speech("en_GB")
     text = "This is the sentence you have to reproduce"
-    success = speech.text_to_speech("This is the sentence to reproduce f df  gf gf hhghg ds dfd df fgfg hg hggh jhjh j hjh fg f gf", True )
-    print(success)
     start = time.time()
+    success, len = speech.text_to_speech("This is the sentence to reproduce fuck ", True)
     elapsed_time = 0
+    while(elapsed_time<3.5):
+      elapsed_time = time.time()-start
+      print("wait")
+    speech.cancel_reproduction()
+
+    #success_against = speech.text_to_speech("test again agaist you", True)
+
     # while(elapsed_time<4):
     #   elapsed_time = time.time()-start
     #speech.cancel_reproduction()
