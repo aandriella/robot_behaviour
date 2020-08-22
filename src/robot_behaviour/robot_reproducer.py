@@ -65,7 +65,7 @@ class Robot:
     b_executed = False
     if counter >=len(self.sentences['congratulation'])-1: counter=random.randint(0, len(self.sentences['congratulation'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(self.sentences['congratulation'][counter])
+      self.speech.text_to_speech(self.sentences['congratulation'][counter], locked = True)
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -92,7 +92,7 @@ class Robot:
     b_executed = False
     if counter >=len(self.sentences['compassion'])-1: counter=random.randint(0, len(self.sentences['compassion'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(self.sentences['compassion'][counter])
+      self.speech.text_to_speech(self.sentences['compassion'][counter], locked = True)
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
@@ -441,7 +441,7 @@ class Robot:
     b_executed = False
     if counter >= len(self.sentences['timeout'])-1: counter = random.randint(0, len(self.sentences['timeout'])-1)
     if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(self.sentences['timeout'][counter])
+      self.speech.text_to_speech(self.sentences['timeout'][counter], locked = True)
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
