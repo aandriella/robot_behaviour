@@ -41,9 +41,9 @@ class Speech():
     return self.feedback
 
   def text_to_speech(self, text, locked=False, threshold=10):
-    rospy.loginfo("Waiting for Server")
+    #rospy.loginfo("Waiting for Server")
     self.client.wait_for_server()
-    rospy.loginfo("Reached Server")
+    #rospy.loginfo("Reached Server")
     goal = TtsGoal()
     goal.rawtext.text = text
     length = len(text)
@@ -73,7 +73,8 @@ if __name__ == "__main__":
     speech = Speech("en_GB")
     text = "This is the sentence you have to reproduce"
     start = time.time()
-    time_to_reproduce = speech.text_to_speech("This is the sentence to reproduce goool but this is extra ", True, 13)
+    time_to_reproduce = speech.text_to_speech("111", True, 1)
+    rospy.sleep(time_to_reproduce)
     elapsed_time = 0
     print("len:", time_to_reproduce)
     while(elapsed_time<time_to_reproduce):
