@@ -276,11 +276,14 @@ class Robot:
     #used by speech
     tokens_id = [t[:][0] for t in tokens]
     tokens_loc = [t[:][1] for t in tokens]
-    tokens_id_to_str = "   ".join([str(t) for t in tokens_id])
+    tokens_id_to_str = [str(t) for t in tokens_id]
     if self.face!=None and self.gesture==None:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.speech.text_to_speech(self.sentences['lev_3'][counter]+tokens_id_to_str)
-      rospy.sleep(0.1)
+      time_to_reproduce = self.speech.text_to_speech(self.sentences['lev_3'][counter])
+      rospy.sleep(time_to_reproduce)
+      for token in tokens_id_to_str:
+        time_to_reproduce = self.speech.text_to_speech(token, locked=True, threshold=1.5)
+        rospy.sleep(time_to_reproduce)
       self.face.reproduce_face_expression(facial_expression)
       b_executed = True
     elif self.face==None and self.gesture!=None:
