@@ -40,7 +40,7 @@ class Speech():
     self.feedback = self.event(feedback.event_type)
     return self.feedback
 
-  def text_to_speech(self, text, locked=False):
+  def text_to_speech(self, text, locked=False, threshold=10):
     rospy.loginfo("Waiting for Server")
     self.client.wait_for_server()
     rospy.loginfo("Reached Server")
@@ -58,7 +58,7 @@ class Speech():
       self.client.stop_tracking_goal()
 
 
-    return response, length
+    return length/threshold
 
   def cancel_reproduction(self):
     rospy.loginfo("canceling...")
@@ -73,9 +73,10 @@ if __name__ == "__main__":
     speech = Speech("en_GB")
     text = "This is the sentence you have to reproduce"
     start = time.time()
-    success, len = speech.text_to_speech("This is the sentence to reproduce fuck ", True)
+    time_to_reproduce = speech.text_to_speech("This is the sentence to reproduce goool but this is extra ", True, 13)
     elapsed_time = 0
-    while(elapsed_time<3.5):
+    print("len:", time_to_reproduce)
+    while(elapsed_time<time_to_reproduce):
       elapsed_time = time.time()-start
       print("wait")
     speech.cancel_reproduction()
