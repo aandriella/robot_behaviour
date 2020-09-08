@@ -386,7 +386,7 @@ class Gesture:
       place_success = self.place(to_)
       return place_success
 
-  def suggest_row(self, row):
+  def suggest_row(self, row, reproduce_text, text, delay):
     # cell 1 for first row, 2 for the second and so on
     conv_cell = int(row)
     rospy.loginfo("Starting run_motion_python application...")
@@ -402,6 +402,10 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: " + "sr" + str(conv_cell))
     self.client.send_goal(goal)
+
+    rospy.sleep(delay)
+    # reproduce the text with the function speech passed as argument
+    reproduce_text(text)
 
     rospy.loginfo("Waiting for result...")
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))
