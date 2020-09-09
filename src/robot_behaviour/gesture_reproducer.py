@@ -218,15 +218,15 @@ class Gesture:
     rospy.loginfo("Sending goal with motion: init")
     self.client.send_goal(goal)
 
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
-    else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
+    # rospy.loginfo("Waiting for result...")
+    # action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+    # state = self.client.get_state()
+    # if action_ok:
+    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+    #   return True
+    # else:
+    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
+    #   return False
 
   def head_noddling_yes(self):
     rospy.loginfo("Starting run_motion_python application...")
@@ -386,6 +386,8 @@ class Gesture:
       place_success = self.place(to_)
       return place_success
 
+
+
   def suggest_row(self, row, reproduce_text, text, delay):
     # cell 1 for first row, 2 for the second and so on
     conv_cell = int(row)
@@ -403,19 +405,25 @@ class Gesture:
     rospy.loginfo("Sending goal with motion: " + "sr" + str(conv_cell))
     self.client.send_goal(goal)
 
-    rospy.sleep(delay)
-    # reproduce the text with the function speech passed as argument
-    reproduce_text(text)
+    # rospy.loginfo("Waiting for result...")
+    #
+    # action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+    # state = self.client.get_state()
+    # if action_ok:
+    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+    #   return True
+    # else:
+    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
+    #   return False
 
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+  def get_action_state(self):
     state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
+    if state != 3:
+      #action still running
+      return 0
     else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
+      #action completed
+      return 1
 
   def suggest_subset(self, cell, reproduce_text, text, delay):
 
@@ -538,11 +546,11 @@ class Gesture:
       return False
 
   def cancel_motion(self):
-    rospy.loginfo("canceling action")
-    print("canceling action")
-    self.client.cancel_goal()
-    rospy.loginfo("goal has been canceled")
-    print("cancel action")
+    if (self.client.get_state()) == 1:
+      rospy.loginfo("canceling action")
+      self.client.cancel_goal()
+      rospy.loginfo("goal has been canceled")
+      print("cancel action")
 
 
 # def main():
