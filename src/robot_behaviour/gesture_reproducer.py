@@ -459,7 +459,7 @@ class Gesture:
     rospy.loginfo("Execute action without waiting for result...")
 
 
-  def offer_token(self, token_loc, reproduce_text, text):
+  def offer_token(self, token_loc, reproduce_text, text_0, text_1):
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(token_loc))
     rospy.loginfo("Starting run_motion_python application...")
@@ -476,10 +476,12 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
     self.client.send_goal(goal)
-
     rospy.loginfo("Waiting for result...")
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))
     state = self.client.get_state()
+
+    reproduce_text(text_0)
+
     if action_ok:
       rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
       if action_ok:
@@ -501,7 +503,7 @@ class Gesture:
           rospy.loginfo("Sending goal with motion: " + "o" + str(conv_cell))
           self.client.send_goal(goal)
 
-          reproduce_text(text)
+          reproduce_text(text_1)
 
           rospy.loginfo("Waiting for result...")
           action_ok = self.client.wait_for_result(rospy.Duration(30.0))
