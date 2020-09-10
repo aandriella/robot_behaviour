@@ -179,6 +179,9 @@ class Gesture:
     return 46 - cell - 5 * int((cell - 1) / 5)
 
   def wave(self):
+    '''
+    Wave the user
+    '''
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -192,18 +195,13 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: wave")
     self.client.send_goal(goal)
-
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
-    else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
+    rospy.loginfo("Execute action without waiting for result...")
 
   def initial_pos(self):
+    '''
+    Sending the robot to its initial location
+    :
+    '''
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -217,18 +215,13 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: init")
     self.client.send_goal(goal)
+    rospy.loginfo("Execute action without waiting for result...")
 
-    # rospy.loginfo("Waiting for result...")
-    # action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    # state = self.client.get_state()
-    # if action_ok:
-    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-    #   return True
-    # else:
-    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-    #   return False
 
   def head_noddling_yes(self):
+    '''
+    Robot nods its head up and down
+    '''
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     rospy.loginfo("Waiting for Action Server...")
@@ -243,16 +236,11 @@ class Gesture:
     self.client.send_goal(goal)
 
     rospy.loginfo("Execute actions without waiting for result...")
-    # action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    # state = self.client.get_state()
-    # if action_ok:
-    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-    #   return True
-    # else:
-    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-    #   return False
 
   def head_noddling_no(self):
+    '''
+    Robot nods its head left nd right
+    '''
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     rospy.loginfo("Waiting for Action Server...")
@@ -267,16 +255,15 @@ class Gesture:
     self.client.send_goal(goal)
 
     rospy.loginfo("Execute action without waiting for result...")
-    #action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    #state = self.client.get_state()
-    # if action_ok:
-    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-    #   return True
-    # else:
-    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-    #   return False
 
   def pick(self, cell):
+    '''
+    Robot picks the token in location cell
+    Args:
+      cell: location of the board
+    Return:
+      true if the pick has been successfully executed
+    '''
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
@@ -285,17 +272,12 @@ class Gesture:
     rospy.loginfo("conv_cell "+str(conv_cell))
     rospy.loginfo("Waiting for Action Server...")
     self.client.wait_for_server()
-    rospy.loginfo("0")
     goal = PlayMotionGoal()
-    rospy.loginfo("1")
     goal.motion_name = "p" + str(conv_cell)
-    rospy.loginfo("2")
     goal.skip_planning = False
     goal.priority = 0  # Optional
-
     rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
     self.client.send_goal(goal)
-
     rospy.loginfo("Waiting for result...")
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))
     state = self.client.get_state()
@@ -323,13 +305,18 @@ class Gesture:
           if action_ok:
             rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
             return True
-
-
     else:
       rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
       return False
 
   def place(self, cell):
+    '''
+    Robot places the token in the cell location
+    Args:
+      cell: the location on the baord
+    Return:
+      true if the place has been successfully executed
+    '''
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
@@ -381,14 +368,27 @@ class Gesture:
       return False
 
   def pick_and_place(self, from_, to_):
+    '''
+    Method to move a token from a location to another
+    Args:
+      from_: location
+      to_: location
+    :Return:
+      true if the pick and place has been successfully executed
+    '''
     pick_success = self.pick(from_)
     if pick_success:
       place_success = self.place(to_)
       return place_success
 
-
-
-  def suggest_row(self, row, reproduce_text, text, delay):
+  def suggest_row(self, row):
+    '''
+    Suggest the row where the solution is
+    Args:
+      row: row of the board
+    Return:
+       none
+    '''
     # cell 1 for first row, 2 for the second and so on
     conv_cell = int(row)
     rospy.loginfo("Starting run_motion_python application...")
@@ -404,29 +404,17 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: " + "sr" + str(conv_cell))
     self.client.send_goal(goal)
+    rospy.loginfo("Execute action without waiting for result...")
 
-    # rospy.loginfo("Waiting for result...")
-    #
-    # action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    # state = self.client.get_state()
-    # if action_ok:
-    #   rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-    #   return True
-    # else:
-    #   rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-    #   return False
 
-  def get_action_state(self):
-    state = self.client.get_state()
-    if state != 3:
-      #action still running
-      return 0
-    else:
-      #action completed
-      return 1
-
-  def suggest_subset(self, cell, reproduce_text, text, delay):
-
+  def suggest_subset(self, cell):
+    '''
+    Suggest a subset of three tokens on a row
+    Args:
+      cell: the solution location
+    Return:
+      None
+    '''
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
@@ -442,24 +430,19 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: " + "ss" + str(conv_cell))
     self.client.send_goal(goal)
+    rospy.loginfo("Execute action without waiting for result...")
 
-    rospy.sleep(delay)
-    #reproduce the text with the function speech passed as argument
-    reproduce_text(text)
 
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
-    else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
-
-  def suggest_solution(self, token_loc, reproduce_text, text, delay):
+  def suggest_solution(self, cell):
+    '''
+    Robot points at the location of cell
+    Args:
+      cell: solution location
+    Return:
+       None
+    '''
     # cell 1 is g45 for the robot view point
-    conv_cell = int(self.convert(token_loc))
+    conv_cell = int(self.convert(cell))
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
     # client = SimpleActionClient('/play_motion', PlayMotionAction)
@@ -473,19 +456,8 @@ class Gesture:
 
     rospy.loginfo("Sending goal with motion: " + "s" + str(conv_cell))
     self.client.send_goal(goal)
+    rospy.loginfo("Execute action without waiting for result...")
 
-    rospy.sleep(delay)
-    reproduce_text(text)
-
-    rospy.loginfo("Waiting for result...")
-    action_ok = self.client.wait_for_result(rospy.Duration(30.0))
-    state = self.client.get_state()
-    if action_ok:
-      rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
-      return True
-    else:
-      rospy.logwarn("Action failed with state: " + str(get_status_string(state)))
-      return False
 
   def offer_token(self, token_loc, reproduce_text, text):
     # cell 1 is g45 for the robot view point
@@ -552,6 +524,14 @@ class Gesture:
       rospy.loginfo("goal has been canceled")
       print("cancel action")
 
+  def get_action_state(self):
+    state = self.client.get_state()
+    if state != 3:
+      #action still running
+      return 0
+    else:
+      #action completed
+      return 1
 
 # def main():
 #   robot_gesture = Gesture()
