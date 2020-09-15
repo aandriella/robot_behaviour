@@ -469,6 +469,9 @@ class Robot:
 
   def reproduce_sentence(self, text):
     self.speech.text_to_speech(text)
+
+  def has_speech_ended(self):
+    return self.speech.reproduction_has_ended
   #
   # def fake_function(self, reproduce_sentence, text):
   #   i=0
