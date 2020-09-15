@@ -16,10 +16,8 @@ class Speech():
     self.client = actionlib.SimpleActionClient('/tts', TtsAction)
     self.sound_client = SoundClient()
     self.language = language
-    self.feedback = 0
-    self.text = ""
+    self.reproduction_has_ended = False
   def event(self, event):
-    #print("event {}".format(event))
     return {
       1: 'TTS_EVENT_INITIALIZATION',
       2: 'TTS_EVENT_SHUTDOWN',
@@ -33,64 +31,42 @@ class Speech():
     }[event]
 
   def feedbackCb(self, feedback):
-    print("event type: " + self.event(feedback.event_type))
-    print("timestamp: " + str(feedback.timestamp))
-    print("current word: " + feedback.text_said)
-    print("next word: " + feedback.next_word)
-    print("-")
+      r = rospy.Rate(20)
+      r.sleep()
+      #rospy.loginfo("Feedback ")
 
-  def text_to_speech(self, text, locked=False, threshold=10):
+  def activeCb(self):
+      rospy.loginfo("Processing the goal")
+
+  def doneCb(self, state, result):
+      rospy.loginfo("Action server is done.")
+      self.reproduction_has_ended = True
+      
+
+  def text_to_speech(self, text, locked=False):
     #rospy.loginfo("Waiting for Server")
     self.client.wait_for_server()
     #rospy.loginfo("Reached Server")
     goal = TtsGoal()
     goal.rawtext.text = text
-    length = len(text)
     goal.rawtext.lang_id = self.language
-    t0 = time.time()
-    self.client.send_goal(goal, feedback_cb=self.feedbackCb)
-
-    goal_state = self.client.get_state()
+    self.client.send_goal(goal, active_cb=self.activeCb, feedback_cb=self.feedbackCb, done_cb=self.doneCb)
     if locked:
-      self.client.wait_for_result(timeout=rospy.Duration(5))
+      self.client.wait_for_result()
 
-    response = self.client.get_result()
-    if goal_state != GoalStatus.SUCCEEDED:
-      self.client.stop_tracking_goal()
-
-    return
-  
   def cancel_reproduction(self):
     rospy.loginfo("canceling...")
     self.text_to_speech("", False)
     rospy.loginfo("goal has been canceled")
 
-  def get_status(self):
-    if self.feedback == "TTS_EVENT_STARTED_PLAYING_WORD":
-      return True
-#
 if __name__ == "__main__":
     speech = Speech("en_GB")
-    text = "This is the sentence you have to reproduce, for istance."
-    start = time.time()
-    t = speech.text_to_speech(text, False, 1)
-    time_to_reproduce = 5
-    print(time_to_reproduce)
-    # rospy.sleep(time_to_reproduce)
+    text = "The solution is 112"
+    speech.text_to_speech(text, False, 0)
+    t0 = time.time()
     elapsed_time = 0
-    # print("len:", time_to_reproduce)
-    while(elapsed_time<time_to_reproduce):
-      elapsed_time = time.time()-start
-      if elapsed_time>2:
-        speech.cancel_reproduction()
-        print("speech", speech.client.get_state())
-        break
-    #success_against = speech.text_to_speech("test again agaist you", True)
+    while(elapsed_time<5):
+        elapsed_time = time.time()-t0
+        print("Reproduction has ended? ",speech.reproduction_has_ended)
 
-    # while(elapsed_time<4):
-    #   elapsed_time = time.time()-start
-    #speech.cancel_reproduction()
-    #while(speech.feedback!="TTS_EVENT_FINISHED_PLAYING_SENTENCE"):
-    #  print("Do something else")
-    #print("We're out")
-    #while (speech.feedback)
+
