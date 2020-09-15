@@ -470,6 +470,10 @@ class Robot:
   def reproduce_sentence(self, text):
     self.speech.text_to_speech(text)
 
+  def reset_speech_ended(self):
+    self.speech.reproduction_has_ended = False
+    return self.speech.reproduction_has_ended
+
   def has_speech_ended(self):
     return self.speech.reproduction_has_ended
   #
