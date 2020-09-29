@@ -1,0 +1,25 @@
+play_motion:
+  motions:
+    s33:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.5516, 0.3872, -1.4816, 1.4506, -1.7999, 0.5705, -1.5773]
+        #go to step1
+        - time_from_start: 3
+          positions: [0.7396, 0.4637, -1.1922, 1.3392, -1.6315, 0.5706, -1.5775]
+        #go to step2
+        - time_from_start: 4
+          positions: [0.7396, 0.3637, -1.1922, 1.3392, -1.6315, 0.5706, -1.5775]
+        #go to step3
+        - time_from_start: 5
+          positions: [0.7396, 0.4637, -1.1922, 1.3392, -1.6315, 0.5706, -1.5775]
+        #come back
+        - time_from_start: 7
+          positions: [0.2269, 0.3316, -1.6138, 2.2556, -1.6316, 0.5703, -1.5773]
+
+
+      meta:
+        name: s33
+        usage: s33
+        description: suggest the solution for p33
