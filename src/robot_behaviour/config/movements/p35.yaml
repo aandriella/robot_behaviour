@@ -8,8 +8,6 @@ play_motion:
         - time_from_start: 3
           positions: [0.5399, 0.4803, -1.1818, 1.298, -1.6315, 0.5706, -1.5775]
         - time_from_start: 5
-          positions: [0.5417, 0.2994, -1.1818, 1.2352, -1.6315, 0.5706, -1.5775]
-        - time_from_start: 7
           positions: [0.5418, 0.2894, -1.1826, 1.2352, -1.6314, 0.5706, -1.5776]
       meta:
         name: p35

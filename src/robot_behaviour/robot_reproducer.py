@@ -45,6 +45,9 @@ class Robot:
       "lev_5": self.offer_solution
     }
 
+  def send_to_rest(self):
+    self.gesture.initial_pos()
+
 
   def load_sentences(self, file):
     file = open(file, "r")
@@ -141,7 +144,7 @@ class Robot:
         self.speech.text_to_speech(self.sentences['user_move_back'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
-      success = self.gesture.pick_and_place(token_from, token_to)
+      success = self.gesture.pick_and_place(token_to, token_from)
       self.gesture.initial_pos()
       b_executed = True
 
@@ -185,17 +188,10 @@ class Robot:
     '''
     print("Lev_0")
     b_executed = False
-    if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(self.sentences['lev_0'][counter])
-      rospy.sleep(0.1)
-      self.face.reproduce_face_expression(facial_expression)
-      b_executed = True
-    elif self.face == None and self.gesture != None:
-      '''N.B For this kind of action we did not plan to move the robot'''
-      assert "Error Lev 0 does not contemplate any gesture"
-    else:
-      '''N.B For this kind of action we did not plan to move the robot'''
-      assert "Error Lev 0 does not contemplate any gesture"
+    self.speech.text_to_speech(self.sentences['lev_0'][counter])
+    rospy.sleep(0.1)
+    self.face.reproduce_face_expression(facial_expression)
+    b_executed = True
     return b_executed
 
   def encouragement(self, counter, facial_expression, delay_for_speech):
@@ -208,15 +204,9 @@ class Robot:
       '''
     print("Lev_1")
     b_executed = False
-    if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(self.sentences['lev_1'][counter]+self.sentences['lev_0'][0])
-      rospy.sleep(0.1)
-      self.face.reproduce_face_expression(facial_expression)
-      b_executed = True
-    elif self.face==None and self.gesture!=None:
-      assert "Error Lev 1 does not contemplate any gesture"
-    else:
-      assert "Error Lev 1 does not contemplate any gesture"
+    self.speech.text_to_speech(self.sentences['lev_1'][counter]+";;;;"+self.sentences['lev_0'][0])
+    rospy.sleep(0.1)
+    b_executed = True
     return b_executed
 
 
@@ -357,6 +347,7 @@ class Robot:
       self.speech.text_to_speech(self.sentences['lev_5'][0])
       self.face.reproduce_face_expression(facial_expression)
       self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1], self.sentences['lev_5'][2])
+      self.gesture.initial_pos()
       b_executed = True
     return b_executed
 
@@ -384,6 +375,7 @@ class Robot:
       self.speech.text_to_speech(self.sentences['max_attempt'][counter])
       rospy.sleep(0.1)
       self.gesture.pick_and_place(token_sol_from, token_sol_to)
+      self.gesture.initial_pos()
       b_executed = True
     else:
       # TODO: test on the robot
@@ -391,6 +383,7 @@ class Robot:
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
       self.gesture.pick_and_place(token_sol_from, token_sol_to)
+      self.gesture.initial_pos()
       b_executed = True
 
   def pick(self, positive, counter, facial_expression):
@@ -498,8 +491,8 @@ def main():
   token_to = ""
   who = "robot"
   row = 3
-  tokens = [("111",13), ("256", 15), ("341", 18)]
-  token = ("111", 14, 13)
+  tokens = [("111",8), ("256", 9), ("341", 10)]
+  token = ("111", 8, 2)
   positive = False
   lev_id = 3
   #robot.fake_function(robot.play_sentence)
@@ -510,8 +503,9 @@ def main():
   #robot.action["move_back"].__call__(who, token)
   #robot.action["lev_0"].__call__()
   #rospy.sleep(3.0)
-  robot.assistance(lev_id=5, row=2, counter=4, token=token, facial_expression=face,  tokens=tokens, delay_for_speech=3)
-
+  #robot.assistance(lev_id=5, row=2, counter=0, token=token, facial_expression=face,  tokens=tokens, delay_for_speech=1)
+  #robot.move_onbehalf(token, counter, face)
+  robot.move_token_back(who=robot, token=token, counter=counter, facial_expression=face)
   #robot.action["assistance"].__call__(lev_id, row, counter, token, *tokens)
   #robot.action["lev_2"].__call__(row, counter)
   #robot.action["lev_3"].__call__(counter, token, *tokens)

@@ -6,16 +6,16 @@ play_motion:
         - time_from_start: 0
           positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
         #go to first step
-        - time_from_start: 3
+        - time_from_start: 2
           positions: [0.939, 0.223, -1.3074, 1.0479, -1.6315, 0.5706, -1.5775]
         #go to second step
-        - time_from_start: 5
+        - time_from_start: 4
           positions: [0.939, 0.183, -1.3074, 1.0479, -1.6315, 0.5706, -1.5775]
         #go to third step
-        - time_from_start: 7
+        - time_from_start: 6
           positions: [0.939, 0.223, -1.3074, 1.0479, -1.6315, 0.5706, -1.5775]
         #come back
-        - time_from_start: 10
+        - time_from_start: 8
           positions: [0.2269, 0.3316, -1.6138, 2.2556, -1.6316, 0.5703, -1.5773]
       meta:
         name: s22

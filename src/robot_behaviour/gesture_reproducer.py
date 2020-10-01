@@ -283,6 +283,11 @@ class Gesture:
     state = self.client.get_state()
     if action_ok:
       rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
+      if str(self.get_status_string(state)) == "REJECTED":
+        self.client.cancel_goal()
+        self.client.send_goal(goal)
+        rospy.loginfo("Waiting for result...")
+        action_ok = self.client.wait_for_result(rospy.Duration(30.0))
       if action_ok:
         activate = self.activate_magnet()
         if activate == False:
@@ -477,11 +482,13 @@ class Gesture:
     rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
     self.client.send_goal(goal)
     rospy.loginfo("Waiting for result...")
+    print(self.client.get_state())
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))
     state = self.client.get_state()
 
     reproduce_text(text_0)
-
+    print(self.client.get_state())
+    #replace action_ok with get_state ==3
     if action_ok:
       rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
       if action_ok:
