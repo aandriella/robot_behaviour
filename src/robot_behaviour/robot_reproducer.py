@@ -139,13 +139,15 @@ class Robot:
       if who == "robot":
         if counter >= len(self.sentences['robot_move_back'])-1: counter = random.randint(0, len(self.sentences['robot_move_back'])-1)
         self.speech.text_to_speech(self.sentences['robot_move_back'][counter])
+        success = self.gesture.pick_and_place(token_to, token_from)
+        self.gesture.initial_pos()
       else:
-        if counter >= len(self.sentences['robot_move_back'])-1: counter = random.randint(0, len(self.sentences['robot_move_back'])-1)
+        if counter >= len(self.sentences['user_move_back'])-1: counter = random.randint(0, len(self.sentences['user_move_back'])-1)
         self.speech.text_to_speech(self.sentences['user_move_back'][counter])
       rospy.sleep(0.1)
       self.face.reproduce_face_expression(facial_expression)
-      success = self.gesture.pick_and_place(token_to, token_from)
-      self.gesture.initial_pos()
+      #success = self.gesture.pick_and_place(token_to, token_from)
+      #self.gesture.initial_pos()
       b_executed = True
 
     return b_executed
@@ -411,7 +413,10 @@ class Robot:
     return b_executed
 
   def get_action_state(self):
-    return self.gesture.get_action_state()
+    if self.gesture!= None:
+      return self.gesture.get_action_state()
+    else:
+      return None
 
   def timeout(self, counter, facial_expression):
     '''
@@ -423,15 +428,9 @@ class Robot:
         '''
     b_executed = False
     if counter >= len(self.sentences['timeout'])-1: counter = random.randint(0, len(self.sentences['timeout'])-1)
-    if self.face!=None and self.gesture==None:
-      time_to_reproduce = self.speech.text_to_speech(self.sentences['timeout'][counter], locked = True)
-      rospy.sleep(time_to_reproduce)
-      self.face.reproduce_face_expression(facial_expression)
-      b_executed = True
-    elif self.face==None and self.gesture!=None:
-      assert "Error Timeout does not contemplate any gesture"
-    else:
-      assert "Error Timeout does not contemplate any gesture"
+    self.speech.text_to_speech(self.sentences['timeout'][counter], locked = True)
+    self.face.reproduce_face_expression(facial_expression)
+    b_executed = True
     return b_executed
 
   def instruction(self, counter, facial_expression):
@@ -458,7 +457,7 @@ class Robot:
     if self.gesture != None:
       self.gesture.cancel_motion()
       #self.gesture.initial_pos()
-      self.speech.cancel_reproduction()
+      #self.speech.cancel_reproduction()
 
   def reproduce_sentence(self, text):
     self.speech.text_to_speech(text)
