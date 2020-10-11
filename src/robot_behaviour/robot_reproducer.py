@@ -10,7 +10,6 @@ import ast
 from robot_behaviour.face_reproducer import Face
 from robot_behaviour.speech_reproducer import Speech
 from robot_behaviour.gesture_reproducer import Gesture
-import robot_behaviour.sentences as s
 
 class Robot:
   def __init__(self, speech, sentences_file, face=None, gesture=None):
@@ -433,7 +432,7 @@ class Robot:
     b_executed = True
     return b_executed
 
-  def instruction(self, counter, facial_expression):
+  def instruction(self,objective , facial_expression):
     '''The agent provides the instructions of the exercise
     Args:
     Return:
@@ -442,16 +441,23 @@ class Robot:
     '''
     print("instruction")
     b_executed = False
-    if counter >= len(self.sentences['instruction'])-1: counter = random.randint(0, len(self.sentences['instruction'])-1)
-    if self.face!=None and self.gesture==None:
-      self.speech.text_to_speech(self.sentences['instruction'][counter], locked=True)
-      rospy.sleep(0.1)
-      self.face.reproduce_face_expression(facial_expression)
-      b_executed = True
-    elif self.face==None and self.gesture!=None:
-      assert "Error Instruction does not contemplate any gesture"
-    else:
-      assert "Error Instruction does not contemplate any gesture"
+    self.speech.text_to_speech(self.sentences[objective][0], locked=True)
+    rospy.sleep(20)
+    self.face.reproduce_face_expression(facial_expression)
+
+  def end_game(self, facial_expression):
+    '''The agent provides the instructions of the exercise
+    Args:
+    Return:
+      Bool:
+      if the action has been executed successfully
+    '''
+    print("end_game")
+    b_executed = False
+    self.speech.text_to_speech(self.sentences['end_game'][0], locked=True)
+    rospy.sleep(0.1)
+    self.face.reproduce_face_expression(facial_expression)
+
 
   def cancel_action(self):
     if self.gesture != None:
