@@ -1,0 +1,75 @@
+{'instruction_ascending_odd':["Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan,
+			y hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas.
+        El objetivo es ordenar las fichas pares en orden ascendente, del numero mas pequeño al numero mas grande.
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? ¡Comencemos!"],
+
+'instruction_ascending_even':["Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan,
+			y hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas.
+        El objetivo es ordenar las fichas pares en orden ascendente, del numero mas pequeño al numero mas grande.
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? ¡Comencemos!"],
+
+'instruction_descending_odd':["Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan,
+			y hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas.
+        El objetivo es ordenar fichas inpares en orden descendiente, del numero mas pequeño al numero mas grande.
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? ¡Comencemos!"],
+
+'instruction_descending_even':["Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan,
+			y hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas.
+        El objetivo es ordenar fichas inpares en orden ascendente, del numero mas pequeño al numero mas grande.
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? ¡Comencemos!"],
+
+'instruction_ascending':["Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan,
+			y hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas.
+        El objetivo es ordenar fichas numeradas en orden ascendente, del numero mas pequeño al numero mas grande.
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? ¡Comencemos!"],
+
+'instruction_descending':["Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan,
+			y hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas.
+        El objetivo es ordenar fichas numeradas en orden descendiente, del numero mas grande al numero mas pequeño.
+        Por favor, espera mis instrucciones antes de mover una ficha.
+        ¿Preparado? ¡Comencemos!"],
+
+
+'compassion':["No te preocupes, estoy seguro de que mejorarás",
+                  "No te preocupes,  todos nos equivocamos.",
+                  "Sé como te sientes, también he estado en esta situación antes.",
+                  "Si confías en mí, lo conseguiremos"],
+'congratulation':["Has hecho un buen movimiento.",
+                  "¡Bien hecho! Estás jugando según lo esperado.",
+                  "¡Me encanta jugar contigo!",
+                  "Eso es exactamente lo que esperaba de ti... ¡Bien hecho!"
+                  ],
+
+'max_attempt':["Has superado el número máximo de intentos. Voy a mover la ficha por ti."],
+
+'timeout':["El tiempo corre, te ayudaré de nuevo."],
+'timeout_pick':["El tiempo corre, por favor, mueve la ficha de vuelta y te ofreceré ayuda de nuevo."]
+
+'user_move_back':["¿Por favor, puedes mover la ficha donde estaba antes?"],
+'robot_move_back':["No te preocupes, yo la mueveré a su sitio"],
+
+'lev_0':["Es tu turno, por favor, mueve una ficha."],
+'lev_1':["¡Vamos! ¡Sé que puedes hacerlo!",
+         "Recuerda, los números deben estar ordenados en orden ascendente. ",
+         "¡Creo en ti! ",
+         "¡¡¡No tengas miedo de comenter un error!! "],
+'lev_2':["¡La respuesta está aquí! ",
+         "Mira en esta linea...   "],
+'lev_3':["Estoy aquí para ayudarte... La solución puede ser una de estas fichas: ",
+         "¿Por qué no pruebas con con una de estas fichas?;"],["Una pista... La solución puede ser:"],
+'lev_4':["la ficha correcta es   ; ; ; :",
+         "la ficha correcta que has de mover es   ; ; ; :",
+         "Hoy es tu dia de suerte ... la solución es   ; ; ; :"],
+'lev_5':["La ficha que has de mover es ésta...:",
+         "Cógela... y muévela a la posición correcta."],
+
+'pick_ok':["¡Genial!", "Ok", "¡Perfecto!"],
+'pick_no':["¿Estas seguro?", "No sé.", "Es un numero par o impar?"],
+'end_game':["Ha sido un placer jugar contigo, espero que te lo hayas pasado bien. Quieres jugar otra vez?"]
+
+}
