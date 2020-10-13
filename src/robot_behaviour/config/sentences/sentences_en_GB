@@ -25,4 +25,6 @@
 'lev_5':["I will give you the token to move:","The token to move is this one.",
          "Take it . and move in the right location"],
 'pick_ok':["Yep", "Ok", "Great"],
-'pick_no':["Really???", "Are you sure?", "No"]}
+'pick_no':["Really???", "Are you sure?", "No"],
+'end_game':["It has been a pleasure playing with you. Hope you have enjoyed it too."]
+}
