@@ -41,6 +41,7 @@ class Speech():
   def doneCb(self, state, result):
       rospy.loginfo("Action server is done.")
       self.reproduction_has_ended = True
+      return self.reproduction_has_ended
       
 
   def text_to_speech(self, text, locked=False):
@@ -61,18 +62,7 @@ class Speech():
 
 if __name__ == "__main__":
     speech = Speech("en_GB")
-    text = "The solution is 112"
+    text = "Hola"
     speech.text_to_speech(text, True)
     print(speech.reproduction_has_ended)
-    speech.reproduction_has_ended = False
-    print(speech.reproduction_has_ended)
-    if speech.reproduction_has_ended == False:
-        speech.text_to_speech(text, True)
-        print(speech.reproduction_has_ended)
-    #
-    # t0 = time.time()
-    # elapsed_time = 0
-    # while(elapsed_time<5):
-    #     elapsed_time = time.time()-t0
-    #     print("Reproduction has ended? ",speech.reproduction_has_ended)
 
