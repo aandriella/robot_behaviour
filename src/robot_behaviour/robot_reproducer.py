@@ -124,7 +124,7 @@ class Robot:
     return b_executed
 
 
-  def move_token_back(self, who, token, counter, facial_expression, eyes_coords):
+  def move_token_back(self, who, token, counter, facial_expression, eyes_coords=None):
     '''
       The robot will pick the wrong token and move it back to its initial location
       if who = "robot" otherwise the user is asked to move back the token
@@ -541,7 +541,7 @@ def main():
   who = "robot"
   row = 3
   tokens = [("111",8), ("256", 9), ("341", 10)]
-  token = ("111", 8, 2)
+  token = ("111", 1, 18)
   positive = False
   lev_id = 3
   #robot.fake_function(robot.play_sentence)
@@ -554,7 +554,7 @@ def main():
   #rospy.sleep(3.0)
   #robot.assistance(lev_id=5, row=2, counter=0, token=token, facial_expression=face,  tokens=tokens, delay_for_speech=1)
   #robot.move_onbehalf(token, counter, face)
-  robot.move_token_back(who=robot, token=token, counter=counter, facial_expression=face)
+  robot.move_token_back(who="robot", token=token, counter=counter, facial_expression=face)
   #robot.action["assistance"].__call__(lev_id, row, counter, token, *tokens)
   #robot.action["lev_2"].__call__(row, counter)
   #robot.action["lev_3"].__call__(counter, token, *tokens)
