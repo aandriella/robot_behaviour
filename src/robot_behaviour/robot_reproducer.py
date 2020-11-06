@@ -111,8 +111,7 @@ class Robot:
     print("Congrats method")
     b_executed = False
     if counter >=len(self.sentences['congratulation'])-1: counter=random.randint(0, len(self.sentences['congratulation'])-1)
-    time_to_reproduce = self.speech.text_to_speech(self.sentences['congratulation'][counter], locked = True)
-    rospy.sleep(time_to_reproduce)
+    self.speech.text_to_speech(self.sentences['congratulation'][counter], locked = True)
     self.face.reproduce_face_expression(facial_expression)
     if eyes_coords!=None:
      self.face.move_eyes(eyes_coords[0], eyes_coords[1])
@@ -130,21 +129,13 @@ class Robot:
     print("Compassion funct")
     b_executed = False
     if counter >=len(self.sentences['compassion'])-1: counter=random.randint(0, len(self.sentences['compassion'])-1)
-    if self.face!=None and self.gesture==None:
-      time_to_reproduce = self.speech.text_to_speech(self.sentences['compassion'][counter], locked = True)
-      rospy.sleep(time_to_reproduce)
-      self.face.reproduce_face_expression(facial_expression)
-      if eyes_coords != None:
-        self.face.move_eyes(eyes_coords[0], eyes_coords[1])
-
-      b_executed = True
-    elif self.face==None and self.gesture!=None:
-      '''N.B For this kind of action we did not plan to move the robot'''
-      assert "Error Compassion does not contemplate any gesture"
-    else:
-      '''N.B For this kind of action we did not plan to move the robot'''
-      assert "Error Compassion does not contemplate any gesture"
-
+    time_to_reproduce = self.speech.text_to_speech(self.sentences['compassion'][counter], locked = True)
+    rospy.sleep(time_to_reproduce)
+    self.face.reproduce_face_expression(facial_expression)
+    if eyes_coords != None:
+      self.face.move_eyes(eyes_coords[0], eyes_coords[1])
+    b_executed = True
+    '''N.B For this kind of action we did not plan to move the robot'''
     return b_executed
 
 
@@ -286,7 +277,7 @@ class Robot:
     elif self.face==None and self.gesture!=None:
       #TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
       self.gesture.suggest_row(row)
-      self.speech.text_to_speech(self.sentences['lev_2'][counter] + str(row) + ";" + self.sentences['lev_0'][0])
+      self.speech.text_to_speech(self.sentences['lev_2'][counter]+ ";" + self.sentences['lev_0'][0])
       rospy.sleep(delay_for_speech)
       b_executed = True
     else:
@@ -294,7 +285,7 @@ class Robot:
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
       self.gesture.suggest_row(row)
       rospy.sleep(delay_for_speech)
-      self.speech.text_to_speech(self.sentences['lev_2'][counter]+"; ;"+str(row)+";;"+self.sentences['lev_0'][0])
+      self.speech.text_to_speech(self.sentences['lev_2'][counter]+"; ;"+self.sentences['lev_0'][0])
       b_executed = True
     return b_executed
 
