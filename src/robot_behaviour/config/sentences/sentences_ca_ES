@@ -40,7 +40,7 @@
          "Agafa-la... y mou-la a la posició correcta."],
 
 'pick_ok':["Genial!", "Molt be!", "Perfecte!"],
-'pick_no':["N'estas segur?", "Vols dir?", "És un número parell o senar?"],
+'pick_no':["N'estas segur?", "Vols dir?", "És un número parell? o senar?"],
 'end_game':["Molt be, has acabat. Ha estat un plaer jugar amb tu, espero que t'ho hagis passat be. Vols jugar un altre cop?"]
 
 }
