@@ -4,7 +4,7 @@ play_motion:
       joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
       points:
         - time_from_start: 0
-          positions: [0.6274, 0.3213, -1.1835, 1.3082, -1.6314, 0.5706, -1.5776]
+          positions: [0.7366099090337328, 0.5201908343432174, -1.0709785005138903, 1.3788896991823774, -1.7852940381494409, 0.5630266112358551, -1.5764433872079322]
         - time_from_start: 2
           positions: [0.6386, 0.543, -1.1834, 1.3668, -1.6315, 0.5706, -1.5775]
         - time_from_start: 5
