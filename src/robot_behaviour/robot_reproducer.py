@@ -110,7 +110,7 @@ class Robot:
     '''
     print("Congrats method")
     b_executed = False
-    if counter >=len(self.sentences['congratulation'])-1: counter=random.randint(0, len(self.sentences['congratulation'])-1)
+    if counter >len(self.sentences['congratulation'])-1: counter=random.randint(0, len(self.sentences['congratulation'])-1)
     self.speech.text_to_speech(self.sentences['congratulation'][counter], locked = True)
     self.face.reproduce_face_expression(facial_expression)
     if eyes_coords!=None:
@@ -128,9 +128,8 @@ class Robot:
       '''
     print("Compassion funct")
     b_executed = False
-    if counter >=len(self.sentences['compassion'])-1: counter=random.randint(0, len(self.sentences['compassion'])-1)
-    time_to_reproduce = self.speech.text_to_speech(self.sentences['compassion'][counter], locked = True)
-    rospy.sleep(time_to_reproduce)
+    if counter >len(self.sentences['compassion'])-1: counter=random.randint(0, len(self.sentences['compassion'])-1)
+    self.speech.text_to_speech(self.sentences['compassion'][counter], locked = True)
     self.face.reproduce_face_expression(facial_expression)
     if eyes_coords != None:
       self.face.move_eyes(eyes_coords[0], eyes_coords[1])
@@ -545,32 +544,44 @@ class Robot:
 
 
 def main():
-  speech = Speech("en_GB")
-  gesture = Gesture()
+  speech = Speech("es_ES")
+  gesture = None#Gesture()
   face = Face()
-  robot = Robot(speech=speech, sentences_file="config/sentences/sentences_en_GB",  face=face, gesture=gesture)
+  policy_filename = "/home/pal/Documents/Framework/GenerativeMutualShapingRL/results/1/True/1/policy.pkl"
+  robot = Robot(speech=speech, sentences_file="config/sentences/sentences_es_ES", action_policy_filename=policy_filename,  face=face, gesture=gesture)
 
   counter = 0
   token_from = ""
   token_to = ""
   who = "robot"
-  row = 3
+  row = 4
   tokens = [("111",8), ("256", 9), ("341", 10)]
-  token = ("111", 1, 18)
+  token = ("111", 20, 5)
   positive = False
   lev_id = 3
+  delay = 2.0
+  eye_coords = (0,0)
   #robot.fake_function(robot.play_sentence)
+  #robot.action["instruction"].__call__(objective="ascending", facial_expression = "neutral")
+  robot.reset_speech_ended()
 
-  #robot.action["congrats"].__call__(counter)
-  #robot.action["compassion"].__call__(counter)
+
+  # for i in range(4):
+  #   robot.action["compassion"].__call__(counter=i, facial_expression="sad")
+  #   rospy.sleep(3.0)
+  # for i in range(4):
+  #   robot.action["congrats"].__call__(counter=i, facial_expression="happy")
+    #speech.cancel_reproduction()
   # #take in input 5 params
   #robot.action["move_back"].__call__(who, token)
-  #robot.action["lev_0"].__call__()
   #rospy.sleep(3.0)
-  #robot.assistance(lev_id=5, row=2, counter=0, token=token, facial_expression=face,  tokens=tokens, delay_for_speech=1)
+  for lev in range(4):
+    for c in range(3):
+      robot.assistance(lev_id=lev+1, row=2, counter=c, token=token, facial_expression="neutral",  eyes_coords=eye_coords, tokens=tokens, delay_for_speech=1)
+      rospy.sleep(2.0)
   #robot.move_onbehalf(token, counter, face)
-  robot.move_token_back(who="robot", token=token, counter=counter, facial_expression=face)
-  #robot.action["assistance"].__call__(lev_id, row, counter, token, *tokens)
+  #robot.move_token_back(who="robot", token=token, counter=counter, facial_expression=face)
+  #robot.action["assistance"].__call__(lev_id, row, counter, token, face, eye_coords, tokens, delay)
   #robot.action["lev_2"].__call__(row, counter)
   #robot.action["lev_3"].__call__(counter, token, *tokens)
   #robot.action["lev_4"].__call__(counter, token)
@@ -578,7 +589,7 @@ def main():
   #robot.action["instruction"].__call__()
   #robot.action["max_attempt"].__call__(token)
   #robot.action["timeout"].__call__()
-  #robot.action["pick"].__call__(positive, counter)
+  robot.action["pick"].__call__(positive=False, counter=2, facial_expression="confused", eyes_coords=None)
 
 if __name__=="__main__":
   main()
