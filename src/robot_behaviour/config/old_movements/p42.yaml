@@ -1,0 +1,17 @@
+play_motion:
+  motions:
+    p42:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
+        - time_from_start: 3
+          positions: [0.7796, 0.7522, -1.2092, 1.6385, -1.6313, 0.5704, -1.5777]
+        - time_from_start: 5
+          positions: [0.7501, 0.5998, -1.2099, 1.6399, -1.63, 0.5699, -1.5803]
+        - time_from_start: 7
+          positions: [0.6754, 0.2423, -1.2884, 1.6038, -1.63, 0.53, -1.58]
+      meta:
+        name: p42
+        usage: p42
+        description: pick a token in position p42 with intermediate point

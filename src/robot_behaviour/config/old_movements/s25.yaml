@@ -1,0 +1,23 @@
+play_motion:
+  motions:
+    s25:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
+        #go to first step
+        - time_from_start: 3
+          positions: [0.64, 0.22, -1.2499, 1.0199, -1.6, 0.5399, -1.5499]
+        #go to second step
+        - time_from_start: 5
+          positions: [0.64, 0.18, -1.2499, 1.0199, -1.6, 0.5399, -1.5499]
+        #go to third step
+        - time_from_start: 7
+          positions: [0.64, 0.22, -1.2499, 1.0199, -1.6, 0.5399, -1.5499]
+        #come back
+        - time_from_start: 10
+          positions: [0.2269, 0.3316, -1.6138, 2.2556, -1.6316, 0.5703, -1.5773]
+      meta:
+        name: s25
+        usage: s25
+        description: suggest the solution for p25

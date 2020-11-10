@@ -1,0 +1,15 @@
+play_motion:
+  motions:
+    o33:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.7396, 0.3237, -1.1922, 1.3392, -1.6315, 0.5706, -1.5775]
+        - time_from_start: 5
+          positions: [0.7119, 0.4834, -1.2491, 1.3931, -1.6315, 0.5706, -1.5775]
+        - time_from_start: 10
+          positions: [1.4105, 0.2109, -1.1399, 0.6501, -1.5298, 0.57, -1.58]
+      meta:
+        name: o33
+        usage: o33
+        description: offer token in location p33  to user 

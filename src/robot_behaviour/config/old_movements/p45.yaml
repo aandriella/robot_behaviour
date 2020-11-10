@@ -1,0 +1,17 @@
+play_motion:
+  motions:
+    p45:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
+        - time_from_start: 3
+          positions: [0.3294, 0.5073, -1.299, 1.5193, -1.6312, 0.5705, -1.5776]
+        - time_from_start: 5
+          positions: [0.301, 0.3004, -1.2996, 1.4801, -1.63, 0.5701, -1.5801]
+        - time_from_start: 7
+          positions: [0.2987, 0.1959, -1.2914, 1.474, -1.63, 0.57, -1.58]
+      meta:
+        name: p45
+        usage: p45
+        description: pick a token in position p45 with intermediate point
