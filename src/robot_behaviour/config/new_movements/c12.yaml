@@ -1,0 +1,15 @@
+play_motion:
+  motions:
+    c12:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [1.2031763542929022, 0.14058691343631596, -1.141419832640476, 0.6876227676448481, -1.6893868773482137, 0.5091112543814796, -1.5757505020638343]
+        - time_from_start: 2
+          positions: [1.1657, 0.1891, -1.1414, 0.6463, -1.5298, 0.5699, -1.5782]
+        - time_from_start: 5
+          positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
+      meta:
+        name: c12
+        usage: c12
+        description: come back from position p12 to intermediate point

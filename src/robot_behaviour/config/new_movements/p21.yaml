@@ -1,0 +1,15 @@
+play_motion:
+  motions:
+    p21:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.68, 0.2706, -1.3499, 1.3701, -1.6295, 0.5699, -1.5799]
+        - time_from_start: 3
+          positions: [1.0608, 0.182, -1.3074, 1.034, -1.6315, 0.5706, -1.5775]
+        - time_from_start: 5.5
+          positions: [1.1594266419181152, 0.2438865498780469, -1.1346242076117137, 0.9898363312828852, -1.6819281725617483, 0.5630266112358551, -1.5764433872079322]
+      meta:
+        name: p21
+        usage: p21
+        description: pick a token in position p21 with intermediate point

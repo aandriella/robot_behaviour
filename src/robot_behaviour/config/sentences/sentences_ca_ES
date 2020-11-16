@@ -25,8 +25,8 @@
 
 'lev_0':["Es el teu torn. Si us plau, mou una fitxa."],
 'lev_1':["Vinga! Se que ho pots fer!",
-         "Recorda, els números han d'estar ordenats en ordre ascendent. ",
-         "Crec en tu!",
+         "Recorda, estem ordenant els números imparells del més gran al més petit. ",
+         "Recorda, estem ordenant els números imparells del més gran al més petit.",
          "No tinguis por de cometre un error!!"],
 'lev_2':["La resposta està en aquesta línia! ",
          "Mira en aquesta línia...   "],

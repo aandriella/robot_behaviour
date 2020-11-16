@@ -22,7 +22,7 @@
 'lev_4':["The right token is this one   ; ; ; :",
          "The right token to move is   ; ; ; :",
          "It's not so difficult. the right token to move is   ; ; ; :"],
-'lev_5':["I will give you the token to move:","The token to move is this one.",
+'lev_5':["The token to move is this one.",
          "Take it . and move in the right location"],
 'pick_ok':["Yep", "Ok", "Great"],
 'pick_no':["Really???", "Are you sure?", "No"],

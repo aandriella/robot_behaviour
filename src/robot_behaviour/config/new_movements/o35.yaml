@@ -1,0 +1,15 @@
+play_motion:
+  motions:
+    o35:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.5418, 0.2894, -1.1826, 1.2352, -1.6314, 0.5706, -1.5776]
+        - time_from_start: 5
+          positions: [0.5399, 0.4803, -1.1818, 1.298, -1.6315, 0.5706, -1.5775]
+        - time_from_start: 10
+          positions: [0.6997, 0.2705, -1.1202, 0.6501, -1.5499, 0.5702, -1.5802]
+      meta:
+        name: o35
+        usage: o35
+        description:  offer token in position p35 to user
