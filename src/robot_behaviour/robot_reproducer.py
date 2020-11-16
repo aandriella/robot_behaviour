@@ -199,6 +199,9 @@ class Robot:
   LEVELS OF ASSISTANCE FURNISHED BY THE ROBOT
   '''
 
+  def reset_facial_expression(self):
+    self.face.reproduce_face_expression("neutral")
+    rospy.sleep(0.1)
 
   def assistance(self, lev_id, row, counter, token, facial_expression, eyes_coords,  tokens, delay_for_speech):
     if eyes_coords != None:
@@ -281,6 +284,7 @@ class Robot:
       b_executed = True
     else:
       self.face.reproduce_face_expression(facial_expression)
+      rospy.sleep(0.1)
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
       self.gesture.suggest_row(row)
       rospy.sleep(delay_for_speech)
@@ -382,18 +386,15 @@ class Robot:
       rospy.sleep(delay_for_speech)
       self.face.reproduce_face_expression(facial_expression)
       self.speech.text_to_speech(self.sentences['lev_5'][1])
-      self.speech.text_to_speech(self.sentences['lev_5'][2])
       b_executed = True
     elif self.face == None and self.gesture != None:
-      # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
       self.speech.text_to_speech(self.sentences['lev_5'][0])
-      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1], self.sentences['lev_5'][2])
+      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1])
       b_executed = True
     else:
-      # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
       self.speech.text_to_speech(self.sentences['lev_5'][0])
       self.face.reproduce_face_expression(facial_expression)
-      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1], self.sentences['lev_5'][2])
+      self.gesture.offer_token(token_sol_from, self.reproduce_sentence, self.sentences['lev_5'][1])
       self.gesture.initial_pos()
       b_executed = True
     return b_executed
@@ -520,8 +521,10 @@ class Robot:
   def cancel_action(self):
     if self.gesture != None:
       self.gesture.cancel_motion()
+      self.reproduce_sentence("")
       #self.gesture.initial_pos()
       #self.speech.cancel_reproduction()
+
 
   def reproduce_sentence(self, text):
     self.speech.text_to_speech(text)
@@ -535,7 +538,7 @@ class Robot:
   #
   # def fake_function(self, reproduce_sentence, text):
   #   i=0
-  #   while(i<1000):
+  #   while(i<1):
   #     if i%10==0:
   #       reproduce_sentence(text)
   #     else:
@@ -545,9 +548,9 @@ class Robot:
 
 def main():
   speech = Speech("es_ES")
-  gesture = None#Gesture()
+  gesture = Gesture()
   face = Face()
-  policy_filename = "/home/pal/Documents/Framework/GenerativeMutualShapingRL/results/1/True/1/policy.pkl"
+  policy_filename = "/home/pal/carf_ws/src/carf/robot-patient-interaction/1/True/1/policy.pkl"
   robot = Robot(speech=speech, sentences_file="config/sentences/sentences_es_ES", action_policy_filename=policy_filename,  face=face, gesture=gesture)
 
   counter = 0
@@ -555,10 +558,10 @@ def main():
   token_to = ""
   who = "robot"
   row = 4
-  tokens = [("111",8), ("256", 9), ("341", 10)]
-  token = ("111", 20, 5)
+  tokens = [("111",15), ("256", 17), ("341", 17)]
+  token = ("111", 9, 5)
   positive = False
-  lev_id = 3
+  lev_id = 4
   delay = 2.0
   eye_coords = (0,0)
   #robot.fake_function(robot.play_sentence)
@@ -575,21 +578,25 @@ def main():
   # #take in input 5 params
   #robot.action["move_back"].__call__(who, token)
   #rospy.sleep(3.0)
-  for lev in range(4):
-    for c in range(3):
-      robot.assistance(lev_id=lev+1, row=2, counter=c, token=token, facial_expression="neutral",  eyes_coords=eye_coords, tokens=tokens, delay_for_speech=1)
-      rospy.sleep(2.0)
+  # robot.assistance(lev_id=2, row=4, counter=1, token=token, facial_expression="neutral", eyes_coords=eye_coords,
+  #                  tokens=tokens, delay_for_speech=2)
+
+  # for lev in range(4):
+  #   for c in range(3):
+  #     robot.assistance(lev_id=lev+1, row=2, counter=c, token=token, facial_expression="neutral",  eyes_coords=eye_coords, tokens=tokens, delay_for_speech=1)
+  #     rospy.sleep(2.0)
   #robot.move_onbehalf(token, counter, face)
   #robot.move_token_back(who="robot", token=token, counter=counter, facial_expression=face)
-  #robot.action["assistance"].__call__(lev_id, row, counter, token, face, eye_coords, tokens, delay)
+  for t in range(11,20):
+    robot.action["assistance"].__call__(lev_id, row, counter, ("111", t, 5), "neutral", eye_coords, tokens, delay)
+    rospy.sleep(10)
   #robot.action["lev_2"].__call__(row, counter)
-  #robot.action["lev_3"].__call__(counter, token, *tokens)
   #robot.action["lev_4"].__call__(counter, token)
   #robot.action["lev_5"].__call__(token)
   #robot.action["instruction"].__call__()
   #robot.action["max_attempt"].__call__(token)
   #robot.action["timeout"].__call__()
-  robot.action["pick"].__call__(positive=False, counter=2, facial_expression="confused", eyes_coords=None)
+  #robot.action["pick"].__call__(positive=False, counter=2, facial_expression="confused", eyes_coords=None)
 
 if __name__=="__main__":
   main()
