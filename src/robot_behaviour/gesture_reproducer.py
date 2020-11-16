@@ -256,6 +256,50 @@ class Gesture:
 
     rospy.loginfo("Execute action without waiting for result...")
 
+  def calibration(self, points):
+    '''
+    GO through all the four points
+    Args:
+      :points
+    :return:
+    '''
+    for i in range(len(points)):
+      # cell 1 is g45 for the robot view point
+      conv_cell = int(self.convert(points[i]))
+      rospy.loginfo("Starting run_motion_python application...")
+      self.wait_for_valid_time(10.0)
+      # client = SimpleActionClient('/play_motion', PlayMotionAction)
+      rospy.loginfo("conv_cell " + str(conv_cell))
+      rospy.loginfo("Waiting for Action Server...")
+      self.client.wait_for_server()
+      goal = PlayMotionGoal()
+      goal.motion_name = "p" + str(conv_cell)
+      goal.skip_planning = False
+      goal.priority = 0  # Optional
+      rospy.loginfo("Sending goal with motion: " + "p" + str(conv_cell))
+      self.client.send_goal(goal)
+      rospy.loginfo("Waiting for result...")
+      action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+      state = self.client.get_state()
+      rospy.sleep(1.0)
+      #Coming back to my position
+
+      rospy.loginfo("Starting run_motion_python application...")
+      self.wait_for_valid_time(10.0)
+      rospy.loginfo("Waiting for Action Server...")
+      self.client.wait_for_server()
+      goal = PlayMotionGoal()
+      goal.motion_name = "c" + str(conv_cell)
+      goal.skip_planning = False
+      goal.priority = 0  # Optional
+      rospy.loginfo("Sending goal with motion: " + "c" + str(conv_cell))
+      self.client.send_goal(goal)
+
+      rospy.loginfo("Waiting for result...")
+      action_ok = self.client.wait_for_result(rospy.Duration(30.0))
+      state = self.client.get_state()
+
+
   def pick(self, cell):
     '''
     Robot picks the token in location cell
@@ -464,7 +508,7 @@ class Gesture:
     rospy.loginfo("Execute action without waiting for result...")
 
 
-  def offer_token(self, token_loc, reproduce_text, text_0, text_1):
+  def offer_token(self, token_loc, reproduce_text, text):
     # cell 1 is g45 for the robot view point
     conv_cell = int(self.convert(token_loc))
     rospy.loginfo("Starting run_motion_python application...")
@@ -486,7 +530,6 @@ class Gesture:
     action_ok = self.client.wait_for_result(rospy.Duration(30.0))
     state = self.client.get_state()
 
-    reproduce_text(text_0)
     print(self.client.get_state())
     #replace action_ok with get_state ==3
     if action_ok:
@@ -510,7 +553,7 @@ class Gesture:
           rospy.loginfo("Sending goal with motion: " + "o" + str(conv_cell))
           self.client.send_goal(goal)
 
-          reproduce_text(text_1)
+          reproduce_text(text)
 
           rospy.loginfo("Waiting for result...")
           action_ok = self.client.wait_for_result(rospy.Duration(30.0))
@@ -542,27 +585,26 @@ class Gesture:
       #action completed
       return 1
 
-# def main():
-#   robot_gesture = Gesture()
-#   robot_speech = Speech("en_GB")
-#
-#   #tiago.wave()
-#   robot_gesture.pick_and_place(18, 1)
-#   rospy.sleep(2)
-#   robot_gesture.pick_and_place(1, 18)
-#   rospy.sleep(2)
-#   robot_gesture.pick_and_place(12, 2)
-#   rospy.sleep(2)
-#   robot_gesture.pick_and_place(2, 12)
-#   rospy.sleep(2)
-#   robot_gesture.pick_and_place(15, 3)
-#   rospy.sleep(2)
-#   robot_gesture.pick_and_place(3, 15)
-#   rospy.sleep(2)
-#
-#
-# if __name__ == '__main__':
-#   main()
+def main():
+  robot_gesture = Gesture()
+  robot_gesture.calibration([20,16,5,1])
+  #tiago.wave()
+  # robot_gesture.pick_and_place(20,20)
+  # rospy.sleep(2)
+  # robot_gesture.pick(15, 15)
+  # rospy.sleep(2)
+  # robot_gesture.pick(5, 15)
+  # rospy.sleep(2)
+  # robot_gesture.pick(1, 1)
+  # rospy.sleep(2)
+  # robot_gesture.pick_and_place(15, 3)
+  # rospy.sleep(2)
+  # robot_gesture.pick_and_place(3, 15)
+  # rospy.sleep(2)
+
+
+if __name__ == '__main__':
+  main()
 
 
 
