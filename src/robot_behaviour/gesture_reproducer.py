@@ -224,11 +224,11 @@ class Gesture:
     '''
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
-    rospy.loginfo("Waiting for Action Server...")
-    self.client.wait_for_server()
+    # rospy.loginfo("Waiting for Action Server...")
+    # self.client.wait_for_server()
 
     goal = PlayMotionGoal()
-    goal.motion_name = "head_yes"
+    goal.motion_name = "noddling_yes"
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
@@ -243,11 +243,11 @@ class Gesture:
     '''
     rospy.loginfo("Starting run_motion_python application...")
     self.wait_for_valid_time(10.0)
-    rospy.loginfo("Waiting for Action Server...")
-    self.client.wait_for_server()
+    # rospy.loginfo("Waiting for Action Server...")
+    # self.client.wait_for_server()
 
     goal = PlayMotionGoal()
-    goal.motion_name = "head_no"
+    goal.motion_name = "noddling_no"
     goal.skip_planning = False
     goal.priority = 0  # Optional
 
@@ -588,19 +588,7 @@ class Gesture:
 def main():
   robot_gesture = Gesture()
   robot_gesture.calibration([20,16,5,1])
-  #tiago.wave()
-  # robot_gesture.pick_and_place(20,20)
-  # rospy.sleep(2)
-  # robot_gesture.pick(15, 15)
-  # rospy.sleep(2)
-  # robot_gesture.pick(5, 15)
-  # rospy.sleep(2)
-  # robot_gesture.pick(1, 1)
-  # rospy.sleep(2)
-  # robot_gesture.pick_and_place(15, 3)
-  # rospy.sleep(2)
-  # robot_gesture.pick_and_place(3, 15)
-  # rospy.sleep(2)
+
 
 
 if __name__ == '__main__':
