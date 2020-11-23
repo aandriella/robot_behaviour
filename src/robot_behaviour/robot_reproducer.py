@@ -110,12 +110,16 @@ class Robot:
     '''
     print("Congrats method")
     b_executed = False
+    if self.face != None and self.gesture != None:
+      self.gesture.head_noddling_yes()
+
     if counter >len(self.sentences['congratulation'])-1: counter=random.randint(0, len(self.sentences['congratulation'])-1)
-    self.speech.text_to_speech(self.sentences['congratulation'][counter], locked = True)
     self.face.reproduce_face_expression(facial_expression)
-    if eyes_coords!=None:
-     self.face.move_eyes(eyes_coords[0], eyes_coords[1])
+    if eyes_coords != None:
+      self.face.move_eyes(eyes_coords[0], eyes_coords[1])
+    self.speech.text_to_speech(self.sentences['congratulation'][counter], locked = True)
     b_executed = True
+
     return b_executed
 
   def compassion(self, counter, facial_expression, eyes_coords=None):
@@ -128,6 +132,9 @@ class Robot:
       '''
     print("Compassion funct")
     b_executed = False
+    if self.face != None and self.gesture != None:
+      self.gesture.head_noddling_no()
+
     if eyes_coords != None:
       self.face.move_eyes(eyes_coords[0], eyes_coords[1])
     self.face.reproduce_face_expression(facial_expression)
@@ -153,16 +160,15 @@ class Robot:
     token_id, token_from, token_to =  token
     b_executed = False
     if self.face!=None and self.gesture==None:
+      self.face.reproduce_face_expression(facial_expression)
+      if eyes_coords != None:
+        self.face.move_eyes(eyes_coords[0], eyes_coords[1])
       if who == "robot":
         if counter >= len(self.sentences['robot_move_back'])-1: counter = random.randint(0, len(self.sentences['robot_move_back'])-1)
         self.speech.text_to_speech(self.sentences['robot_move_back'][counter])
       else:
         if counter >= len(self.sentences['user_move_back'])-1: counter = random.randint(0, len(self.sentences['user_move_back'])-1)
         self.speech.text_to_speech(self.sentences['user_move_back'][counter])
-      rospy.sleep(0.1)
-      self.face.reproduce_face_expression(facial_expression)
-      if eyes_coords != None:
-        self.face.move_eyes(eyes_coords[0], eyes_coords[1])
       b_executed = True
     elif self.face==None and self.gesture!=None:
       if who == "robot":
@@ -189,8 +195,6 @@ class Robot:
       else:
         if counter >= len(self.sentences['user_move_back'])-1: counter = random.randint(0, len(self.sentences['user_move_back'])-1)
         self.speech.text_to_speech(self.sentences['user_move_back'][counter])
-      rospy.sleep(0.1)
-
         #success = self.gesture.pick_and_place(token_to, token_from)
       #self.gesture.initial_pos()
       b_executed = True
@@ -202,7 +206,7 @@ class Robot:
 
   def reset_facial_expression(self):
     self.face.reproduce_face_expression("neutral")
-    rospy.sleep(0.1)
+    rospy.sleep(0.5)
 
   def assistance(self, lev_id, row, counter, token, facial_expression, eyes_coords,  tokens, delay_for_speech):
     if eyes_coords != None:
@@ -525,8 +529,8 @@ class Robot:
   def cancel_action(self):
     if self.gesture != None:
       self.gesture.cancel_motion()
-      self.reproduce_sentence("")
       #self.gesture.initial_pos()
+      self.reproduce_sentence("")
       #self.speech.cancel_reproduction()
 
 
@@ -565,6 +569,7 @@ def main(argv):
       language_id = arg
 
 
+
   #DEMO
   #1 provide instructions
   #'instruction_descending_odd':["Hola, em dic Socrates, encantat de coneixe't.
@@ -573,8 +578,9 @@ def main(argv):
   # Si us plau, espera les meves instruccions abans de moure una fitxa."]
 
   row = 2
-  tokens = [("321", 8), ("177", 9), ("125", 7)]
-  token = ("321", 8, 1)
+  tokens = [("135", 7), ("947", 8), ("125", 9)]
+  token = ("947", 8, 1)
+
 
   if language_id == "es_ES":
 
@@ -585,8 +591,12 @@ def main(argv):
     robot = Robot(speech=speech, sentences_file="config/sentences/sentences_es_ES",
                   action_policy_filename=policy_filename, face=face, gesture=gesture)
 
-    instruction = "Hola, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan, y  hoy vamos  a hacer un ejercicio cognitivo, basado en el SKT, para entrenar tus habilidades cognitivas. El objetivo es ordenar fichas inpares en orden descendiente, del numero mas grande al numero mas pequeño."
+
+
+    instruction = "Hola Maria Teresa, mi nombre es Socrates, encantado de conocerte. Soy el ayudante de Joan, y  hoy vamos  a hacer un ejercicio cognitivo,para entrenar tus habilidades cognitivas. El objetivo es ordenar fichas inpares en orden descendiente, del número mas grande al número mas pequeño."
     robot.reproduce_sentence(instruction, locked=True)
+    rospy.sleep(1.5)
+    robot.reproduce_sentence("Cuando te equivocas, te puedo ayudar asì:", locked=True)
     #When you make a mistake a can help you in this way:
     l0 = "Acordarte la tarea así:"
     l1 = "Animarte, así:"
@@ -595,27 +605,26 @@ def main(argv):
 
     # Remebering the rule
     robot.reproduce_sentence(l0, locked=True)
+    rospy.sleep(2)
     robot.assistance(lev_id=1, row=row, counter=1, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=tokens, delay_for_speech=1)
     rospy.sleep(9)
     #Encouraging
     robot.reproduce_sentence(l1, locked=True)
+    rospy.sleep(2)
     robot.assistance(lev_id=1, row=row, counter=0, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=[tokens], delay_for_speech=1)
     rospy.sleep(9)
     #assistance
+    robot.reproduce_sentence(l2, locked=True)
     robot.assistance(lev_id=2, row=row, counter=0, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=tokens, delay_for_speech=1)
-
-    robot.reproduce_sentence(l2, locked=True)
-    robot.assistance(lev_id=2, row=row, counter=1, token=token, facial_expression="neutral", eyes_coords=(0,0),
-                     tokens=tokens, delay_for_speech=1)
-    rospy.sleep(10)
+    rospy.sleep(11)
 
     robot.reproduce_sentence(l2, locked=True)
     robot.assistance(lev_id=3, row=2, counter=1, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=tokens, delay_for_speech=2.5)
-    rospy.sleep(12)
+    rospy.sleep(13)
 
     robot.reproduce_sentence(l2, locked=True)
     robot.assistance(lev_id=4, row=2, counter=1, token=token, facial_expression="neutral", eyes_coords=(0, 0),
@@ -636,12 +645,19 @@ def main(argv):
     recommendation_7 = "Cuando te equivocas más de 4 veces, yo moveré la ficha por ti."
     recommendation_8 = "Es muy importante que tengas clara la tarea que tienes que hacer. Puedes explicar a Joan lo que tienes que hacer?"
     robot.reproduce_sentence(recommendation_1, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_2, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_3, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_4, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_5, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_6, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_7, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_8, locked=True)
 
   else:
@@ -668,11 +684,13 @@ def main(argv):
 
     # Remebering the rule
     robot.reproduce_sentence(l0, locked=True)
+    rospy.sleep(2)
     robot.assistance(lev_id=1, row=row, counter=1, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=tokens, delay_for_speech=1)
     rospy.sleep(9)
     #Encouraging
     robot.reproduce_sentence(l1, locked=True)
+    rospy.sleep(2)
     robot.assistance(lev_id=1, row=row, counter=0, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=[tokens], delay_for_speech=1)
     rospy.sleep(9)
@@ -688,7 +706,7 @@ def main(argv):
     robot.reproduce_sentence(l2, locked=True)
     robot.assistance(lev_id=4, row=2, counter=1, token=token, facial_expression="neutral", eyes_coords=(0, 0),
                      tokens=tokens, delay_for_speech=1)
-    rospy.sleep(8)
+    rospy.sleep(11)
     #offer token
     robot.reproduce_sentence(l3, locked=True)
     robot.assistance(lev_id=5, row=2, counter=1, token=token, facial_expression="neutral", eyes_coords=(0, 0),
@@ -705,11 +723,17 @@ def main(argv):
     robot.reproduce_sentence(recommendation_1, locked=True)
     rospy.sleep(1.5)
     robot.reproduce_sentence(recommendation_2, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_3, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_4, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_5, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_6, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_7, locked=True)
+    rospy.sleep(2)
     robot.reproduce_sentence(recommendation_8, locked=True)
 
   #Encouraging
