@@ -38,7 +38,8 @@ class Robot:
       "max_attempt": self.move_onbehalf,
       "timeout": self.timeout,
       "pick": self.pick,
-      "end_game" : self.end_game
+      "end_game" : self.end_game,
+      "lev_5": self.offer_solution
     }
 
     self.assistance_level = {
@@ -79,6 +80,9 @@ class Robot:
 
   def send_to_rest(self):
     self.gesture.initial_pos()
+
+  def head_rest(self):
+    self.gesture.head_rest()
 
   def load_sentences(self, file):
     file = open(file, "r")
@@ -180,7 +184,6 @@ class Robot:
       rospy.sleep(0.1)
       # TODO: validation on the robot
       success = self.gesture.pick_and_place(token_from, token_to)
-      self.gesture.initial_pos()
       b_executed = True
     else:
       #TODO validation on the robot
@@ -206,7 +209,7 @@ class Robot:
 
   def reset_facial_expression(self):
     self.face.reproduce_face_expression("neutral")
-    rospy.sleep(0.5)
+    rospy.sleep(1.0)
 
   def assistance(self, lev_id, row, counter, token, facial_expression, eyes_coords,  tokens, delay_for_speech):
     if eyes_coords != None:
@@ -291,8 +294,8 @@ class Robot:
       self.face.reproduce_face_expression(facial_expression)
       rospy.sleep(0.1)
       # TODO: test on the robot and see if the voice can be sinc with the movement otherwise include speech and text in the gesture method
-      self.gesture.suggest_row(row)
       rospy.sleep(delay_for_speech)
+      self.gesture.suggest_row(row)
       self.speech.text_to_speech(self.sentences['lev_2'][counter]+"; ;"+self.sentences['lev_0'][0])
       b_executed = True
     return b_executed
@@ -384,11 +387,12 @@ class Robot:
     #need for gesture
     token_sol_id, token_sol_from, _ = token
     #need for speech?
-    token_id_to_str = " . ".join([str(t) for t in token_sol_id])
+    token_id_to_str = token_sol_id
     if self.face != None and self.gesture == None:
       assert "This level has not been designed to be provided without the robot"
       self.speech.text_to_speech(self.sentences['lev_5'][0])
       rospy.sleep(delay_for_speech)
+      self.speech.text_to_speech("..."+token_id_to_str)
       self.face.reproduce_face_expression(facial_expression)
       self.speech.text_to_speech(self.sentences['lev_5'][1])
       b_executed = True
@@ -459,7 +463,8 @@ class Robot:
     if positive:
       if counter >= len(self.sentences['pick_ok'])-1: counter = random.randint(0, len(self.sentences['pick_ok'])-1)
       self.speech.text_to_speech(self.sentences['pick_ok'][counter])
-      rospy.sleep(0.2)
+      #self.gesture.head_noddling_yes()
+      #rospy.sleep(0.2)
       self.face.reproduce_face_expression(facial_expression)
       if eyes_coords != None:
         self.face.move_eyes(eyes_coords[0], eyes_coords[1])
@@ -467,8 +472,9 @@ class Robot:
       b_executed = True
     else:
       if counter >= len(self.sentences['pick_no'])-1: counter = random.randint(0, len(self.sentences['pick_no'])-1)
+      self.gesture.head_noddling_no()
+      #rospy.sleep(0.2)
       self.speech.text_to_speech(self.sentences['pick_no'][counter])
-      rospy.sleep(0.2)
       self.face.reproduce_face_expression(facial_expression)
       if eyes_coords != None:
         self.face.move_eyes(eyes_coords[0], eyes_coords[1])
@@ -527,11 +533,10 @@ class Robot:
 
 
   def cancel_action(self):
-    if self.gesture != None:
-      self.gesture.cancel_motion()
-      #self.gesture.initial_pos()
-      self.reproduce_sentence("")
-      #self.speech.cancel_reproduction()
+    self.gesture.cancel_motion()
+    #self.gesture.initial_pos()
+    self.reproduce_sentence("")
+    #self.speech.cancel_reproduction()
 
 
   def reproduce_sentence(self, text, locked=False):
