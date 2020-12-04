@@ -1,0 +1,17 @@
+play_motion:
+  motions:
+    noddling_yes:
+      joints: [head_1_joint, head_2_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.002366301372505042, -0.9148519747609053]
+        #go to p13
+        - time_from_start: 0.4
+          positions: [0.002366301372505042, -0.6566553313601391]
+        - time_from_start: 1.0
+          positions: [0.002366301372505042, -0.8148519747609053]
+        #come back
+      meta:
+        name: noddling_yes
+        usage: noddling_yes
+        description: head noddling

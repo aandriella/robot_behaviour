@@ -1,0 +1,16 @@
+play_motion:
+  motions:
+    cb45:
+      joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
+      points:
+        - time_from_start: 0
+          positions: [0.43849212842657503, 0.5666097086931844, -1.1658871507462916, 1.6040043657672305, -1.7967914852196853, 0.5305666096055373, -1.579535433479321]
+        - time_from_start: 1
+          positions: [0.3294, 0.5073, -1.299, 1.5193, -1.6312, 0.5705, -1.5776]
+        - time_from_start: 2.5
+          positions: [0.2269, 0.3316, -1.6138, 2.2556, -1.6316, 0.5703, -1.5773]
+ 
+      meta:
+        name: cb45
+        usage: cb45
+        description: coming back a token in position c45 with intermediate point
