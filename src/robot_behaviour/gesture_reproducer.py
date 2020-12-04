@@ -217,6 +217,25 @@ class Gesture:
     self.client.send_goal(goal)
     rospy.loginfo("Execute action without waiting for result...")
 
+  def head_rest(self):
+    '''
+    Robot head to rest
+    '''
+    rospy.loginfo("Starting run_motion_python application...")
+    self.wait_for_valid_time(10.0)
+    # rospy.loginfo("Waiting for Action Server...")
+    # self.client.wait_for_server()
+
+    goal = PlayMotionGoal()
+    goal.motion_name = "head_rest"
+    goal.skip_planning = False
+    goal.priority = 0  # Optional
+
+    rospy.loginfo("Sending goal with motion: head_rest")
+    self.client.send_goal(goal)
+
+    rospy.loginfo("Execute actions without waiting for result...")
+
 
   def head_noddling_yes(self):
     '''
@@ -230,7 +249,7 @@ class Gesture:
     goal = PlayMotionGoal()
     goal.motion_name = "noddling_yes"
     goal.skip_planning = False
-    goal.priority = 0  # Optional
+    goal.priority = 1  # Optional
 
     rospy.loginfo("Sending goal with motion: noddling_yes")
     self.client.send_goal(goal)
@@ -249,7 +268,7 @@ class Gesture:
     goal = PlayMotionGoal()
     goal.motion_name = "noddling_no"
     goal.skip_planning = False
-    goal.priority = 0  # Optional
+    goal.priority = 1  # Optional
 
     rospy.loginfo("Sending goal with motion: noddling_no")
     self.client.send_goal(goal)
@@ -328,7 +347,7 @@ class Gesture:
     if action_ok:
       rospy.loginfo("Action finished succesfully with state: " + str(self.get_status_string(state)))
       if str(self.get_status_string(state)) == "REJECTED":
-        self.client.cancel_goal()
+        self.client.cancel_all_goals()
         self.client.send_goal(goal)
         rospy.loginfo("Waiting for result...")
         action_ok = self.client.wait_for_result(rospy.Duration(30.0))
@@ -359,7 +378,9 @@ class Gesture:
       return False
 
   def place(self, cell):
+
     '''
+    N.B: AFTER PLACED THE TOKEN THE ARM MOVES TO INIT POSTION LEAVE c instead of cb if you want it moving differently
     Robot places the token in the cell location
     Args:
       cell: the location on the baord
@@ -399,11 +420,11 @@ class Gesture:
           self.client.wait_for_server()
 
           goal = PlayMotionGoal()
-          goal.motion_name = "c" + str(conv_cell)
+          goal.motion_name = "cb" + str(conv_cell)
           goal.skip_planning = False
           goal.priority = 0  # Optional
 
-          rospy.loginfo("Sending goal with motion: " + "c" + str(conv_cell))
+          rospy.loginfo("Sending goal with motion: " + "cb" + str(conv_cell))
           self.client.send_goal(goal)
 
           rospy.loginfo("Waiting for result...")
@@ -570,11 +591,11 @@ class Gesture:
       return False
 
   def cancel_motion(self):
-    if (self.client.get_state()) == 1:
-      rospy.loginfo("canceling action")
-      self.client.cancel_goal()
-      rospy.loginfo("goal has been canceled")
-      print("cancel action")
+    #if (self.client.get_state()) == 1:
+    rospy.loginfo("canceling action")
+    self.client.cancel_all_goals()
+    rospy.loginfo("goal has been canceled")
+    print("cancel action")
 
   def get_action_state(self):
     state = self.client.get_state()
