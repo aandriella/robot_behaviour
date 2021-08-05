@@ -3,7 +3,7 @@
 
 
 #### Package:
-- **src/robot_behaviour/** folder contains the following classes:
+- **src/robot_behaviour/src** folder contains the following classes:
 
   - speech_reproducer.py 
 
@@ -13,4 +13,4 @@
 
   - robot_reproducer.py 
 
-- **src/robot_behaviour/config** contains the pre-recorded gestures and the scripted sentences used by the TIAGo 
+- **src/robot_behaviour/src/config** contains the pre-recorded gestures and the scripted sentences used by the TIAGo 
