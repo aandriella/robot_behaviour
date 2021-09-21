@@ -429,7 +429,7 @@ class Robot:
     b_executed = True
     return b_executed
 
-  def end_game(self,sentence, delay_sound):
+  def end_game(self, delay_sound):
     '''The agent provides the instructions of the exercise
     Args:
     Return:
@@ -438,7 +438,7 @@ class Robot:
     '''
     print("end_game")
     b_executed = False
-    sentence = self.audio_file + "/" + sentence
+    sentence = self.end_game_sentence
     self.play_sound(sentence, delay_sound)
     b_executed = True
     return b_executed
