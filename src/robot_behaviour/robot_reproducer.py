@@ -32,8 +32,8 @@ class Robot:
     self.lev_0_sentences = "your_turn.wav"
     self.lev_1_sentences = ["Lev_1_1.wav", "Lev_1_2.wav", "Lev_1_3.wav"]
     self.lev_2_sentences = ["Lev_2_left.wav", "Lev_2_center.wav", "Lev_2_right.wav"]
-    self.lev_3_sentences = ["D.mp3", "O.mp3", "M.mp3", "R.mp3", "E.mp3",
-                            "G.mp3", "L.mp3", "S.mp3", "U.mp3", "I.mp3"]
+    self.lev_3_sentences = ["D.wav", "O.wav", "M.wav", "R.wav", "E.wav",
+                            "G.wav", "L.wav", "S.wav", "U.wav", "I.wav"]
     self.end_game_sentence = "end_game.wav"
     self.instruction_sentence = "instruction.wav"
     self.move_back_sentence = "move_back.wav"
@@ -188,6 +188,7 @@ class Robot:
       '''
     print("Lev_1")
     b_executed = False
+    print(counter)
     selected = random.randint(0, counter - 1)
     sentence = sentence_array[selected]
     self.play_sound(sentence, delay_sound)
@@ -474,10 +475,6 @@ def main():
 
   print("main --- robot behaviour")
 
-
-
-
-
   policy_filename = "/home/pal/carf_ws/src/carf/robot-patient-interaction/1/True/1/policy.pkl"
   audio = "/home/pal/carf_ws/src/robot_behaviour/src/robot_behaviour/config/audio/female/praise/cat/"
   robot = Robot(audio_file=audio, action_policy_filename=policy_filename)
@@ -502,4 +499,5 @@ def main():
 
 
 if __name__=="__main__":
-  main()
+  pass
+  #main()
