@@ -383,12 +383,10 @@ class Robot:
     if positive == True:
       selected = random.randint(0, counter - 1)
       sentence = self.pick_pos_sentences[selected]
-      self.play_sound(self.sound_correct_pick, 1)
       self.play_sound(sentence, delay_sound)
     else:
       selected = random.randint(0, counter - 1)
       sentence = self.pick_neg_sentences[selected]
-      self.play_sound(self.sound_wrong_pick, 1)
       self.play_sound(sentence, delay_sound)
 
     b_executed = True
