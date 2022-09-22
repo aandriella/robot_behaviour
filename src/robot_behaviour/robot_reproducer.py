@@ -30,7 +30,7 @@ class Robot:
     self.sentences = ""
 
     self.lev_0_sentences = "your_turn.wav"
-    self.lev_1_sentences = ["Lev_1_1_.wav", "Lev_1_2_.wav", "Lev_1_3_.wav"]
+    self.lev_1_sentences = ["Lev_1_1.wav", "Lev_1_2_.wav", "Lev_1_3_.wav"]
     self.lev_2_sentences = ["Lev_2_left_.wav", "Lev_2_center_.wav", "Lev_2_right_.wav"]
     self.lev_3_sentences = ["D_.wav", "O_.wav", "M_.wav", "R_.wav", "E_.wav",
                             "G_.wav", "L_.wav", "S_.wav", "U_.wav", "I_.wav"]
@@ -41,6 +41,8 @@ class Robot:
     self.pick_neg_sentences = ["pick_wrong_1.wav", "pick_wrong_2.wav", "pick_wrong_3.wav"]
     self.place_pos_sentences = ["place_correct_1.wav", "place_correct_2.wav", "place_correct_3.wav"]
     self.place_neg_sentences = ["place_wrong_1.wav", "place_wrong_2.wav", "place_wrong_3.wav"]
+    self.sound_wrong_pick = "beep.mp3"
+    self.sound_correct_pick = "pair.wav"
 
 
     self.action = {
@@ -381,10 +383,12 @@ class Robot:
     if positive == True:
       selected = random.randint(0, counter - 1)
       sentence = self.pick_pos_sentences[selected]
+      self.play_sound(self.sound_correct_pick, 1)
       self.play_sound(sentence, delay_sound)
     else:
       selected = random.randint(0, counter - 1)
       sentence = self.pick_neg_sentences[selected]
+      self.play_sound(self.sound_wrong_pick, 1)
       self.play_sound(sentence, delay_sound)
 
     b_executed = True

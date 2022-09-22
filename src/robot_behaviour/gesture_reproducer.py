@@ -608,12 +608,9 @@ class Gesture:
 
 def main():
   robot_gesture = Gesture()
-  robot_gesture.calibration([20,16,5,1])
-
+  #robot_gesture.calibration([20,16,5,1])
+  robot_gesture.pick_and_place(20,1)
 
 
 if __name__ == '__main__':
   main()
-
-
-
