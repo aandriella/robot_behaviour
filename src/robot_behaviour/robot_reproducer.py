@@ -30,7 +30,7 @@ class Robot:
     self.sentences = ""
 
     self.lev_0_sentences = "your_turn.wav"
-    self.lev_1_sentences = ["Lev_1_1.wav", "Lev_1_2_.wav", "Lev_1_3_.wav"]
+    self.lev_1_sentences = ["Lev_1_1_.wav", "Lev_1_2_.wav", "Lev_1_3_.wav"]
     self.lev_2_sentences = ["Lev_2_left_.wav", "Lev_2_center_.wav", "Lev_2_right_.wav"]
     self.lev_3_sentences = ["D_.wav", "O_.wav", "M_.wav", "R_.wav", "E_.wav",
                             "G_.wav", "L_.wav", "S_.wav", "U_.wav", "I_.wav"]
