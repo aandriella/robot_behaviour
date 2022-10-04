@@ -14,6 +14,7 @@ import sys, getopt
 import pygame
 import time
 import thread
+import soundfile as sf
 
 
 class Robot:
@@ -41,8 +42,6 @@ class Robot:
     self.pick_neg_sentences = ["pick_wrong_1.wav", "pick_wrong_2.wav", "pick_wrong_3.wav"]
     self.place_pos_sentences = ["place_correct_1.wav", "place_correct_2.wav", "place_correct_3.wav"]
     self.place_neg_sentences = ["place_wrong_1.wav", "place_wrong_2.wav", "place_wrong_3.wav"]
-    self.sound_wrong_pick = "beep.mp3"
-    self.sound_correct_pick = "pair.wav"
 
 
     self.action = {
@@ -66,11 +65,12 @@ class Robot:
 
 
   def play_sound(self, file_path, delay_sound):
-    time.sleep(0.1)
     pygame.mixer.init()
     pygame.mixer.music.load(self.audio_file+"/"+file_path)
     pygame.mixer.music.play()
-    time.sleep(delay_sound)
+    sound_file = sf.SoundFile(self.audio_file+"/"+file_path)
+    seconds = float(sound_file.frames) / float(sound_file.samplerate)
+    time.sleep(seconds+0.1)
 
   def load_robot_policy(self, learned_policy_filename):
     with open(learned_policy_filename, "rb") as f:
@@ -102,7 +102,7 @@ class Robot:
     print("Congrats method")
     b_executed = False
     selected = random.randint(0,counter-1)
-    sentence = self.pick_pos_sentences[selected]
+    sentence = self.place_pos_sentences[selected]
     self.play_sound(sentence, delay_sound)
     b_executed = True
 
