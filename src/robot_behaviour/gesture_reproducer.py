@@ -7,14 +7,13 @@ import time
 # ROS imports
 import rospy
 from actionlib import SimpleActionClient
-
 from play_motion_msgs.msg import PlayMotionAction, PlayMotionGoal
 
 
 class Gesture:
 
     def __init__(self):
-        rospy.init_node('robot_node', anonymous=True)
+        rospy.init_node('robot_behaviour', anonymous=True)
         self.client = SimpleActionClient('/play_motion', PlayMotionAction)
 
     def wait_for_valid_time(self, timeout):
